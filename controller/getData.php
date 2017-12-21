@@ -161,6 +161,7 @@ function getDataSiswaDatatable($connect) {
 }
 
 function getSiswaBaruDatatable($connect) {
+	$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$query = '';
 	$id_ortu = $_SESSION['id'];
 	$output = [];
@@ -168,12 +169,11 @@ function getSiswaBaruDatatable($connect) {
 		SELECT tb_siswa.*,DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir, tb_pendaftaran.jumlah_bayar,tb_pendaftaran.cara_bayar,tb_pendaftaran.status as status_pembayaran
 		from tb_siswa
 		LEFT JOIN tb_pendaftaran on tb_pendaftaran.id_siswa = tb_siswa.id
+		LEFT JOIN tb_detail_siswa ON tb_detail_siswa.id_siswa = tb_siswa.id
+		WHERE tb_siswa.id_ortu IN(".$id_ortu.")
 	";
 	if (isset($_POST["search"]["value"])) {
-		$query .= 'WHERE tb_siswa.nis LIKE "%'.$_POST["search"]["value"].'%" ';
-		$query .= 'OR tb_siswa.nama LIKE "%'.$_POST["search"]["value"].'%" ';
-		$query .= 'OR tb_siswa.alamat LIKE "%'.$_POST["search"]["value"].'%" ';
-		$query .= 'AND tb_siswa.id_ortu = "'.$id_ortu.'" ';
+		$query .= 'AND tb_siswa.nama LIKE "%'.$_POST["search"]["value"].'%" ';
 	}
 	if (isset($_POST["order"])) {
 		$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
@@ -183,6 +183,7 @@ function getSiswaBaruDatatable($connect) {
 	if ($_POST["length"] != -1) {
 		$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 	}
+	// echo $query;
 
 	$statement = $connect->prepare($query);
 	$statement->execute();
@@ -204,7 +205,7 @@ function getSiswaBaruDatatable($connect) {
 			$status = '<span class="label label-info">Menunggu Konfirmasi</span>';
 		}elseif ($row['status_pembayaran'] == 'paid') {
 			$update = '';
-			$status = '<span class="label label-success">Lunas</span>';
+			$status = '<span class="label label-success">Lunas</span><br><span class="label label-info">Diterima</span>';
 		}
 		if ($row['jenis_kelamin'] == '1') {
 			$jk = 'Laki-laki';

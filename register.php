@@ -10,7 +10,7 @@ if (isset($_POST['register'])) {
   $query = "SELECT * FROM tb_ortu";
   $statement =  $connect->prepare($query);
   $statement->execute();
-  $noTelepon = substr($_POST['tlpn'],0,1);
+  $noTelepon = substr($_POST['tlpn'],0,2);
   // if there are any user data on database
   if ($statement->rowCount() > 0) {
     $result = $statement->fetchAll();
@@ -21,8 +21,8 @@ if (isset($_POST['register'])) {
         $message .= "Nomer telepon tidak boleh sama!" ."<br>";
       }else if($row['email'] == $_POST['email']) {
         $message .= "Email tidak boleh sama!" ."<br>";
-      }else if (!is_int($_POST['tlpn']) || ($noTelepon != "62")) {
-        $message .= "Nomer telepon harus number dan diawali dengan 62!" ."<br>";
+      }else if (($noTelepon != "62") ) {
+        $message .= "Nomer telepon harus valid dan diawali dengan 62!" ."<br>";
       }
       else {
         $query = "INSERT INTO tb_ortu (nama,email,username,password,tgl_lahir,alamat,jenis_kelamin,tlpn,status) 

@@ -37,7 +37,7 @@ if (isset($_POST['btn_action'])) {
 
 		$result = $statement->fetchAll();
 		if (isset($result)) {
-			echo 'Siswa berhasil didaftarkan, mohon konfirmasi biaya pendaftaran anda!';
+			echo 'Siswa berhasil didaftarkan, mohon segera melunasi biaya pendaftaran.!';
 		}
 	}
 	/**
@@ -102,31 +102,24 @@ if (isset($_POST['btn_action'])) {
 		$query = "
 			UPDATE tb_siswa
 			set nama = :nama,
-			email = :email,
 			tgl_lahir = :tgl_lahir,
 			alamat = :alamat,
-			jenis_kelamin = :jenis_kelamin,
-			tlpn = :tlpn,
-			status = :status
+			jenis_kelamin = :jenis_kelamin
 			WHERE id = :id
 		";
 		$statement = $connect->prepare($query);
 		$statement->execute(
 			array(
 				':nama' 		=> $_POST['nama'],
-				':email' 		=> $_POST['email'],
 				':tgl_lahir' 	=> $_POST['tgl_lahir'],
 				':alamat' 		=> $_POST['alamat'],
 				':jenis_kelamin'=> $_POST['jenis_kelamin'],
-				':tlpn' 		=> $_POST['tlpn'],
-				':status' 		=> $_POST['status'],
-				':id'			=> $_POST['user_id']
+				':id'			=> $_POST['id_siswa']
 			)
 		);
-		$count = $statement->rowCount();
 		$result = $statement->fetch();
 		if (isset($result)) {
-			echo "User updated!";
+			echo "Data siswa telah diupdate!";
 		}
 	}
 
@@ -218,7 +211,7 @@ if (isset($_POST['btn_action_konfirm'])) {
 					':id_pendaftaran' => $_POST['id_pendaftaran']
 				));
 
-				echo 'Galeri berhasil ditambahkan';
+				echo 'Konfirmasi telah terkirim dan sedang diproses oleh administrator!';
 			}
 		}
 	}

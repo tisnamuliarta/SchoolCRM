@@ -6,6 +6,7 @@
     <div class="box">
       <div class="box-header  with-border">
         <h3 class="box-title"><i class="fa fa-user"></i> Siswa Baru</h3>
+        <input type="hidden" name="id_ortu" id="id_ortu" value="<?php echo $_SESSION['id'] ?>">
       </div>
       <div class="box-body">
         <div class="row">
@@ -31,7 +32,7 @@
                 <th>Alamat</th>
                 <th>Jumlah Pembayaran</th>
                 <th>Metode Pembayaran</th>
-                <th>Status</th>
+                <th>Status Pembayaran</th>
                 <th></th>
               </tr>
               </thead>
@@ -70,7 +71,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label>Nama</label>
+                <label>Nama</label>                
                 <input type="text" name="nama" id="nama" class="form-control" required />
               </div>
             </div>
@@ -216,13 +217,14 @@
        * =========================
        */
   // ================== User datatable =============
+      var id_ortu = <?php echo $_SESSION['id']; ?>;
       var userTable = $('#siswatable').DataTable({
         "processing":true,
         "serverSide":true,
         "order":[],
         "ajax":{
           url: "../controller/getData.php",
-          data: {siswaBaru: "siswa-baru"},
+          data: {siswaBaru: "siswa-baru",id_ortu:id_ortu},
           type: "POST"
         },
         "columnDefs":[
@@ -400,7 +402,6 @@
           $('#jumlah_bayar').val(data.jumlah_bayar);
           $('input[name="jenis_kelamin"][value="'+data.jenis_kelamin+'"]').prop('checked',true);
           $('input[name="metodePembayaran"][value="'+data.cara_bayar+'"]').prop('checked',true);
-          $('#tlpn').val(data.tlpn);
           $('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit Siswa");
           $('#action').val("Edit");
           $('#id_siswa').val(id)
