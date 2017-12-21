@@ -1,0 +1,5 @@
+<IFModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /crmsystem
+
+</IFModule>
