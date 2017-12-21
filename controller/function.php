@@ -86,7 +86,7 @@ function listSiswaByOrtu($connect) {
 	$result = $statement->fetchAll();
 	$output = '';
 	foreach ($result as $row) {
-		$output .= '<option value="'.$row['id'].'" >Nomer Pendaftaran : '.$row['id'].' - Nama : '.$row['nama']. '</option>' ;
+		$output .= '<option value="'.$row['id'].'" > Nama : '.$row['nama']. '</option>' ;
 	}
 	return $output;
 }

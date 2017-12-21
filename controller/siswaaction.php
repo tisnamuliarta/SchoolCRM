@@ -1,13 +1,9 @@
 <?php  
 include '../connection.php';
 include 'function.php';
-include 'nexmo.php';
+include '../nexmo.php';
 
-echo $client;
-
-$isSame = false;
 $output = [];
-
 if (isset($_POST['btn_action'])) {
 	/**
 	 * ==========================================
@@ -28,14 +24,15 @@ if (isset($_POST['btn_action'])) {
 		));
 		$idSiswa = $connect->lastInsertId();
 
-		$queryPendaftaran = "INSERT INTO tb_pendaftaran (id_siswa,id_ortu,jumlah_bayar,cara_bayar)
-			VALUES (:id_siswa,:id_ortu,:jumlah_bayar,:cara_bayar)";
+		$queryPendaftaran = "INSERT INTO tb_pendaftaran (id_siswa,id_tahun_ajaran,id_ortu,jumlah_bayar,cara_bayar)
+			VALUES (:id_siswa,:id_tahun_ajaran,:id_ortu,:jumlah_bayar,:cara_bayar)";
 		$statementPendaftaran = $connect->prepare($queryPendaftaran);
 		$statementPendaftaran->execute(array(
-			':id_siswa'		=> $idSiswa,
-			':id_ortu'		=> $_SESSION['id'],
-			':jumlah_bayar'	=> $_POST['biayaPendaftaran'],
-			':cara_bayar'	=> $_POST['metodePembayaran']
+			':id_siswa'			=> $idSiswa,
+			':id_tahun_ajaran'	=> $_POST['tahun_ajaran'],
+			':id_ortu'			=> $_SESSION['id'],
+			':jumlah_bayar'		=> $_POST['biayaPendaftaran'],
+			':cara_bayar'		=> $_POST['metodePembayaran']
 		));
 
 		$result = $statement->fetchAll();
@@ -49,7 +46,7 @@ if (isset($_POST['btn_action'])) {
 	 * ====================================
 	 */
 	if ($_POST['btn_action'] == 'fetch_single') {
-		$query = " SELECT tb_siswa.*,DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir, tb_pendaftaran.jumlah_bayar,tb_pendaftaran.cara_bayar,tb_pendaftaran.status as status_pembayaran
+		$query = " SELECT tb_siswa.*,DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir, tb_pendaftaran.jumlah_bayar,tb_pendaftaran.cara_bayar,tb_pendaftaran.id_tahun_ajaran,tb_pendaftaran.status as status_pembayaran
 			from tb_siswa
 			LEFT JOIN tb_pendaftaran on tb_pendaftaran.id_siswa = tb_siswa.id WHERE 
 			tb_siswa.id = :id ";
@@ -64,6 +61,7 @@ if (isset($_POST['btn_action'])) {
 			$output['id'] = $row['id'];
 			$output['nama'] = $row['nama'];
 			$output['nis'] = $row['nis'];
+			$output['id_tahun_ajaran'] = $row['id_tahun_ajaran'];
 			$output['jumlah_bayar'] = $row['jumlah_bayar'];
 			$output['tgl_lahir'] = $row['tgl_lahir'];
 			$output['alamat'] = $row['alamat'];
@@ -156,6 +154,7 @@ if (isset($_POST['btn_action'])) {
 	}
 
 	if ($_POST['btn_action'] == 'konfirmasi_pembayaran') {
+		// query update pendaftaran
 		$query_pendaftaran = " UPDATE tb_pendaftaran 
 			set status = :status
 			WHERE id = :id_pendaftaran ";
@@ -164,8 +163,10 @@ if (isset($_POST['btn_action'])) {
 				':status' 	=> 'paid',
 				':id_pendaftaran' 	=> $_POST['id_pendaftaran']
 		));
+		// End query update pendaftaran
 
 		$nis = generateNis($connect);
+		// query update siswa
 		$query_siswa = "UPDATE tb_siswa 
 		SET status = :status,
 		nis = :nis
@@ -176,10 +177,21 @@ if (isset($_POST['btn_action'])) {
 			':nis'		=> $nis,
 			':id_siswa'	=> $_POST['id_siswa']
 		));
+		// end query update siswa
+
+		// Query select kelas
+		$select_kelas = "SELECT * FROM tb_kelas WHERE kelas='A'";
+		$statement_kelas = $connect->prepare($select_kelas);
+		$statement_kelas->execute();
+		$result_kelas = $statement_kelas->fetch(PDO::FETCH_ASSOC);
+		$idkelas = $result_kelas['id'];
+		// End query select siswa 
+
+		$query_detail_siswa = "INSERT INTO tb_detail_siswa (id_siswa,id_kelas,id_tahun_ajaran)";
 		
-		$count = $statement->rowCount();
-		if ($count > 0) {
-			echo 'Status user berubah menjadi ' . $status;
+		$result = $statement->fetchAll();
+		if (isset($result)) {
+			echo 'Data berhasil dikonfirmasi ';
 		}
 	}
 

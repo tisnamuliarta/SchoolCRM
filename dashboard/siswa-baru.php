@@ -152,7 +152,7 @@
 </div>
 
 <div id="konfirmasiSiswaModal" class="modal fade">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm">
     <form method="post" id="formKonfirmasiPendaftaran" enctype="multipart/form-data">
       <div class="modal-content">
         <div class="modal-header">
@@ -168,7 +168,7 @@
             </select>
           </div>
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
               <div class="form-group">
                 <label>Bukti Pembayaran</label>
                 <input class="form-control" type="file" name="foto" id="foto" required/>
@@ -399,6 +399,7 @@
           $('#nama').val(data.nama);
           $('#tgl_lahir').val(data.tgl_lahir);
           $('#alamat').val(data.alamat);
+          $('#tahun_ajaran').val(data.id_tahun_ajaran);
           $('#jumlah_bayar').val(data.jumlah_bayar);
           $('input[name="jenis_kelamin"][value="'+data.jenis_kelamin+'"]').prop('checked',true);
           $('input[name="metodePembayaran"][value="'+data.cara_bayar+'"]').prop('checked',true);
