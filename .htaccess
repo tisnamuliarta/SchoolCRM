@@ -1,5 +1,5 @@
 <IFModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /crmsystem
+RewriteBase /schoolcrm
 
 </IFModule>

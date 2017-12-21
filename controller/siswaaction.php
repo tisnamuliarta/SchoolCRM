@@ -1,6 +1,9 @@
 <?php  
 include '../connection.php';
 include 'function.php';
+include 'nexmo.php';
+
+echo $client;
 
 $isSame = false;
 $output = [];

@@ -121,15 +121,23 @@ function getDataSiswaDatatable($connect) {
 		$idx++;
 		$status = '';
 		$jk = '';
-		if ($row['status'] == 'active') {
-			$status = '<span class="label label-success">Active</span>';
-		}else {
-			$status = '<span class="label label-danger">Non Active</span>';
-		}
+		$update = '';
+		// if ($row['status'] == 'active') {
+		// 	$status = '<span class="label label-success">Active</span>';
+		// }else {
+		// 	$status = '<span class="label label-danger">Non Active</span>';
+		// }
 		if ($row['jenis_kelamin'] == '1') {
 			$jk = 'Laki-laki';
 		}else {
 			$jk = 'Perempuan';
+		}
+		if ($row['status_pembayaran'] == 'unpaid') {
+			$status .= '<span class="label label-danger">Non Active</span>';
+		}elseif ($row['status_pembayaran'] == 'waiting') {
+			$status .= '<span class="label label-info">Menunggu Konfirmasi</span>';
+		}elseif ($row['status_pembayaran'] == 'paid') {
+			$status .= '<span class="label label-success">Active</span>';
 		}
 		$sub_array = [];
 		$sub_array[] = $idx;
@@ -140,6 +148,9 @@ function getDataSiswaDatatable($connect) {
 		$sub_array[] = $row['alamat'];
 		$sub_array[] = $status;
 		$sub_array[] = '
+			<div class="col-sm-12" style="margin-top:5px;">
+				<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
+			</div>
 			<div class="col-sm-12" style="margin-top:5px;">
 				<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
 			</div>
@@ -229,7 +240,7 @@ function getSiswaBaruDatatable($connect) {
 	$output = [
 		"draw" => intval($_POST["draw"]),
 		"recordsTotal" => $filtered_rows,
-		"recordsFiltered"  => get_total_all_records($connect,"tb_siswa"),
+		"recordsFiltered"  => get_total_all_siswa_records($connect,"tb_siswa",$id_ortu),
 		"data" => $data
 	];
 
@@ -552,6 +563,11 @@ function getGaleriDatatable($connect) {
 	echo json_encode($output);
 }
 
+function get_total_all_siswa_records($connect,$table,$id_ortu){
+	$statement = $connect->prepare("SELECT * FROM $table WHERE id_ortu = $id_ortu");
+	$statement->execute();
+	return $statement->rowCount();
+}
 
 
 function get_total_all_records($connect,$table){

@@ -33,7 +33,7 @@ if (isset($_POST['idTahunAjaran']))
  */
 
 function getDiscountByIdTahunAjaran($connect,$idTahunAjaran) {
-	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$query = "SELECT tb_diskon.diskon FROM tb_diskon WHERE tb_diskon.tahun_ajaran = :tahun_ajaran";
 	$statement = $connect->prepare($query);
 	$statement->execute(array(

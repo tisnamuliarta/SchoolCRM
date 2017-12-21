@@ -9,12 +9,12 @@
       </div>
       <div class="box-body">
         <div class="row">
-          <div class="col-sm-12">
+          <!-- <div class="col-sm-12">
             <div class="col-sm-1 pull-right">
               <button type="button" name="add" id="add_button" class="btn form-control btn-success btn-xs">Tambah</button>
               <br><br>
             </div>
-          </div>
+          </div> -->
           <div class="col-sm-12">
             <table id="siswatable" class="table table-bordered table-striped">
               <thead>
@@ -48,12 +48,15 @@
         <div class="modal-body">
           <div id="textDiscount" class="text-success text-center"></div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
               <div class="form-group">
-                <label>Pilih Tahun Ajaran</label>
+                <label>Tahun Ajaran</label>
                 <select name="tahun_ajaran" id="tahun_ajaran" class="form-control" required>
-                  <option value="">Pilih tahun ajaran</option>
-                  <?php echo listTahunAjatan($connect); ?>
+                  <option value="">Pilih tahun ajaran anak anda mendaftar</option>
+                  <?php
+                    $tahun = date('Y'); 
+                    echo listTahunAjatan($connect,$tahun) 
+                  ?> 
                 </select>
               </div>
             </div>
@@ -61,7 +64,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label>Nama</label>
+                <label>Nama</label>                
                 <input type="text" name="nama" id="nama" class="form-control" required />
               </div>
             </div>
@@ -70,59 +73,65 @@
             <label>Alamat</label>
             <textarea class="form-control" id="alamat" name="alamat" required></textarea>
           </div>
-          <div class="form-group">
-            <label>Jenis Kelamin</label>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="radio">
-                  <label><input type="radio" id="1" name="jenis_kelamin" value="1" required> Laki-laki</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="radio">
-                  <label><input type="radio" id="2" name="jenis_kelamin" value="2"> Perempuan</label>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-6">
               <div class="form-group">
-                <label>Tanggal Lahir</label>
-                <input class="form-control getDatePicker" name="tgl_lahir" id="tgl_lahir" required/>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Telepon</label>
-                <input class="form-control" name="tlpn" id="tlpn" required />
-                <div class="text-danger" id="tlpnError"></div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Metode Pembayaran</label>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="radio">
-                  <label><input type="radio" id="tunai" name="metodePembayaran" value="tunai" required> Setor Tunai</label>
+                <label>Jenis Kelamin :</label>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="radio">
+                      <label><input type="radio" id="1" name="jenis_kelamin" value="1" required> Laki-laki</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="radio">
+                      <label><input type="radio" id="2" name="jenis_kelamin" value="2"> Perempuan</label>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="radio">
-                  <label><input type="radio" id="transfer" name="metodePembayaran" value="transfer"> Transfer</label>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label>Tanggal Lahir :</label>
+                    <input class="form-control getDatePicker" name="tgl_lahir" id="tgl_lahir" required/>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Biaya Pendaftaran</label>
-            <input class="form-control" id="biayaPendaftaran" name="biayaPendaftaran" readonly required value="100000">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Metode Pembayaran</label>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="radio">
+                      <label><input type="radio" id="tunai" name="metodePembayaran" value="tunai" required> Setor Tunai</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="radio">
+                      <label><input type="radio" id="transfer" name="metodePembayaran" value="transfer"> Transfer</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Biaya Pendaftaran</label>
+                <input class="form-control" id="biayaPendaftaran" name="biayaPendaftaran" readonly required value="100000">
+              </div>
+            </div>
           </div>
+
         </div>
         <div class="modal-footer">
-          <input type="hidden" name="user_id" id="user_id" />
+          <input type="hidden" name="id_siswa" id="id_siswa" />
           <input type="hidden" name="btn_action" id="btn_action" />
           <input type="hidden" name="diskon" id="diskon">
           <input type="hidden" name="jumlahAnak" id="jumlahAnak">
@@ -286,10 +295,8 @@
       })
     });
     // ============= Display single data and update
-    $(document).on('click','.update-user',function(){
+    $(document).on('click','.update-siswa',function(){
       var id = $(this).attr("id");
-      $('#password').prop('disabled',true);
-      $('#username').prop('disabled',true);
       var btn_action = 'fetch_single';
       $.ajax({
         url: '../controller/siswaaction.php',
@@ -301,37 +308,16 @@
           $('#nama').val(data.nama);
           $('#tgl_lahir').val(data.tgl_lahir);
           $('#alamat').val(data.alamat);
-          $('#email').val(data.email);
+          $('#jumlah_bayar').val(data.jumlah_bayar);
           $('input[name="jenis_kelamin"][value="'+data.jenis_kelamin+'"]').prop('checked',true);
-          $('#'+data.status+'').prop('checked',true);
-          $('#tlpn').val(data.tlpn);
-          $('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit User");
+          $('input[name="metodePembayaran"][value="'+data.cara_bayar+'"]').prop('checked',true);
+          $('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit Siswa");
           $('#action').val("Edit");
-          $('#user_id').val(id)
+          $('#id_siswa').val(id)
           $('#btn_action').val("Edit");
         }
       })
     });
-
-    // ================== delete data
-    $(document).on('click','.delete-user',function(){
-      var user_id = $(this).attr("id");
-      var status = $(this).data("status");
-      var btn_action = 'delete';
-      if (confirm("Anda yakin akan akan menonaktifkan user ini?")) {
-        $.ajax({
-          url: '../controller/siswaaction.php',
-          method: 'POST',
-          data: {user_id: user_id, status:status, btn_action:btn_action},
-          success: function(data) {
-            $('#alert_action').fadeIn().html('<div class="alert alert-info alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>')
-            dataSiswaTable.ajax.reload();
-          }
-        })
-      }else {
-        return false;
-      }
-    })
 
     // View data ========================
     $(document).on('click','.view-user',function(){
