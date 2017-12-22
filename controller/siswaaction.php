@@ -152,7 +152,11 @@ if (isset($_POST['btn_action'])) {
 			echo 'Status user berubah menjadi ' . $status;
 		}
 	}
-
+	/**
+	 * =====================
+	 * Konfirmasi Pembayaran
+	 * ======================
+	 */
 	if ($_POST['btn_action'] == 'konfirmasi_pembayaran') {
 		// query update pendaftaran
 		$query_pendaftaran = " UPDATE tb_pendaftaran 
@@ -165,7 +169,7 @@ if (isset($_POST['btn_action'])) {
 		));
 		// End query update pendaftaran
 
-		$nis = generateNis($connect);
+		$nis = str_pad(generateNis($connect),4,"0",STR_PAD_LEFT);
 		// query update siswa
 		$query_siswa = "UPDATE tb_siswa 
 		SET status = :status,
@@ -185,10 +189,44 @@ if (isset($_POST['btn_action'])) {
 		$statement_kelas->execute();
 		$result_kelas = $statement_kelas->fetch(PDO::FETCH_ASSOC);
 		$idkelas = $result_kelas['id'];
+		// echo $idkelas;
 		// End query select siswa 
 
-		$query_detail_siswa = "INSERT INTO tb_detail_siswa (id_siswa,id_kelas,id_tahun_ajaran)";
-		
+		// select pendaftran
+		$select_pendaftaran = "SELECT * FROM tb_pendaftaran WHERE id=:id_pendaftaran";
+		$statement_pendaftaran = $connect->prepare($select_pendaftaran);
+		$statement_pendaftaran->execute(array(
+			':id_pendaftaran' 	=> $_POST['id_pendaftaran']
+		));
+		$result_pendaftaran = $statement_pendaftaran->fetch(PDO::FETCH_ASSOC);
+		$idTahunAjaran = $result_pendaftaran['id_tahun_ajaran'];
+		// end select pendaftaran
+
+		// select pendaftran
+		$select_siswa = "SELECT tb_ortu.tlpn FROM tb_siswa LEFT JOIN tb_ortu ON tb_ortu.id = tb_siswa.id_ortu 
+		WHERE tb_siswa.id=:id_siswa";
+		$statement_siswa = $connect->prepare($select_siswa);
+		$statement_siswa->execute(array(
+			':id_siswa' 	=> $_POST['id_siswa']
+		));
+		$result_siswa = $statement_siswa->fetch(PDO::FETCH_ASSOC);
+		$tlpn_ortu = $result_siswa['tlpn'];
+		// end select pendaftaran
+
+		$query_detail_siswa = "INSERT INTO tb_detail_siswa (id_siswa,id_kelas,id_tahun_ajaran)
+		VALUES (:id_siswa,:id_kelas,:id_tahun_ajaran)";
+		$statement_detail_siswa = $connect->prepare($query_detail_siswa);
+		$statement_detail_siswa->execute(array(
+			':id_siswa'			=> $_POST['id_siswa'],
+			':id_kelas'			=> $idkelas,
+			':id_tahun_ajaran'	=> $idTahunAjaran
+		));
+
+		// $message = $client->message()->send([
+		//     'to' => $tlpn_ortu,
+		//     'from' => 'Acme Inc',
+		//     'text' => 'A text message sent using the Nexmo SMS API'
+		// ]);
 		$result = $statement->fetchAll();
 		if (isset($result)) {
 			echo 'Data berhasil dikonfirmasi ';
