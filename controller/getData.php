@@ -177,11 +177,10 @@ function getDataSiswaDatatable($connect) {
 		from tb_siswa
 		LEFT JOIN tb_pendaftaran on tb_pendaftaran.id_siswa = tb_siswa.id
 		LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
+		WHERE tb_siswa.nis IS NULL
 	";
 	if (isset($_POST["search"]["value"])) {
-		$query .= 'WHERE tb_siswa.nis LIKE "%'.$_POST["search"]["value"].'%" ';
-		$query .= 'OR tb_siswa.nama LIKE "%'.$_POST["search"]["value"].'%" ';
-		$query .= 'OR tb_siswa.alamat LIKE "%'.$_POST["search"]["value"].'%" ';
+		$query .= 'AND concat(tb_siswa.nis,"",tb_siswa.nama,"",tb_siswa.alamat) LIKE "%'.$_POST["search"]["value"].'%" ';
 	}
 	if (isset($_POST["order"])) {
 		$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
@@ -267,7 +266,7 @@ function getDataSiswaDatatable($connect) {
 	$output = [
 		"draw" => intval($_POST["draw"]),
 		"recordsTotal" => $filtered_rows,
-		"recordsFiltered"  => get_total_all_records($connect,"tb_siswa"),
+		"recordsFiltered"  => get_total_all_null_siswa_records($connect,"tb_siswa"),
 		"data" => $data
 	];
 
@@ -673,6 +672,11 @@ function get_total_all_siswa_records($connect,$table,$id_ortu){
 }
 function get_total_all_notNull_siswa_records($connect,$table){
 	$statement = $connect->prepare("SELECT * FROM $table WHERE nis IS NOT NULL");
+	$statement->execute();
+	return $statement->rowCount();
+}
+function get_total_all_null_siswa_records($connect,$table){
+	$statement = $connect->prepare("SELECT * FROM $table WHERE nis IS NULL");
 	$statement->execute();
 	return $statement->rowCount();
 }

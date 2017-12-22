@@ -2,13 +2,13 @@
 
 <div class="container">`
   <div class="row">
-    <div class="col-lg-12 col-xs-12">
+    <div class="col-md-8 col-md-offset-2 col-xs-12">
+      <div class="box-header">
+        <h2 class="text-center">About Us</h2>
+        <hr>
+      </div>
       <!-- small box -->
       <div class="box">
-        <div class="box-header">
-          <p class="box-title">About Us</p>
-          <hr>
-        </div>
         <div class="box-body">
           <?php  
             $query = "SELECT * FROM tb_tentang";
@@ -18,7 +18,7 @@
           ?>
 
           <?php foreach ($result as $row): ?>
-            <section><?php echo $row['content']; ?></section>
+            <section><span><?php echo $row['content']; ?></span></section>
           <?php endforeach ?>
         </div>
       </div>
