@@ -122,7 +122,7 @@
           data:{kegiatan: "ta"}
         },
         "columnDefs":[
-          {"target":3,"width":"15%"},
+          {"targets":3,"width":"20%"},
           {
             "targets":[0,4,5],
             "orderable":false,

@@ -115,16 +115,15 @@ function getKegiatanDatatable($connect) {
 	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$query = '';
 	$output = [];
+	$nip = $_SESSION["nip"];
 	$query .= " 
 		SELECT tb_kegiatan.*,tb_guru.nama as nama_guru, DATE_FORMAT(tb_kegiatan.tgl,'%d %M %Y') as tgl_kegiatan
 		from tb_kegiatan
 		LEFT JOIN tb_guru on tb_guru.nip = tb_kegiatan.nip
+		WHERE tb_kegiatan.nip = $nip
 	";
 	if (isset($_POST["search"]["value"])) {
-		$query .= 'WHERE tb_kegiatan.nama LIKE "%'.$_POST["search"]["value"].'%" ';
-		$query .= 'OR tb_kegiatan.deskripsi LIKE "%'.$_POST["search"]["value"].'%" ';
-		$query .= 'OR tb_kegiatan.tgl LIKE "%'.$_POST["search"]["value"].'%" ';
-		$query .= 'AND tb_kegiatan.nip = "'.$_SESSION["nip"].'"';
+		$query .= 'AND CONCAT(tb_kegiatan.nama,"",tb_kegiatan.deskripsi,"",tb_kegiatan.tgl) LIKE "%'.$_POST["search"]["value"].'%" ';
 	}
 	if (isset($_POST["order"])) {
 		$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
