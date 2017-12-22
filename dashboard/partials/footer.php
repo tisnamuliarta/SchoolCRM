@@ -26,6 +26,7 @@
 <script src="plugins/extra/vfs_fonts.js"></script>
 <script src="plugins/datatables/extensions/Buttons/js/buttons.html5.min.js"></script>
 <script src="plugins/datatables/extensions/Buttons/js/buttons.print.min.js"></script>
+<script src="plugins/select2/select2.full.min.js"></script>
 <!-- <script src="dist/js/script.js"></script> -->
 <script type="text/javascript">
 	$(function(){
