@@ -203,7 +203,7 @@ if (isset($_POST['btn_action'])) {
 		// end select pendaftaran
 
 		// select pendaftran
-		$select_siswa = "SELECT tb_ortu.tlpn FROM tb_siswa LEFT JOIN tb_ortu ON tb_ortu.id = tb_siswa.id_ortu 
+		$select_siswa = "SELECT tb_ortu.nama as nama_ortu, tb_siswa.nama as nama_siswa, tb_ortu.tlpn FROM tb_siswa LEFT JOIN tb_ortu ON tb_ortu.id = tb_siswa.id_ortu 
 		WHERE tb_siswa.id=:id_siswa";
 		$statement_siswa = $connect->prepare($select_siswa);
 		$statement_siswa->execute(array(
@@ -211,6 +211,8 @@ if (isset($_POST['btn_action'])) {
 		));
 		$result_siswa = $statement_siswa->fetch(PDO::FETCH_ASSOC);
 		$tlpn_ortu = $result_siswa['tlpn'];
+		$nama_ortu = $result_siswa['nama_ortu'];
+		$nama_siswa = $result_siswa['nama_siswa'];
 		// end select pendaftaran
 
 		$query_detail_siswa = "INSERT INTO tb_detail_siswa (id_siswa,id_kelas,id_tahun_ajaran)
@@ -222,11 +224,11 @@ if (isset($_POST['btn_action'])) {
 			':id_tahun_ajaran'	=> $idTahunAjaran
 		));
 
-		// $message = $client->message()->send([
-		//     'to' => $tlpn_ortu,
-		//     'from' => 'Acme Inc',
-		//     'text' => 'A text message sent using the Nexmo SMS API'
-		// ]);
+		$message = $client->message()->send([
+		    'to' => $tlpn_ortu,
+		    'from' => 'TK SINAR PRIMA',
+		    'text' => 'Yth. '.$nama_ortu.' Terima Kasih telah menyelesaikan pembayaran untuk '.$nama_siswa.'. Pengambilan seragam dapat dilakukan mulai besok. Terima Kasih '
+		]);
 		$result = $statement->fetchAll();
 		if (isset($result)) {
 			echo 'Data berhasil dikonfirmasi ';

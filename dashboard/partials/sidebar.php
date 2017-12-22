@@ -65,7 +65,10 @@
           <span>Dashboard</span></a>
         </li>
         <li id="link-sidebar"><a href="siswa.php"><i class="fa fa-users"></i> 
-          <span>Siswa</span></a>
+          <span>Siswa Baru</span></a>
+        </li>
+        <li id="link-sidebar"><a href="daftar-siswa.php"><i class="fa fa-users"></i> 
+          <span>Data Siswa</span></a>
         </li>
         <li id="link-sidebar"><a href="kegiatan.php"><i class="fa fa-check-square"></i> 
           <span>Kegiatan</span></a>
