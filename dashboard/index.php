@@ -1,4 +1,4 @@
-<?php require 'partials/head.php'; ?>
+<?php require 'partials/head_admin.php'; ?>
 
 <div class="row">
   <div class="col-lg-12 col-xs-12">

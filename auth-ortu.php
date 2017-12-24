@@ -2,8 +2,8 @@
 include 'connection.php';
 // include 'controller/Login.php';
 // createUser();
-if (isset($_SESSION['logged_id'])) {
-  header("location: dashboard/index.php");
+if (isset($_SESSION['logged_id']) && ($_SESSION['status'] == 'ortu')) {
+  header("location: dashboard/index-ortu.php");
 }
 $message = "";
 $oldUsername = "";

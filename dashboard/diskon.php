@@ -1,5 +1,5 @@
 <?php 
-  require 'partials/head.php'; 
+  require 'partials/head_admin.php'; 
 ?>
 
 

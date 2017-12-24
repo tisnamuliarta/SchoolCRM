@@ -35,6 +35,35 @@ function uploadImage($connect,$id) {
 	}
 }
 
+function listSiswaNISnotNull($connect) {
+	$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query = "SELECT tb_siswa.* 
+		FROM tb_siswa
+		WHERE tb_siswa.nis IS NOT NULL 
+		ORDER BY tb_siswa.nis ASC ";
+	$dbs = $connect->prepare($query);
+	$dbs->execute();
+	$result = $dbs->fetchAll();
+	$output = '';
+	foreach ($result as $row) {
+		$output .= '<option value="'.$row['nis'].'" >'.$row['nis'].'</option>' ;
+	}
+	return $output;
+}
+
+function listSiswaByNIS($connect,$nis) {
+	$query = "SELECT tb_siswa.* 
+		FROM tb_siswa
+		WHERE tb_siswa.nis = :nis 
+		ORDER BY tb_siswa.nis ASC ";
+	$dbs = $connect->prepare($query);
+	$dbs->execute(array(
+		':nis'	=> $nis
+	));
+	$result = $dbs->fetch(PDO::FETCH_ASSOC);
+	return $result['nama'];
+}
+
 function listAllTa($connect) {
 	$query = "SELECT tb_tahun_ajaran.id,tb_tahun_ajaran.tahun, CONCAT(tb_tahun_ajaran.tahun,' - ',tb_tahun_ajaran.semester) as tahun_ajaran 
 		FROM tb_tahun_ajaran

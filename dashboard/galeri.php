@@ -1,4 +1,4 @@
-<?php require 'partials/head.php'; ?>
+<?php require 'partials/head_admin.php'; ?>
 <span id="alert_action"></span>
 <div class="row">
   <!-- Datatable Galeri -->

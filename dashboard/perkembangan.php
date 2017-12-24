@@ -1,4 +1,4 @@
-<?php require 'partials/head.php'; ?>
+<?php require 'partials/head_guru.php'; ?>
 <span id="alert_action"></span>
 <div class="row">
   <div class="col-lg-12 col-xs-12">
@@ -11,19 +11,22 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="col-sm-1 pull-right">
-              <button type="button" name="add" id="add_tahunajaran_button" class="btn form-control btn-success btn-xs">Add</button>
+              <button type="button" name="add" id="add_perkembangan_button" class="btn form-control btn-success btn-xs">Add</button>
               <br><br>
             </div>
           </div>
           <div class="col-sm-12">
-            <table id="kegiatanTable" class="table table-bordered table-striped">
+            <table id="perkembanganTable" class="table table-bordered table-striped">
               <thead>
               <tr>
                 <th>NO</th>
+                <th>NIS</th>
                 <th>Nama</th>
-                <th>Deskripsi</th>
-                <th>Tanggal</th>
-                <th></th>
+                <th>Kelas</th>
+                <th>Sosialisasi</th>
+                <th>Motorik</th>
+                <th>Daya Ingat</th>
+                <th>Keaktifan</th>
                 <th></th>
               </tr>
               </thead>
@@ -35,9 +38,9 @@
   </div>
 </div>
 
-<div id="tahunAjaranModal" class="modal fade">
+<div id="perkembanganModal" class="modal fade">
   <div class="modal-dialog">
-    <form method="post" id="formKegiatan">
+    <form method="post" id="formPerkembangan">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -54,7 +57,10 @@
                     <label>Nomer Induk Siswa</label>
                   </div>
                   <div class="col-md-6">
-                    <input type="text" name="nis" id="nis" class="form-control" required />
+                    <select type="text" name="nis" id="nis" class="form-control" required >
+                      <option value="">Pilih NIS</option>
+                      <?php echo listSiswaNISnotNull($connect) ?>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -68,7 +74,7 @@
                     <label>Nama</label>
                   </div>
                   <div class="col-md-6">
-                    <input type="text" name="nama" id="nama" class="form-control" required />
+                    <input type="text" name="nama" id="nama" class="form-control" readonly required />
                   </div>
                 </div>
               </div>
@@ -201,17 +207,19 @@
      * Guru datatable
      * ===================================
      */
-      var kegiatanTable = $('#kegiatanTable').DataTable({
+      var perkembanganTable = $('#perkembanganTable').DataTable({
         "processing":true,
         "serverSide":true,
         "order":[],
         "ajax":{
-          url: "../controller/getData.php",
+          url: "../controller/data/perkembangan.php",
           type: "POST",
           data:{kegiatan: "ta"}
         },
         "columnDefs":[
-          {"targets":3,"width":"20%"},
+          {"targets":0,"width":"5%"},
+          {"targets":2,"width":"30%"},
+          {"targets":3,"width":"15%"},
           {
             "targets":[0,4,5],
             "orderable":false,
@@ -219,29 +227,42 @@
         ],
         "pageLength": 10
       });
-
-      $('#add_tahunajaran_button').click(function(){
-        $('#tahunAjaranModal').modal('show');
-        $('#formKegiatan')[0].reset();
+      // Add perkembangan button
+      $('#add_perkembangan_button').click(function(){
+        $('#perkembanganModal').modal('show');
+        $('#formPerkembangan')[0].reset();
         $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Tahun Ajaran");
         $('#action').val('Add');
         $('#btn_action').val('Add');
       });
+      // on change select nis
+      $('#nis').change(function(){
+        var nis = $('#nis').val();
+        var btn_action = 'load_nama_siswa';
+        $.ajax({
+          url: '../controller/perkembanganaction.php',
+          method: 'POST',
+          data: {nis:nis,btn_action:btn_action},
+          success: function(data){
+            $('#nama').val(data)
+          }
+        });
+      })
     // ============= save data ======
-    $(document).on('submit','#formKegiatan', function(e){
+    $(document).on('submit','#formPerkembangan', function(e){
       e.preventDefault();
       $('#action').attr('disabled','disabled');
       var formData = $(this).serialize();
       $.ajax({
-        url: "../controller/kegiatanaction.php",
+        url: "../controller/perkembanganaction.php",
         method: "POST",
         data: formData,
         success: function(data){
-          $('#formKegiatan')[0].reset();
-          $('#tahunAjaranModal').modal('hide');
+          $('#formPerkembangan')[0].reset();
+          $('#perkembanganModal').modal('hide');
           $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
           $('#action').attr('disabled', false);
-          kegiatanTable.ajax.reload();
+          perkembanganTable.ajax.reload();
         }
       })
     });
@@ -251,12 +272,12 @@
       $('.modal-user-title').html("<i class='fa fa-plus'></i> Edit Tahun Ajaran");
       var btn_action = 'fetch_single';
       $.ajax({
-        url: '../controller/kegiatanaction.php',
+        url: '../controller/perkembanganaction.php',
         method: 'POST',
         data: { id:id, btn_action:btn_action },
         dataType: 'json',
         success: function(data){
-          $('#tahunAjaranModal').modal('show');
+          $('#perkembanganModal').modal('show');
           $('#nama').val(data.nama);
           $('#deskripsi').val(data.deskripsi);
           $('#tgl').val(data.tgl);
@@ -273,12 +294,12 @@
       var btn_action = 'delete';
       if (confirm("Anda yakin akan menghapus kegiatan ini?")) {
         $.ajax({
-          url: '../controller/kegiatanaction.php',
+          url: '../controller/perkembanganaction.php',
           method: 'POST',
           data: {id: id, btn_action:btn_action},
           success: function(data) {
             $('#alert_action').fadeIn().html('<div class="alert alert-info alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>')
-            kegiatanTable.ajax.reload();
+            perkembanganTable.ajax.reload();
           }
         })
       }else {

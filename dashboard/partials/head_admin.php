@@ -2,7 +2,7 @@
 require_once '../connection.php';
 include_once('../controller/function.php');
 
-if (!isset($_SESSION['logged_id']) || ($_SESSION['status'] != 'ortu')) {
+if (!isset($_SESSION['logged_id']) || ($_SESSION['status'] != 'admin') ) {
   header("location: ../index.php");
 }
 ?>

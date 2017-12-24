@@ -3,8 +3,10 @@ include 'connection.php';
 // include 'controller/Login.php';
 // createGuru($connect);
 // createOrtu($connect);
-if (isset($_SESSION['logged_id'])) {
+if (isset($_SESSION['logged_id']) && ($_SESSION['status'] == 'admin')) {
   header("location: dashboard/index.php");
+}elseif (isset($_SESSION['logged_id']) && ($_SESSION['status'] == 'guru')) {
+  header("location: dashboard/guru-index.php");
 }
 $message = "";
 $oldUsername = "";

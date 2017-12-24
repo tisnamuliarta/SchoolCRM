@@ -1,4 +1,4 @@
-<?php require 'partials/head.php'; ?>
+<?php require 'partials/head_admin.php'; ?>
 <?php  
   $content = '';
   $selectTentang = "SELECT * FROM tb_tentang";
