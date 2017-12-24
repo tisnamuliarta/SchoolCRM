@@ -5,6 +5,42 @@ function selectData($connect,$table){
 	return $statement->execute();
 }
 
+function countSiswaBaru($connect){
+	$query = "SELECT * FROM tb_siswa WHERE nis IS NOT NULL";
+	$statement =  $connect->prepare($query);
+	$statement->execute();
+	return $statement->rowCount();
+}
+
+function getKuotaKelas($connect,$kelas) {
+	$query = "SELECT tb_kelas.* FROM tb_kelas WHERE kelas = :kelas";
+	$st = $connect->prepare($query);
+	$st->execute(array(
+		':kelas'	=> $kelas
+	));
+	$result = $st->fetch(PDO::FETCH_ASSOC);
+	return $result['maximal_siswa'];
+}
+
+function getCountKuotaSiswaBaru($connect,$kelas) {
+	$query = "SELECT COUNT(*) as count FROM tb_siswa 
+		LEFT JOIN tb_detail_siswa ON tb_siswa.id=tb_detail_siswa.id_siswa 
+		LEFT JOIN tb_kelas ON tb_kelas.id = tb_detail_siswa.id_kelas
+		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.status = :status
+		AND tb_kelas.kelas=:kelas ";
+	$statement = $connect->prepare($query);
+	$statement->execute(array(
+		':status'	=> 'active',
+		':kelas'	=> $kelas
+	));
+	$return =  $statement->fetch(PDO::FETCH_ASSOC);
+	return $return['count'];
+}
+
+function countTotalKuotaSiswaBaru($connect){
+	return getKuotaKelas($connect,'A') - countSiswaBaru($connect);
+}
+
 function generateNis($connect) {
 	$query_count = "SELECT * FROM `tb_siswa` WHERE nis IS NOT NULL";
 	$statement= $connect->prepare($query_count);

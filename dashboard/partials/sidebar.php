@@ -36,7 +36,7 @@
           <span>Guru</span></a>
         </li>
         <li id="link-sidebar"><a href="galeri.php"><i class="fa fa-file-picture-o"></i> 
-          <span>Galeri</span></a>
+          <span>Galeri & Kelas</span></a>
         </li>
         <li id="link-sidebar"><a href="tahunajaran.php"><i class="fa fa-calendar-plus-o"></i> 
           <span>Tahun Ajaran</span></a>

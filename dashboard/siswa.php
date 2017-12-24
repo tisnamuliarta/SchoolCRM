@@ -6,6 +6,8 @@
     <div class="box">
       <div class="box-header  with-border">
         <h3 class="box-title"><i class="fa fa-user"></i> Siswa Baru</h3>
+        <span class="text-info pull-right">Kuota siswa baru : <?php echo getKuotaKelas($connect,'A') ?></span><br>
+        <span class="text-info pull-right"> Siswa baru terdaftar : <?php echo getCountKuotaSiswaBaru($connect,'A') ?></span>
       </div>
       <div class="box-body">
         <div class="row">
@@ -20,7 +22,7 @@
               <thead>
               <tr>
                 <th>No</th>
-                <th>NIS</th>
+                <th>Orang Tua</th>
                 <th>Nama</th>
                 <th>Jenis Kelamin</th>
                 <th>Tanggal Lahir</th>

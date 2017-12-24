@@ -7,18 +7,24 @@
       <div class="box-header  with-border">
         <h3 class="box-title"><i class="fa fa-user"></i> Siswa Baru</h3>
         <input type="hidden" name="id_ortu" id="id_ortu" value="<?php echo $_SESSION['id'] ?>">
+        <span class="text-info pull-right">Kuota tersisa untuk siswa baru : <?php echo countTotalKuotaSiswaBaru($connect) ?></span>
       </div>
       <div class="box-body">
         <div class="row">
           <div class="col-sm-12">
-            <div class="col-sm-1 pull-right">
-              <button type="button" name="add" id="add_button" class="btn form-control btn-success btn-xs">Tambah</button>
-              <br><br>
-            </div>
-            <div class="col-sm-2 pull-right">
-              <button type="button" name="konfirmasi_pendaftaran" id="konfirmasi_pendaftaran_btn" class="btn form-control btn-info btn-xs">Konfirmasi Pendaftaran</button>
-              <br><br>
-            </div>
+            <?php $totalKuota = countTotalKuotaSiswaBaru($connect) ?>
+            <?php if ($totalKuota = 0): ?>
+              <span class="text-success">Kuota Habis</span>
+            <?php else: ?>
+              <div class="col-sm-1 pull-right">
+                <button type="button" name="add" id="add_button" class="btn form-control btn-success btn-xs">Tambah</button>
+                <br><br>
+              </div>
+              <div class="col-sm-2 pull-right">
+                <button type="button" name="konfirmasi_pendaftaran" id="konfirmasi_pendaftaran_btn" class="btn form-control btn-info btn-xs">Konfirmasi Pendaftaran</button>
+                <br><br>
+              </div>
+            <?php endif ?>
           </div>
           <div class="col-sm-12">
             <table id="siswatable" class="table table-bordered table-striped">
@@ -359,6 +365,7 @@
           $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
           $('#action_konfirm').attr('disabled', false);
           userTable.ajax.reload();
+          window.location.reload(true);
         }
       })
     });

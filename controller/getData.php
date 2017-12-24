@@ -1,5 +1,6 @@
 <?php 
 include '../connection.php';
+include 'function.php';
 /**
  * Check the post variable
  */
@@ -172,9 +173,10 @@ function getDataSiswaDatatable($connect) {
 	$query = '';
 	$output = [];
 	$query .= " 
-		SELECT tb_siswa.*, DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir ,tb_pendaftaran.id as id_pendaftaran,tb_pendaftaran.jumlah_bayar,tb_pendaftaran.cara_bayar,tb_pendaftaran.status as status_pembayaran, (SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas
+		SELECT tb_siswa.*, DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir ,tb_pendaftaran.id as id_pendaftaran,tb_pendaftaran.jumlah_bayar,tb_pendaftaran.cara_bayar,tb_pendaftaran.status as status_pembayaran, (SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas, tb_ortu.nama as nama_ortu
 		from tb_siswa
 		LEFT JOIN tb_pendaftaran on tb_pendaftaran.id_siswa = tb_siswa.id
+		LEFT JOIN tb_ortu ON tb_ortu.id = tb_siswa.id_ortu
 		LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
 		WHERE tb_siswa.nis IS NULL
 	";
@@ -197,17 +199,14 @@ function getDataSiswaDatatable($connect) {
 	$filtered_rows = $statement->rowCount();
 	$start = $_REQUEST['start'];
 	$idx = 0;
+	$totalKuotaSiswa = getCountKuotaSiswaBaru($connect,'A');
+
 	foreach ($result as $row) {
 		$idx++;
 		$status = '';
 		$jk = '';
 		$update = '';
 		$button = '';
-		// if ($row['status'] == 'active') {
-		// 	$status = '<span class="label label-success">Active</span>';
-		// }else {
-		// 	$status = '<span class="label label-danger">Non Active</span>';
-		// }
 		if ($row['jenis_kelamin'] == '1') {
 			$jk = 'Laki-laki';
 		}else {
@@ -215,44 +214,50 @@ function getDataSiswaDatatable($connect) {
 		}
 		if ($row['status_pembayaran'] == 'unpaid') {
 			$status .= '<span class="label label-danger">Non Active</span>';
-			$button = '
-				<div class="col-sm-12" style="margin-top:5px;">
-					<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
-				</div>
-				<div class="col-sm-12" style="margin-top:5px;">
-					<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
-				</div>
-				<div class="col-sm-12" style="margin-top:5px;">
-					<button type="button" name="konfirmasi-pembayaran" id="'.$row["id_pendaftaran"].'" class="btn btn-info btn-xs konfirmasi-siswa" data-status="'.$row["id"].'">Konfirmasi Pembayaran</button>
-				</div>
-			';
+			if ($totalKuotaSiswa <= 30) {
+				$button = '
+					<div class="col-sm-12" style="margin-top:5px;">
+						<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
+					</div>
+					<div class="col-sm-12" style="margin-top:5px;">
+						<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
+					</div>
+					<div class="col-sm-12" style="margin-top:5px;">
+						<button type="button" name="konfirmasi-pembayaran" id="'.$row["id_pendaftaran"].'" class="btn btn-info btn-xs konfirmasi-siswa" data-status="'.$row["id"].'">Konfirmasi Pembayaran</button>
+					</div>
+				';
+			}
 		}elseif ($row['status_pembayaran'] == 'waiting') {
 			$status .= '<span class="label label-info">Menunggu Konfirmasi</span>';
-			$button = '
-				<div class="col-sm-12" style="margin-top:5px;">
-					<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
-				</div>
-				<div class="col-sm-12" style="margin-top:5px;">
-					<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
-				</div>
-				<div class="col-sm-12" style="margin-top:5px;">
-					<button type="button" name="konfirmasi-pembayaran" id="'.$row["id_pendaftaran"].'" class="btn btn-info btn-xs konfirmasi-siswa" data-status="'.$row["id"].'">Konfirmasi Pembayaran</button>
-				</div>
-			';
+			if ($totalKuotaSiswa <= 30) {
+				$button = '
+					<div class="col-sm-12" style="margin-top:5px;">
+						<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
+					</div>
+					<div class="col-sm-12" style="margin-top:5px;">
+						<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
+					</div>
+					<div class="col-sm-12" style="margin-top:5px;">
+						<button type="button" name="konfirmasi-pembayaran" id="'.$row["id_pendaftaran"].'" class="btn btn-info btn-xs konfirmasi-siswa" data-status="'.$row["id"].'">Konfirmasi Pembayaran</button>
+					</div>
+				';
+			}
 		}elseif ($row['status_pembayaran'] == 'paid') {
 			$status .= '<span class="label label-success">Active</span>';
-			$button = '
-				<div class="col-sm-12" style="margin-top:5px;">
-					<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
-				</div>
-				<div class="col-sm-12" style="margin-top:5px;">
-					<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
-				</div>
-			';
+			if ($totalKuotaSiswa <= 30) {
+				$button = '
+					<div class="col-sm-12" style="margin-top:5px;">
+						<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
+					</div>
+					<div class="col-sm-12" style="margin-top:5px;">
+						<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
+					</div>
+				';
+			}
 		}
 		$sub_array = [];
 		$sub_array[] = $idx;
-		$sub_array[] = $row['nis'];
+		$sub_array[] = $row['nama_ortu'];
 		$sub_array[] = $row['nama'];
 		$sub_array[] = $jk;
 		$sub_array[] = $row['tanggal_lahir'];
