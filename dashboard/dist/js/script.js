@@ -2,6 +2,7 @@ $(function() {
     // change active
     //Date picker
     $('.getDatePicker').datepicker({
+      todayBtn: 'linked',
       autoclose: true,
       format: 'yyyy-mm-dd'
     });

@@ -363,6 +363,7 @@
           success: function(data) {
             $('#alert_action').fadeIn().html('<div class="alert alert-info alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>')
             dataSiswaTable.ajax.reload();
+            window.location.reload(true);
           }
         })
       }else {

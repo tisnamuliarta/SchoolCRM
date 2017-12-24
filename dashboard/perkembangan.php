@@ -10,9 +10,38 @@
       <div class="box-body">
         <div class="row">
           <div class="col-sm-12">
-            <div class="col-sm-1 pull-right">
-              <button type="button" name="add" id="add_perkembangan_button" class="btn form-control btn-success btn-xs">Add</button>
-              <br><br>
+            <div class="row">
+              <div class="col-md-1">
+                <select name="kelas" id="kelas" class="form-control">
+                  <?php echo getListKelas($connect) ?>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <select name="tahun_ajaran" id="tahun_ajaran" class="form-control" required>
+                  <?php
+                    $tahun = date('Y'); 
+                    echo listTahunAjatan($connect,$tahun) 
+                  ?> 
+                </select>
+              </div>
+              <div class="col-md-2 ">
+                <div class="has-feedback">
+                  <input type="text" placeholder="dari tanggal" name="tgl_perkembangan_mulai" id="tgl_perkembangan_mulai" class="form-control getDatePicker">
+                  <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                </div>
+              </div>
+              <div class="col-md-2 ">
+                <div class="has-feedback">
+                  <input type="text" placeholder="ke tanggal" name="tgl_perkembangan_akhir" id="tgl_perkembangan_akhir" class="form-control getDatePicker">
+                  <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                </div>
+              </div>
+              <div class="col-md-2 ">
+                <button type="button" name="tampilkan_siswa" id="tampilkan_siswa" class="btn form-control btn-info btn-xs">Tampilkan</button><br><br>
+              </div>
+              <div class="col-sm-1 pull-right">
+                <button type="button" name="add" id="add_perkembangan_button" class="btn form-control btn-success btn-xs">Add</button><br><br>
+              </div>
             </div>
           </div>
           <div class="col-sm-12">
@@ -23,6 +52,7 @@
                 <th>NIS</th>
                 <th>Nama</th>
                 <th>Kelas</th>
+                <th>Tanggal</th>
                 <th>Sosialisasi</th>
                 <th>Motorik</th>
                 <th>Daya Ingat</th>
@@ -82,6 +112,24 @@
           </div>
 
           <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label>Tanggal</label>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group has-feedback">
+                      <input type="text" name="tgl" id="tgl" class="form-control getDatePicker" required />
+                      <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
             <div class="col-sm-10"><label>Nilai Perkembangan : </label><hr></div>
             <div class="col-sm-12">
               <div class="form-group">
@@ -90,13 +138,13 @@
                     <label>Sosialisasi</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="sosialisasi" id="sosialisasi" value="A"> A</label></div>
+                    <div class="radio"><label><input type="radio" name="sosial" id="sosial" value="A"> A</label></div>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="sosialisasi" id="sosialisasi" value="B"> B</label></div>
+                    <div class="radio"><label><input type="radio" name="sosial" id="sosial" value="B"> B</label></div>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="sosialisasi" id="sosialisasi" value="C"> C</label></div>
+                    <div class="radio"><label><input type="radio" name="sosial" id="sosial" value="C"> C</label></div>
                   </div>
                 </div>
               </div>
@@ -146,13 +194,13 @@
                     <label>Keaktifan</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="keaktifan" id="keaktifan" value="A"> A</label></div>
+                    <div class="radio"><label><input type="radio" name="aktif" id="aktif" value="A"> A</label></div>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="keaktifan" id="keaktifan" value="B"> B</label></div>
+                    <div class="radio"><label><input type="radio" name="aktif" id="aktif" value="B"> B</label></div>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="keaktifan" id="keaktifan" value="C"> C</label></div>
+                    <div class="radio"><label><input type="radio" name="aktif" id="aktif" value="C"> C</label></div>
                   </div>
                 </div>
               </div>
@@ -169,7 +217,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <input type="hidden" name="id_kegiatan" id="id_kegiatan" />
+          <input type="hidden" name="id_perkembangan" id="id_perkembangan" />
           <input type="hidden" name="btn_action" id="btn_action" />
           <input type="submit" name="action" id="action" class="btn btn-info" value="Add" />
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -207,6 +255,8 @@
      * Guru datatable
      * ===================================
      */
+    fetchData('no');
+    function fetchData(isSearch,kelas='',tahunAjaran='',tgl_perkembangan_mulai='',tgl_perkembangan_akhir=''){
       var perkembanganTable = $('#perkembanganTable').DataTable({
         "processing":true,
         "serverSide":true,
@@ -214,12 +264,11 @@
         "ajax":{
           url: "../controller/data/perkembangan.php",
           type: "POST",
-          data:{kegiatan: "ta"}
+          data:{kegiatan: "ta",isSearch:isSearch,kelas:kelas,tahunAjaran:tahunAjaran,tgl_perkembangan_mulai:tgl_perkembangan_mulai,tgl_perkembangan_akhir:tgl_perkembangan_akhir}
         },
         "columnDefs":[
           {"targets":0,"width":"5%"},
-          {"targets":2,"width":"30%"},
-          {"targets":3,"width":"15%"},
+          {"targets":2,"width":"20%"},
           {
             "targets":[0,4,5],
             "orderable":false,
@@ -227,11 +276,26 @@
         ],
         "pageLength": 10
       });
+    }
+
+    $('#tampilkan_siswa').click(function(){
+      var kelas = $('#kelas').val();
+      var tahun_ajaran = $('#tahun_ajaran').val();
+      var tgl_perkembangan_mulai = $('#tgl_perkembangan_mulai').val();
+      var tgl_perkembangan_akhir = $('#tgl_perkembangan_akhir').val();
+      if (kelas != '' && tahun_ajaran != '') {
+        $('#perkembanganTable').DataTable().destroy();
+        fetchData('yes',kelas,tahun_ajaran,tgl_perkembangan_mulai,tgl_perkembangan_akhir);
+      }else{
+        alert("Tanggal diperlukan untuk pencarian data");
+      }
+    })
+
       // Add perkembangan button
       $('#add_perkembangan_button').click(function(){
         $('#perkembanganModal').modal('show');
         $('#formPerkembangan')[0].reset();
-        $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Tahun Ajaran");
+        $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Nilai Perkembangan");
         $('#action').val('Add');
         $('#btn_action').val('Add');
       });
@@ -262,14 +326,14 @@
           $('#perkembanganModal').modal('hide');
           $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
           $('#action').attr('disabled', false);
-          perkembanganTable.ajax.reload();
+          $('#perkembanganTable').DataTable().ajax.reload();
         }
       })
     });
     // ============= Display single data and update
-    $(document).on('click','.update-kegiatan',function(){
+    $(document).on('click','.update-perkembangan',function(){
       var id = $(this).attr("id");
-      $('.modal-user-title').html("<i class='fa fa-plus'></i> Edit Tahun Ajaran");
+      $('.modal-user-title').html("<i class='fa fa-plus'></i> Edit Perkembangan Siswa");
       var btn_action = 'fetch_single';
       $.ajax({
         url: '../controller/perkembanganaction.php',
@@ -278,10 +342,14 @@
         dataType: 'json',
         success: function(data){
           $('#perkembanganModal').modal('show');
+          $('#nis').val(data.nis);
           $('#nama').val(data.nama);
-          $('#deskripsi').val(data.deskripsi);
           $('#tgl').val(data.tgl);
-          $('#id_kegiatan').val(id)
+          $('input[name="sosial"][value="'+data.sosial+'"]').prop('checked',true);
+          $('input[name="motorik"][value="'+data.motorik+'"]').prop('checked',true);
+          $('input[name="aktif"][value="'+data.aktif+'"]').prop('checked',true);
+          $('input[name="daya_ingat"][value="'+data.daya_ingat+'"]').prop('checked',true);
+          $('#id_perkembangan').val(id)
           $('#action').val("Edit");
           $('#btn_action').val("Edit");
         }
@@ -289,17 +357,17 @@
     });
 
     // ================== delete data
-    $(document).on('click','.delete-kegiatan',function(){
+    $(document).on('click','.delete-perkembangan',function(){
       var id = $(this).attr("id");
       var btn_action = 'delete';
-      if (confirm("Anda yakin akan menghapus kegiatan ini?")) {
+      if (confirm("Anda yakin akan menghapus data ini?")) {
         $.ajax({
           url: '../controller/perkembanganaction.php',
           method: 'POST',
           data: {id: id, btn_action:btn_action},
           success: function(data) {
             $('#alert_action').fadeIn().html('<div class="alert alert-info alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>')
-            perkembanganTable.ajax.reload();
+            $('#perkembanganTable').DataTable().ajax.reload();
           }
         })
       }else {
