@@ -38,7 +38,11 @@
               </thead>
             </table>
           </div>
+          
         </div>
+      </div>
+      <div class="box-footer">
+        <span class="text-info">* Untuk transfer bank dapat dilakukan ke nomer rekening <strong> Bank BCA 1922022</strong> Atas Nama <strong>Indah Sri</strong></span>
       </div>
     </div>
   </div>

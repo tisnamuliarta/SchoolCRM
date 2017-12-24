@@ -179,7 +179,7 @@ function getDataSiswaDatatable($connect) {
 		WHERE tb_siswa.nis IS NULL
 	";
 	if (isset($_POST["search"]["value"])) {
-		$query .= 'AND concat(tb_siswa.nis,"",tb_siswa.nama,"",tb_siswa.alamat) LIKE "%'.$_POST["search"]["value"].'%" ';
+		$query .= 'AND concat(tb_siswa.nama,"",tb_siswa.alamat) LIKE "%'.$_POST["search"]["value"].'%" ';
 	}
 	if (isset($_POST["order"])) {
 		$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';

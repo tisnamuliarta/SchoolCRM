@@ -6,12 +6,11 @@
     <div class="small-box bg-aqua">
       <div class="inner">
 
-        <p>Index ortu</p>
+        <p>Selamat datang, <?php echo $_SESSION['nama'] ?></p>
       </div>
       <div class="icon">
         <i class="ion ion-bag"></i>
       </div>
-      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
     </div>
   </div>
 </div>
