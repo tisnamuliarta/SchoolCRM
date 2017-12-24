@@ -2,9 +2,10 @@
 require_once '../connection.php';
 include_once('../controller/function.php');
 
-if (!isset($_SESSION['logged_id']) || ($_SESSION['status'] != 'guru')) {
-  header("location: ../index.php");
+if (!isset($_SESSION['logged_id']) || ($_SESSION['status'] != "guru")) {
+  header("location: ../login.php");
 }
+
 ?>
 
 <!DOCTYPE html>

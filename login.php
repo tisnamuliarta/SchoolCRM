@@ -29,7 +29,12 @@ if (isset($_POST['login'])) {
           $_SESSION['username'] = $row['username'];
           $_SESSION['nama'] = $row['nama'];
           $_SESSION['status'] = $row['type'];
-          header("location: dashboard/index.php");
+          
+          if ($_SESSION['status'] == 'admin') {
+            header("location: dashboard/index.php");
+          }elseif ($_SESSION['status'] == 'guru') {
+            header("location: dashboard/guru-index.php");
+          }
         }else {
           $message = "<label class='text-danger'>Password salah!</label>";
         }

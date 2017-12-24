@@ -26,7 +26,7 @@ if (isset($_POST['login'])) {
           $_SESSION['nama'] = $row['nama'];
           $_SESSION['username'] = $row['username'];
           $_SESSION['status'] = 'ortu';
-          header("location: dashboard/index.php");
+          header("location: dashboard/index-ortu.php");
         }else {
           $message = "<label class='text-danger'>Password salah!</label>";
         }
