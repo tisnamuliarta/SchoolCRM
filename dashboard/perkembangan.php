@@ -48,7 +48,6 @@
             <table id="perkembanganTable" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>NO</th>
                 <th>NIS</th>
                 <th>Nama</th>
                 <th>Kelas</th>
@@ -267,10 +266,9 @@
           data:{kegiatan: "ta",isSearch:isSearch,kelas:kelas,tahunAjaran:tahunAjaran,tgl_perkembangan_mulai:tgl_perkembangan_mulai,tgl_perkembangan_akhir:tgl_perkembangan_akhir}
         },
         "columnDefs":[
-          {"targets":0,"width":"5%"},
-          {"targets":2,"width":"20%"},
+          {"targets":1,"width":"20%"},
           {
-            "targets":[0,4,5],
+            "targets":[8],
             "orderable":false,
           },
         ],

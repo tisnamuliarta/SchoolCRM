@@ -17,26 +17,38 @@ if (isset($_POST['btn_action'])) {
 	 * ==========================================
 	 */
 	if ($_POST['btn_action'] == 'Add') {
-		$query = "
-			INSERT INTO tb_perkembangan (nip,nis,aktif,sosial,motorik,daya_ingat,tgl) 
-			VALUES (:nip,:nis,:aktif,:sosial,:motorik,:daya_ingat,:tgl)
-		";
-		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connect->prepare($query);
-		$statement->execute(
-			array(
-				':nip' 			=> $_SESSION['nip'],
-				':nis' 			=> $_POST['nis'],
-				':aktif' 		=> $_POST['aktif'],
-				':sosial' 		=> $_POST['sosial'],
-				':motorik' 		=> $_POST['motorik'],
-				':daya_ingat' 	=> $_POST['daya_ingat'],
-				':tgl'			=> $_POST['tgl'],
-			)
-		);
-		$result = $statement->fetchAll();
-		if (isset($result)) {
-			echo 'Nilai Perkembangan berhasil ditambahkan!!';
+		$query_select = "SELECT * FROM tb_perkembangan WHERE nip=:nip AND nis=:nis AND tgl=:tgl";
+		$sc = $connect->prepare($query_select);
+		$sc->execute(array(
+			':nip'		=> $_SESSION['nip'],
+			':nis'		=> $_POST['nis'],
+			':tgl'		=> $_POST['tgl']
+		));
+		$count = $sc->rowCount();
+		if ($count > 0) {
+			echo "Ups terjadi kesalahan!! Penilaian hanya boleh sekali dalam seminggu!";
+		}else {
+			$query = "
+				INSERT INTO tb_perkembangan (nip,nis,aktif,sosial,motorik,daya_ingat,tgl) 
+				VALUES (:nip,:nis,:aktif,:sosial,:motorik,:daya_ingat,:tgl)
+			";
+			// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$statement = $connect->prepare($query);
+			$statement->execute(
+				array(
+					':nip' 			=> $_SESSION['nip'],
+					':nis' 			=> $_POST['nis'],
+					':aktif' 		=> $_POST['aktif'],
+					':sosial' 		=> $_POST['sosial'],
+					':motorik' 		=> $_POST['motorik'],
+					':daya_ingat' 	=> $_POST['daya_ingat'],
+					':tgl'			=> $_POST['tgl'],
+				)
+			);
+			$result = $statement->fetchAll();
+			if (isset($result)) {
+				echo 'Nilai Perkembangan berhasil ditambahkan!!';
+			}
 		}
 	}
 	/**
