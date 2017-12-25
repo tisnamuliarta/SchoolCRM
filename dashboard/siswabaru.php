@@ -251,6 +251,7 @@
           $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
           $('#action').attr('disabled', false);
           userTable.ajax.reload();
+          window.location.reload(true);
         }
       })
     });
