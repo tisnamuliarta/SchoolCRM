@@ -9,7 +9,7 @@
       </div>
       <div class="box-body">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-md-12">
             <div class="row">
               <div class="col-md-1">
                 <select name="kelas" id="kelas" class="form-control">

@@ -18,6 +18,20 @@ function getListKelas($connect) {
 	return $output;
 }
 
+function getAllTahunAjaran($connect) {
+	$query = "SELECT tb_tahun_ajaran.id,tb_tahun_ajaran.tahun, CONCAT(tb_tahun_ajaran.tahun,' - ',tb_tahun_ajaran.semester) as tahun_ajaran 
+		FROM tb_tahun_ajaran
+		ORDER BY tb_tahun_ajaran.tahun DESC ";
+	$dbs = $connect->prepare($query);
+	$dbs->execute();
+	$result = $dbs->fetchAll();
+	$output = '';
+	foreach ($result as $row) {
+		$output .= '<option value="'.$row['id'].'" >'.$row['tahun_ajaran'].'</option>' ;
+	}
+	return $output;
+}
+
 /**
  * Display list tahun ajaran
  * @param  integer $connect
