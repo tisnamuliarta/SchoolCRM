@@ -16,6 +16,7 @@
 <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <script src="plugins/fastclick/fastclick.js"></script>
 <script src="plugins/iCheck/icheck.min.js"></script>
+<script src="plugins/chartjs/Chart.bundle.min.js"></script>
 <script src="dist/js/app.min.js"></script>
 <script src="dist/js/script.js"></script>
 <script src="plugins/datatables/extensions/Buttons/js/dataTables.buttons.min.js"></script>

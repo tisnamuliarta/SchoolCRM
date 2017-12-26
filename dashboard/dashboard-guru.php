@@ -36,9 +36,6 @@
   <div class="col-lg-12 col-xs-12">
     <!-- small box -->
     <div>
-      <div class="box-header">
-        <p>Dashboard Guru</p>
-      </div>
       <div class="box-body">
         <div class="row">
 
@@ -133,19 +130,51 @@
     var tgl_perkembangan_akhir = $('#tgl_perkembangan_akhir').val();
     if (tgl_perkembangan_mulai != '' && tgl_perkembangan_akhir != '') {
       $('#perkembanganTable').DataTable().destroy();
-      fetchData('yes',kelas,tahun_ajaran,tgl_perkembangan_mulai,tgl_perkembangan_akhir);
+      fetchDataMotorik('yes',kelas,tahun_ajaran,tgl_perkembangan_mulai,tgl_perkembangan_akhir);
     }else{
       alert("Tanggal diperlukan untuk pencarian data");
     }
   })
 
-  function fetchData(isSearch,idKelas,idTahunAjaran,startDate,endDate) {
+  function fetchDataMotorik(isSearch,idKelas,idTahunAjaran,startDate,endDate) {
     $.ajax({
       url: '../controller/ajax/guruDashboardData.php',
-      data: {isSearch:isSearch,idKelas:idKelas,idTahunAjaran:idTahunAjaran,startDate:startDate,endDate:endDate},
-      method: 'POST',
+      data: {chartType:'motorik', isSearch:isSearch,idKelas:idKelas,idTahunAjaran:idTahunAjaran,startDate:startDate,endDate:endDate},
+      method: 'GET',
       success: function(data){
+        // console.log(data);
+        var id = [];
+        var nilai = [];
+        console.log(data.length)
+        for(var i in data) {
+          console.log(data[i].id);
+          id.push("Nilai " + data[i].id);
+          nilai.push(data[i].nilai);
+        }
 
+        // var chartdata = {
+        //   labels: id,
+        //   datasets : [
+        //     {
+        //       label: 'Nilai Motorik',
+        //       backgroundColor: 'rgba(200, 200, 200, 0.75)',
+        //       borderColor: 'rgba(200, 200, 200, 0.75)',
+        //       hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+        //       hoverBorderColor: 'rgba(200, 200, 200, 1)',
+        //       data: nilai
+        //     }
+        //   ]
+        // };
+
+        // var ctx = $("#barChartMotorik");
+
+        // var barGraph = new Chart(ctx, {
+        //   type: 'bar',
+        //   data: chartdata
+        // });
+      },
+      error: function(data) {
+        console.log(data);
       }
     });
   }
