@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.7.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 25, 2017 at 01:01 AM
--- Server version: 5.7.19
--- PHP Version: 7.1.7
+-- Generation Time: Dec 27, 2017 at 05:33 PM
+-- Server version: 5.7.18
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -78,7 +80,8 @@ INSERT INTO `tb_detail_siswa` (`id`, `id_siswa`, `id_kelas`, `id_tahun_ajaran`) 
 (8, 5, 6, 6),
 (14, 6, 6, 6),
 (15, 7, 6, 6),
-(16, 8, 6, 6);
+(16, 8, 6, 6),
+(17, 11, 6, 6);
 
 -- --------------------------------------------------------
 
@@ -288,7 +291,8 @@ INSERT INTO `tb_pendaftaran` (`id`, `id_siswa`, `id_ortu`, `id_tahun_ajaran`, `t
 (2, 5, 59, 6, '2017-12-21 11:04:31', 100000, 'tunai', 'paid', '47460723b0a47d88ba2979e088a5f95d.png'),
 (3, 6, 59, 6, '2017-12-24 02:59:21', 90000, 'transfer', 'paid', '06ec7291e7c5ae6cb940fef00b42cb76.png'),
 (4, 7, 58, 6, '2017-12-24 03:00:40', 90000, 'tunai', 'paid', '6bee1034b0763cc19d1384313c4b903b.png'),
-(5, 8, 58, 6, '2017-12-24 03:13:58', 90000, 'transfer', 'paid', 'dfd2e228ca51dabf574d6912a9bef315.jpg');
+(5, 8, 58, 6, '2017-12-24 03:13:58', 90000, 'transfer', 'paid', 'dfd2e228ca51dabf574d6912a9bef315.jpg'),
+(8, 11, 58, 6, '2017-12-25 01:43:55', 90000, 'transfer', 'paid', '56a8da1d3bcb2e9b334a778be5b1d781.png');
 
 -- --------------------------------------------------------
 
@@ -313,7 +317,7 @@ CREATE TABLE `tb_perkembangan` (
 
 INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `aktif`, `sosial`, `motorik`, `daya_ingat`, `tgl`) VALUES
 (3, '1010101', '0001', 'B', 'A', 'A', 'A', '2017-12-08'),
-(4, '1010101', '0002', 'B', 'A', 'A', 'A', '2017-12-01'),
+(4, '1010101', '0002', 'B', 'A', 'c', 'A', '2017-12-01'),
 (5, '1010101', '0001', 'B', 'B', 'B', 'A', '2017-12-01'),
 (6, '1010101', '0003', 'C', 'B', 'A', 'A', '2017-12-01'),
 (7, '1010101', '0004', 'A', 'C', 'B', 'B', '2017-12-01'),
@@ -349,7 +353,15 @@ CREATE TABLE `tb_raport` (
   `tahun` int(10) DEFAULT NULL,
   `nip` varchar(20) DEFAULT NULL,
   `nis` varchar(10) DEFAULT NULL,
-  `total_nilai` varchar(10) DEFAULT NULL
+  `sosialisai` varchar(3) DEFAULT NULL,
+  `daya_ingat` varchar(3) DEFAULT NULL,
+  `motorik` varchar(3) DEFAULT NULL,
+  `keaktifan` varchar(3) DEFAULT NULL,
+  `kesenian` varchar(3) DEFAULT NULL,
+  `mendengarkan` varchar(3) DEFAULT NULL,
+  `membaca` varchar(3) DEFAULT NULL,
+  `menulis` varchar(3) DEFAULT NULL,
+  `total_nilai` varchar(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -393,7 +405,8 @@ INSERT INTO `tb_siswa` (`nis`, `id`, `id_ortu`, `nama`, `alamat`, `tgl_lahir`, `
 ('0002', 5, 59, 'Desi ayuni', 'Denpasar', '2010-06-14', 2, 'active'),
 ('0003', 6, 59, 'Putu Ayu', 'Denpasar', '2012-05-16', 2, 'active'),
 ('0004', 7, 58, 'Deka Sand', 'Denpasar', '2013-01-07', 1, 'active'),
-('0005', 8, 58, 'Astuti', 'DPS', '2017-12-03', 2, 'active');
+('0005', 8, 58, 'Astuti', 'DPS', '2017-12-03', 2, 'active'),
+('0006', 11, 58, 'Azis', 'Denpasar', '2017-12-04', 1, 'active');
 
 -- --------------------------------------------------------
 
@@ -630,7 +643,7 @@ ALTER TABLE `tb_detail_raport`
 -- AUTO_INCREMENT for table `tb_detail_siswa`
 --
 ALTER TABLE `tb_detail_siswa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `tb_diskon`
 --
@@ -670,7 +683,7 @@ ALTER TABLE `tb_ortu`
 -- AUTO_INCREMENT for table `tb_pendaftaran`
 --
 ALTER TABLE `tb_pendaftaran`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `tb_perkembangan`
 --
@@ -690,7 +703,7 @@ ALTER TABLE `tb_riwayat_kelas`
 -- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tb_tahun_ajaran`
 --
@@ -770,6 +783,7 @@ ALTER TABLE `tb_riwayat_kelas`
 --
 ALTER TABLE `tb_siswa`
   ADD CONSTRAINT `FK_tb_siswa_tb_ortu` FOREIGN KEY (`id_ortu`) REFERENCES `tb_ortu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
