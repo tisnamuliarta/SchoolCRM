@@ -35,6 +35,10 @@
 
   <div class="col-lg-12 col-xs-12">
     <!-- small box -->
+    <section class="content-header">
+      <h1 >Grafik Perkembangan Nilai Siswa</h1>
+    </section>
+    <hr>
     <div>
       <div class="box-body">
         <div class="row">

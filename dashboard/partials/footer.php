@@ -33,6 +33,7 @@
 	$(function(){
 		var url = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
 		$('ul.treeview-menu li a[href="' + url + '"]').parent().parent().parent().addClass('active');
+		$('ul.treeview-menu li a[href="' + url + '"]').parent().addClass('active');
 	    $('li#link-sidebar a[href="' + url + '"]').parent().addClass('active');
 
 	    // radio

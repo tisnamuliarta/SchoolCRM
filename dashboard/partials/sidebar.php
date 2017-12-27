@@ -81,7 +81,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="perkembangan.php"><i class="fa fa-circle-o"></i> Perkembangan</a></li>
+            <li><a href="perkembangan.php"><i class="fa fa-circle-o"></i> Perkembangan</a></li>
             <li><a href="raport.php"><i class="fa fa-circle-o"></i> Raport</a></li>
           </ul>
         </li>

@@ -118,6 +118,10 @@ function uploadImage($connect,$id) {
 	}
 }
 
+function getNilaiPerkembanganSiswa($connect,$nis) {
+	
+}
+
 function listSiswaNISnotNull($connect) {
 	$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$query = "SELECT tb_siswa.* 
