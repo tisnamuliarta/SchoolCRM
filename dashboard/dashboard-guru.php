@@ -52,7 +52,7 @@
               </div>
               <div class="box-body">
                 <div class="chart">
-                  <canvas id="barChartMotorik" style="height:230px"></canvas>
+                  <canvas id="barChartmotorik" style="height:230px"></canvas>
                 </div>
               </div>
             </div>
@@ -70,7 +70,7 @@
               </div>
               <div class="box-body">
                 <div class="chart">
-                  <canvas id="barChartDayaIngat" style="height:230px"></canvas>
+                  <canvas id="barChartdaya_ingat" style="height:230px"></canvas>
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@
               </div>
               <div class="box-body">
                 <div class="chart">
-                  <canvas id="barChartKeaktifan" style="height:230px"></canvas>
+                  <canvas id="barChartaktif" style="height:230px"></canvas>
                 </div>
               </div>
             </div>
@@ -108,7 +108,7 @@
               </div>
               <div class="box-body">
                 <div class="chart">
-                  <canvas id="barChartSosialisasi" style="height:230px"></canvas>
+                  <canvas id="barChartsosial" style="height:230px"></canvas>
                 </div>
               </div>
             </div>
@@ -130,51 +130,68 @@
     var tgl_perkembangan_akhir = $('#tgl_perkembangan_akhir').val();
     if (tgl_perkembangan_mulai != '' && tgl_perkembangan_akhir != '') {
       $('#perkembanganTable').DataTable().destroy();
-      fetchDataMotorik('yes',kelas,tahun_ajaran,tgl_perkembangan_mulai,tgl_perkembangan_akhir);
+      fetchDataMotorik('yes',kelas,tahun_ajaran,tgl_perkembangan_mulai,tgl_perkembangan_akhir,'motorik');
+      fetchDataMotorik('yes',kelas,tahun_ajaran,tgl_perkembangan_mulai,tgl_perkembangan_akhir,'daya_ingat');
+      fetchDataMotorik('yes',kelas,tahun_ajaran,tgl_perkembangan_mulai,tgl_perkembangan_akhir,'aktif');
+      fetchDataMotorik('yes',kelas,tahun_ajaran,tgl_perkembangan_mulai,tgl_perkembangan_akhir,'sosial');
     }else{
       alert("Tanggal diperlukan untuk pencarian data");
     }
   })
 
-  function fetchDataMotorik(isSearch,idKelas,idTahunAjaran,startDate,endDate) {
+  function fetchDataMotorik(isSearch,idKelas,idTahunAjaran,startDate,endDate,lesson) {
     $.ajax({
       url: '../controller/ajax/guruDashboardData.php',
-      data: {chartType:'motorik', isSearch:isSearch,idKelas:idKelas,idTahunAjaran:idTahunAjaran,startDate:startDate,endDate:endDate},
+      data: {chartType:lesson, isSearch:isSearch,idKelas:idKelas,idTahunAjaran:idTahunAjaran,startDate:startDate,endDate:endDate},
       method: 'GET',
       success: function(data){
         // console.log(data);
         var id = [];
         var nilai = [];
-        console.log(data.length)
-        for(var i in data) {
-          console.log(data[i].id);
-          id.push("Nilai " + data[i].id);
-          nilai.push(data[i].nilai);
-        }
+        var toJSON = $.parseJSON(data);
 
-        // var chartdata = {
-        //   labels: id,
-        //   datasets : [
-        //     {
-        //       label: 'Nilai Motorik',
-        //       backgroundColor: 'rgba(200, 200, 200, 0.75)',
-        //       borderColor: 'rgba(200, 200, 200, 0.75)',
-        //       hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
-        //       hoverBorderColor: 'rgba(200, 200, 200, 1)',
-        //       data: nilai
-        //     }
-        //   ]
-        // };
+        $.each(toJSON, function(k,v){
+          id.push(v.id);
+          nilai.push(v.nilai);
+        })
 
-        // var ctx = $("#barChartMotorik");
-
-        // var barGraph = new Chart(ctx, {
-        //   type: 'bar',
-        //   data: chartdata
-        // });
-      },
-      error: function(data) {
-        console.log(data);
+        var ctx = $("#barChart"+lesson);
+        var barGraph = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: id,
+            datasets: [{
+              label: 'Jumlah data '+lesson,
+              data: nilai,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero:true
+                }
+              }]
+            }
+          }
+        });
       }
     });
   }
