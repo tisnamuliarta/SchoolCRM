@@ -11,6 +11,9 @@ if (isset($_POST['table']))
 if (isset($_POST['galeri']))
 	getGaleriDatatable($connect);
 
+if (isset($_POST['pekerjaan']))
+	getPekerjaanDatatable($connect);
+
 if (isset($_POST['tahunajaran']))
 	getTahunAjaranDatatable($connect);
 
@@ -618,6 +621,51 @@ function getKelasDatatable($connect) {
 		"draw" => intval($_POST["draw"]),
 		"recordsTotal" => $filtered_rows,
 		"recordsFiltered"  => get_total_all_records($connect,"tb_kelas"),
+		"data" => $data
+	];
+
+	echo json_encode($output);
+}
+
+function getPekerjaanDatatable($connect) {
+	$query = '';
+	$output = [];
+	$query .= " SELECT tb_pekerjaan.* from tb_pekerjaan ";
+	if (isset($_POST["search"]["value"])) {
+		$query .= 'WHERE tb_pekerjaan.pekerjaan LIKE "%'.$_POST["search"]["value"].'%" ';
+	}
+	if (isset($_POST["order"])) {
+		$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+	}else {
+		$query .= 'ORDER BY tb_pekerjaan.pekerjaan ASC ';
+	}
+	if ($_POST["length"] != -1) {
+		$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+	}
+
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$data = [];
+	$filtered_rows = $statement->rowCount();
+	$start = $_REQUEST['start'];
+	$idx = 0;
+	foreach ($result as $row) {
+		// select photo
+
+		$idx++;
+		$sub_array = [];
+		$sub_array[] = $idx ;
+		$sub_array[] = $row['pekerjaan'];
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-pekerjaan">Update</button>';
+		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-pekerjaan" data-status="'.$row["id"].'">Delete</button>';
+		$data[] = $sub_array;
+	}
+
+	$output = [
+		"draw" => intval($_POST["draw"]),
+		"recordsTotal" => $filtered_rows,
+		"recordsFiltered"  => get_total_all_records($connect,"tb_pekerjaan"),
 		"data" => $data
 	];
 

@@ -38,6 +38,9 @@
         <li id="link-sidebar"><a href="galeri.php"><i class="fa fa-file-picture-o"></i> 
           <span>Galeri & Kelas</span></a>
         </li>
+        <li id="link-sidebar"><a href="pekerjaan.php"><i class="fa fa-tasks"></i> 
+          <span>Pekerjaan</span></a>
+        </li>
         <li id="link-sidebar"><a href="tahunajaran.php"><i class="fa fa-calendar-plus-o"></i> 
           <span>Tahun Ajaran</span></a>
         </li>
