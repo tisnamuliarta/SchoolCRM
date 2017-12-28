@@ -22,6 +22,8 @@
                 <th>NO</th>
                 <th>Tahun Ajaran</th>
                 <th>Semester</th>
+                <th>Tanggal Mulai</th>
+                <th>Tanggal Selesai</th>
                 <th></th>
               </tr>
               </thead>
@@ -59,6 +61,16 @@
               <option value="semester 1">Semester 1</option>
               <option value="semester 2">Semester 2</option>
             </select>
+          </div>
+
+          <div class="form-group">
+            <label>Tanggal Mulai</label>
+            <input type="text" name="tgl_mulai" id="tgl_mulai" placeholder="2017-01-21" class="form-control getDatePicker" required  />
+          </div>
+
+          <div class="form-group">
+            <label>Tanggal Selesai</label>
+            <input type="text" name="tgl_selesai" id="tgl_selesai" placeholder="2017-01-21" class="form-control getDatePicker" required  />
           </div>
         </div>
         <div class="modal-footer">
@@ -112,7 +124,7 @@
         },
         "columnDefs":[
           {
-            "targets":[0,3],
+            "targets":[0,5],
             "orderable":false,
           },
         ],
@@ -157,7 +169,10 @@
         success: function(data){
           $('#tahunAjaranModal').modal('show');
           $('#tahun').val(data.tahun);
-          $('#semester').val(data.semester);
+          // $('#semester').val(data.semester);
+          $('select[name="semester"] option[value="'+data.semester+'"]').attr('selected','selected');
+          $('#tgl_mulai').val(data.tgl_mulai);
+          $('#tgl_selesai').val(data.tgl_selesai);
           $('#ta_id').val(ta_id)
           $('#action').val("Edit");
           $('#btn_action').val("Edit");

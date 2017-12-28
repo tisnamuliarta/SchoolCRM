@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.2
+-- version 4.6.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 27, 2017 at 05:33 PM
--- Server version: 5.7.18
--- PHP Version: 5.6.31
+-- Generation Time: Dec 28, 2017 at 12:19 AM
+-- Server version: 5.7.19
+-- PHP Version: 7.1.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -165,8 +163,10 @@ CREATE TABLE `tb_galeri_detail` (
 --
 
 INSERT INTO `tb_galeri_detail` (`id`, `id_galeri`, `foto`) VALUES
-(33, 4, '139bbcd0a91d461a892eb27d86a0ddd0.png'),
-(34, 3, 'ff7d1a90e9d0eba75f5d8c7292957bc7.png');
+(35, 4, '29ee001d4f05f14d09ff6581edf7733f.png'),
+(36, 4, '4468a3e875ee4e91dc54a19f5098ceda.png'),
+(37, 3, 'ecf5164c8bc93625a0223a79e7680567.png'),
+(38, 3, '1353f0ee5e7683d092c4f705582b442a.png');
 
 -- --------------------------------------------------------
 
@@ -417,19 +417,21 @@ INSERT INTO `tb_siswa` (`nis`, `id`, `id_ortu`, `nama`, `alamat`, `tgl_lahir`, `
 CREATE TABLE `tb_tahun_ajaran` (
   `id` int(10) UNSIGNED NOT NULL,
   `tahun` varchar(200) DEFAULT NULL,
-  `semester` varchar(200) DEFAULT NULL
+  `semester` varchar(200) DEFAULT NULL,
+  `tgl_mulai` date DEFAULT NULL,
+  `tgl_selesai` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_tahun_ajaran`
 --
 
-INSERT INTO `tb_tahun_ajaran` (`id`, `tahun`, `semester`) VALUES
-(1, '2011/2012', 'semester 1'),
-(2, '2011/2012', 'semester 2'),
-(3, '2012/2013', 'semester 1'),
-(6, '2017/2018', 'semester 1'),
-(7, '2017/2018', 'semester 2');
+INSERT INTO `tb_tahun_ajaran` (`id`, `tahun`, `semester`, `tgl_mulai`, `tgl_selesai`) VALUES
+(1, '2011/2012', 'semester 1', '2011-07-01', '2017-12-30'),
+(2, '2011/2012', 'semester 2', '2012-01-01', '2012-06-30'),
+(3, '2012/2013', 'semester 1', NULL, NULL),
+(6, '2017/2018', 'semester 1', '2017-07-01', '2017-12-31'),
+(7, '2017/2018', 'semester 2', '2018-01-04', '2018-06-27');
 
 -- --------------------------------------------------------
 
@@ -663,7 +665,7 @@ ALTER TABLE `tb_galeri`
 -- AUTO_INCREMENT for table `tb_galeri_detail`
 --
 ALTER TABLE `tb_galeri_detail`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT for table `tb_kegiatan`
 --
@@ -783,7 +785,6 @@ ALTER TABLE `tb_riwayat_kelas`
 --
 ALTER TABLE `tb_siswa`
   ADD CONSTRAINT `FK_tb_siswa_tb_ortu` FOREIGN KEY (`id_ortu`) REFERENCES `tb_ortu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

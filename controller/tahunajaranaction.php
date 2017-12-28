@@ -31,12 +31,14 @@ if (isset($_POST['btn_action'])) {
 		if ($isSame) {
 			echo 'Tahun ajaran tidak boleh sama!';
 		}else {
-			$query = " INSERT INTO tb_tahun_ajaran (tahun,semester) VALUES (:tahun,:semester) ";
+			$query = " INSERT INTO tb_tahun_ajaran (tahun,semester,tgl_mulai,tgl_selesai) VALUES (:tahun,:semester) ";
 			$statement = $connect->prepare($query);
 			$statement->execute(
 				array(
-					':tahun' 		=> $_POST['tahun'],
+					':tahun' 			=> $_POST['tahun'],
 					':semester' 		=> $_POST['semester'],
+					':tgl_mulai' 		=> $_POST['tgl_mulai'],
+					':tgl_selesai' 		=> $_POST['tgl_selesai'],
 				)
 			);
 			$count = $statement->rowCount();
@@ -63,6 +65,8 @@ if (isset($_POST['btn_action'])) {
 			$output['id'] = $row['id'];
 			$output['semester'] = $row['semester'];
 			$output['tahun'] = $row['tahun'];
+			$output['tgl_mulai'] = $row['tgl_mulai'];
+			$output['tgl_selesai'] = $row['tgl_selesai'];
 		}
 		echo json_encode($output);
 	}
@@ -76,7 +80,9 @@ if (isset($_POST['btn_action'])) {
 		$query = "
 			UPDATE tb_tahun_ajaran
 			SET tahun = :tahun,
-			semester = :semester
+			semester = :semester,
+			tgl_mulai = :tgl_mulai,
+			tgl_selesai = :tgl_selesai
 			WHERE id = :ta_id
 		";
 		// $statement = $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -85,13 +91,15 @@ if (isset($_POST['btn_action'])) {
 			array(
 				':tahun' 		=> $_POST['tahun'],
 				':semester' 	=> $_POST['semester'],
-				':ta_id'			=> $_POST['ta_id']
+				':tgl_mulai' 	=> $_POST['tgl_mulai'],
+				':tgl_selesai' 	=> $_POST['tgl_selesai'],
+				':ta_id'		=> $_POST['ta_id']
 			)
 		);
 		// print_r($statement->errorInfo());
 		$result = $statement->fetch();
 		if (isset($result)) {
-			echo "Data guru berhasil diupdate!";
+			echo "Tahun ajaran berhasil diupdate!";
 		}
 	}
 
