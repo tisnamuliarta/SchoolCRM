@@ -12,25 +12,24 @@ if (isset($_POST['btn_action'])) {
 	 * ==========================================
 	 */
 	if ($_POST['btn_action'] == 'Add') {
-		$query = "
-			INSERT INTO tb_ortu (nama,email,username,password,tgl_lahir,alamat,jenis_kelamin,tlpn,status) 
-			VALUES (:nama,:email,:username,:password,:tgl_lahir,:alamat,:jenis_kelamin,:tlpn,:status)
-		";
-		$statement = $connect->prepare($query);
-		$password = password_hash($_POST['password'],PASSWORD_DEFAULT);
-		$statement->execute(
-			array(
-				':nama' 		=> $_POST['nama'],
-				':email' 		=> $_POST['email'],
-				':username' 	=> $_POST['username'],
-				':password' 	=> $password,
-				':tgl_lahir'	=> $_POST['tgl_lahir'],
-				':alamat'		=> $_POST['alamat'],
-				':jenis_kelamin'=> $_POST['jenis_kelamin'],
-				':tlpn'			=> $_POST['tlpn'],
-				':status'		=> $_POST['status']
-			)
-		);
+		$query = "INSERT INTO tb_ortu (email,username,password,alamat,tlpn,status,nama_ayah,nama_ibu,pekerjaan_ayah,pekerjaan_ibu) 
+          VALUES (:email,:username,:password,:alamat,:tlpn,:status,:nama_ayah,:nama_ibu,:pekerjaan_ayah,:pekerjaan_ibu)";
+      	$statement = $connect->prepare($query);
+      	$password = password_hash($_POST['password'],PASSWORD_DEFAULT);
+      	$statement->execute(
+        array(
+          ':nama_ayah'        => $_POST['nama_ayah'],
+          ':nama_ibu'         => $_POST['nama_ibu'],
+          ':pekerjaan_ayah'   => ($_POST['pekerjaan_ayah']) ? $_POST['pekerjaan_ayah'] : null,
+          ':pekerjaan_ibu'    => ($_POST['pekerjaan_ibu']) ? $_POST['pekerjaan_ibu'] : null,
+          ':email'            => $_POST['email'],
+          ':username'         => $_POST['username'],
+          ':password'         => $password,
+          ':alamat'           => $_POST['alamat'],
+          ':tlpn'             => $_POST['tlpn'],
+          ':status'            => 'active'
+        )
+      );
 		$result = $statement->fetchAll();
 		if (isset($result)) {
 			echo 'User added';
@@ -42,7 +41,8 @@ if (isset($_POST['btn_action'])) {
 	 * ====================================
 	 */
 	if ($_POST['btn_action'] == 'fetch_single') {
-		$query = " SELECT * FROM tb_ortu WHERE id = :id ";
+		$query = " SELECT tb_ortu.*, (SELECT tb_pekerjaan.pekerjaan FROM tb_pekerjaan WHERE tb_pekerjaan.id = tb_ortu.pekerjaan_ayah) as nama_pekerjaan_ayah, (SELECT tb_pekerjaan.pekerjaan FROM tb_pekerjaan WHERE tb_pekerjaan.id = tb_ortu.pekerjaan_ibu) as nama_pekerjaan_ibu 
+		from tb_ortu WHERE tb_ortu.id = :id ";
 		$statement = $connect->prepare($query);
 		$statement->execute([
 			':id' => $_POST['id']
@@ -51,12 +51,15 @@ if (isset($_POST['btn_action'])) {
 		// $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
 		foreach ($result as $row) {
 			$output['id'] = $row['id'];
-			$output['nama'] = $row['nama'];
+			$output['nama_ayah'] = $row['nama_ayah'];
+			$output['nama_ibu'] = $row['nama_ibu'];
+			$output['nama_pekerjaan_ayah'] = $row['nama_pekerjaan_ayah'];
+			$output['nama_pekerjaan_ibu'] = $row['nama_pekerjaan_ibu'];
+			$output['pekerjaan_ayah'] = $row['pekerjaan_ayah'];
+			$output['pekerjaan_ibu'] = $row['pekerjaan_ibu'];
 			$output['email'] = $row['email'];
 			$output['username'] = $row['username'];
-			$output['tgl_lahir'] = $row['tgl_lahir'];
 			$output['alamat'] = $row['alamat'];
-			$output['jenis_kelamin'] = $row['jenis_kelamin'];
 			$output['tlpn'] = $row['tlpn'];
 			$output['status'] = $row['status'];
 		}
@@ -71,11 +74,12 @@ if (isset($_POST['btn_action'])) {
 	if ($_POST['btn_action'] == 'Edit') {
 		$query = "
 			UPDATE tb_ortu
-			set nama = :nama,
+			set nama_ayah = :nama_ayah,
+			nama_ibu = :nama_ibu,
+			pekerjaan_ayah = :pekerjaan_ayah,
+			pekerjaan_ibu = :pekerjaan_ibu,
 			email = :email,
-			tgl_lahir = :tgl_lahir,
 			alamat = :alamat,
-			jenis_kelamin = :jenis_kelamin,
 			tlpn = :tlpn,
 			status = :status
 			WHERE id = :id
@@ -83,14 +87,15 @@ if (isset($_POST['btn_action'])) {
 		$statement = $connect->prepare($query);
 		$statement->execute(
 			array(
-				':nama' 		=> $_POST['nama'],
-				':email' 		=> $_POST['email'],
-				':tgl_lahir' 	=> $_POST['tgl_lahir'],
-				':alamat' 		=> $_POST['alamat'],
-				':jenis_kelamin'=> $_POST['jenis_kelamin'],
-				':tlpn' 		=> $_POST['tlpn'],
-				':status' 		=> $_POST['status'],
-				':id'			=> $_POST['user_id']
+				':nama_ayah'        => $_POST['nama_ayah'],
+	          	':nama_ibu'         => $_POST['nama_ibu'],
+	          	':pekerjaan_ayah'   => ($_POST['pekerjaan_ayah']) ? $_POST['pekerjaan_ayah'] : null,
+	          	':pekerjaan_ibu'    => ($_POST['pekerjaan_ibu']) ? $_POST['pekerjaan_ibu'] : null,
+	          	':email'            => $_POST['email'],
+	          	':alamat'           => $_POST['alamat'],
+	          	':tlpn'             => $_POST['tlpn'],
+				':status' 			=> $_POST['status'],
+				':id'				=> $_POST['user_id']
 			)
 		);
 		$count = $statement->rowCount();

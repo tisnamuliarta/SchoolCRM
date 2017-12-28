@@ -369,7 +369,8 @@ function getGaleriDetails($connect,$galeri_id) {
  * @return string
  */
 function getUserDetail($connect,$user_id) {
-	$query = "SELECT * FROM tb_ortu WHERE id = $user_id";
+	$query = "SELECT tb_ortu.*, (SELECT tb_pekerjaan.pekerjaan FROM tb_pekerjaan WHERE tb_pekerjaan.id = tb_ortu.pekerjaan_ayah) as nama_pekerjaan_ayah, (SELECT tb_pekerjaan.pekerjaan FROM tb_pekerjaan WHERE tb_pekerjaan.id = tb_ortu.pekerjaan_ibu) as nama_pekerjaan_ibu 
+		from tb_ortu WHERE tb_ortu.id = $user_id";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -386,15 +387,22 @@ function getUserDetail($connect,$user_id) {
 		}else{
 			$status = '<span class="label label-danger">Non Active</span>';
 		}
-		if ($row['jenis_kelamin'] == 1 ) {
-			$jenis_kelamin = '<span>Laki-laki</span>';
-		}else {
-			$jenis_kelamin = '<span>Perempuan</span>';
-		}
 		$output .= '
 		<tr>
-			<td>Nama</td>
-			<td>'.$row["nama"].'</td>
+			<td>Nama Ayah</td>
+			<td>'.$row["nama_ayah"].'</td>
+		</tr>
+		<tr>
+			<td>Nama Ibu</td>
+			<td>'.$row["nama_ibu"].'</td>
+		</tr>
+		<tr>
+			<td>Pekerjaan Ayah</td>
+			<td>'.$row["nama_pekerjaan_ayah"].'</td>
+		</tr>
+		<tr>
+			<td>Pekerjaan Ibu</td>
+			<td>'.$row["nama_pekerjaan_ibu"].'</td>
 		</tr>
 		<tr>
 			<td>Email</td>
@@ -405,16 +413,8 @@ function getUserDetail($connect,$user_id) {
 			<td>'.$row["username"].'</td>
 		</tr>
 		<tr>
-			<td>Tanggal Lahir</td>
-			<td>'.$row["tgl_lahir"].'</td>
-		</tr>
-		<tr>
 			<td>Telepon</td>
 			<td>'.$row["tlpn"].'</td>
-		</tr>
-		<tr>
-			<td>Jenis Kelamin</td>
-			<td>'.$jenis_kelamin.'</td>
 		</tr>
 		<tr>
 			<td>Alamat</td>

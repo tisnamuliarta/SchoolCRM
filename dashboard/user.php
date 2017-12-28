@@ -20,10 +20,12 @@
               <thead>
               <tr>
                 <th>No</th>
-                <th>Nama</th>
+                <th>Nama Ayah</th>
+                <th>Nama Ibu</th>
                 <th>Username</th>
-                <th>Tanggal Lahir</th>
-                <th>Jenis Kelamin</th>
+                <th>Email</th>
+                <th>Pekerjaan Ayah</th>
+                <th>Pekerjaan Ibu</th>
                 <th>Telepon</th>
                 <th>Status</th>
                 <th></th>
@@ -49,85 +51,96 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Nama</label>
-                <input type="text" name="nama" id="nama" class="form-control" required />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" id="email" class="form-control" required />
-                <div class="text-danger" id="emailError"></div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Alamat</label>
-            <textarea class="form-control" id="alamat" name="alamat" required></textarea>
-          </div>
-          <div class="form-group">
-            <label>Jenis Kelamin</label>
-            <div class="row">
               <div class="col-md-6">
-                <div class="radio">
-                  <label><input type="radio" id="1" name="jenis_kelamin" value="1" required> Laki-laki</label>
+                <div class="form-group">
+                  <label>Nama Ayah</label>
+                  <input type="text" name="nama_ayah" id="nama_ayah" class="form-control" required />
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="radio">
-                  <label><input type="radio" id="2" name="jenis_kelamin" value="2"> Perempuan</label>
+                <div class="form-group">
+                  <label>Nama Ibu</label>
+                  <input type="text" name="nama_ibu" id="nama_ibu" class="form-control" required />
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Tanggal Lahir</label>
-                <input class="form-control getDatePicker" name="tgl_lahir" id="tgl_lahir" required/>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Telepon</label>
-                <input class="form-control" name="tlpn" id="tlpn" required />
-                <div class="text-danger" id="tlpnError"></div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Username</label>
-                <input class="form-control" name="username" id="username" pattern="[^\s]+" title="Username tidak dapat mengandung spasi!" required/>
-                <input type="hidden" name="hiddenUsername" id="hiddenUsername">
-                <div class="text-danger" id="usernameError"></div>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Password</label>
-                <input class="form-control" type="password" id="password" name="password"/>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Status</label>
+
             <div class="row">
-              <div class="col-md-3">
-                <div class="radio">
-                  <label><input type="radio" id="active" name="status" value="active" required> Active</label>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Pekerjaan Ayah</label>
+                  <select name="pekerjaan_ayah" id="pekerjaan_ayah" class="form-control" required>
+                    <!-- <option value="">Pilih Pekerjaan</option> -->
+                    <?php echo getListPekerjaan($connect); ?>
+                  </select>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="radio">
-                  <label><input type="radio" id="non-active" name="status" value="non-active"> Non Active</label>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Pekerjaan Ibu</label>
+                  <select name="pekerjaan_ibu" id="pekerjaan_ibu" class="form-control" required>
+                    <!-- <option value="">Pilih Pekerjaan</option> -->
+                    <?php echo getListPekerjaan($connect); ?>
+                  </select>
                 </div>
               </div>
             </div>
-          </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" name="email" id="email" class="form-control" required />
+                  <div class="text-danger" id="emailError"></div>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label>Handphone</label>
+                  <input type="number" class="form-control" name="tlpn" id="tlpn" required value="62" title="Nomer handphone tidak mengandung spasi!" />
+                  <div class="text-danger" id="tlpnError"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Alamat</label>
+              <textarea class="form-control" id="alamat" name="alamat" required></textarea>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input class="form-control" name="username" id="username" pattern="^[A-Za-z0-9_]{1,15}$" title="Username tidak mengandung spasi!" required/>
+                  <input type="hidden" name="hiddenUsername" id="hiddenUsername">
+                  <div class="text-danger" id="usernameError"></div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label>Password</label>
+                  <input class="form-control" type="password" required id="password" name="password"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Status</label>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="radio">
+                    <label><input type="radio" id="active" name="status" value="active" required> Active</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="radio">
+                    <label><input type="radio" id="non-active" name="status" value="non-active"> Non Active</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
         </div>
         <div class="modal-footer">
           <input type="hidden" name="user_id" id="user_id" />
@@ -179,8 +192,9 @@
           type: "POST"
         },
         "columnDefs":[
+          {"width":"100px","targets":0},
           {
-            "targets":[0,7,8,9],
+            "targets":[0,8,9,10,11],
             "orderable":false,
           },
         ],
@@ -267,12 +281,17 @@
         dataType: 'json',
         success: function(data){
           $('#userModal').modal('show');
-          $('#nama').val(data.nama);
-          $('#tgl_lahir').val(data.tgl_lahir);
+          $('#nama_ayah').val(data.nama_ayah);
+          $('#username').val(data.username);
+          $('#nama_ibu').val(data.nama_ibu);
+          // $('#pekerjaan_ayah').val(data.pekerjaan_ayah);
+          $('select[name="pekerjaan_ayah"] option[value="'+data.pekerjaan_ayah+'"]').attr('selected','selected');
+          $('select[name="pekerjaan_ibu"] option[value="'+data.pekerjaan_ibu+'"]').attr('selected','selected');
+          // $('#pekerjaan_ibu').val(data.pekerjaan_ibu);
           $('#alamat').val(data.alamat);
           $('#email').val(data.email);
-          $('input[name="jenis_kelamin"][value="'+data.jenis_kelamin+'"]').prop('checked',true);
-          $('#'+data.status+'').prop('checked',true);
+          $('input[name="status"][value="'+data.status+'"]').prop('checked',true);
+          // $('#'+data.status+'').prop('checked',true);
           $('#tlpn').val(data.tlpn);
           $('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit User");
           $('#action').val("Edit");
