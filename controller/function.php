@@ -135,6 +135,25 @@ function getNilaiPerkembanganSiswa($connect,$nis) {
 	
 }
 
+function listNisBySemester($connect,$tahun) {
+	$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query = "SELECT tb_siswa.* 
+		FROM tb_siswa
+		LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
+		WHERE tb_siswa.nis IS NOT NULL AND tb_detail_siswa.id_tahun_ajaran = $tahun
+		ORDER BY tb_siswa.nis ASC ";
+	$dbs = $connect->prepare($query);
+	$dbs->execute();
+	$result = $dbs->fetchAll();
+	$output = '';
+	$idx = 0;
+	foreach ($result as $row) {
+		$idx++; 
+		$output .= '<option value="'.$row['nis'].'" >'.$row['nis'].'</option>' ;
+	}
+	return $output;
+}
+
 function listSiswaNISnotNull($connect) {
 	$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$query = "SELECT tb_siswa.* 

@@ -82,12 +82,31 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-4">
+                    <label>Tahun Ajaran</label>
+                  </div>
+                  <div class="col-md-6">
+                    <select name="tahun" id="tahun" class="form-control" required>
+                      <option value="">Pilih Tahun Ajaran</option>
+                      <?php
+                        $tahun = date('Y'); 
+                        echo listTahunAjatan($connect,$tahun) 
+                      ?> 
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-4">
                     <label>Nomer Induk Siswa</label>
                   </div>
                   <div class="col-md-6">
                     <select type="text" name="nis" id="nis" class="form-control" required >
                       <option value="">Pilih NIS</option>
-                      <?php echo listSiswaNISnotNull($connect) ?>
+                      <!-- <?php echo listSiswaNISnotNull($connect) ?> -->
                     </select>
                   </div>
                 </div>
@@ -316,10 +335,19 @@
       console.log($('#tahun_ajaran').val())
     });
     // on change select nis
+    $('#tahun').change(function(){
+      var tahun = $('#tahun').val();
+      var btn_action = 'load_nis_by_semester';
+      getSiswaNISByTahun(tahun, btn_action);
+      $('#nama').val("")
+    })
+
     $('#nis').change(function(){
+      var tahun = $('#tahun').val();
       var nis = $('#nis').val();
       var btn_action = 'load_nama_siswa';
       getNamaSiswa(nis, btn_action);
+      fillTheBlankInput(nis,'fill_blank_input');
     })
 
     // Fill nama siswa field
@@ -334,8 +362,26 @@
       });
     }
 
-    function fillTheBlankInput(){
-      
+    function getSiswaNISByTahun(tahun,btn_action) {
+      $.ajax({
+        url: '../controller/reportAction.php',
+        method: 'GET',
+        data: {tahun:tahun,btn_action:btn_action},
+        success: function(data){
+          $('#nis').html("<option value=''>Pilih NIS</option>"+data)
+        }
+      });
+    }
+
+    function fillTheBlankInput(nis, btn_action){
+      $.ajax({
+        url: '../controller/reportAction.php',
+        method: 'GET',
+        data: {nis:nis,btn_action:btn_action},
+        success: function(data) {
+
+        }
+      });
     }
 
     // ============= save data ======

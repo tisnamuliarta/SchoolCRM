@@ -5,6 +5,16 @@ include 'function.php';
 $isSame = false;
 $output = [];
 
+if (isset($_GET['btn_action'])) {
+	if ($_GET['btn_action'] == 'load_nis_by_semester') {
+		echo listNisBySemester($connect,$_GET['tahun']);
+	}
+
+	if ($_GET['btn_action'] == 'fill_blank_input') {
+		
+	}
+}
+
 if (isset($_POST['btn_action'])) {
 	/**
 	 * ==========================================
