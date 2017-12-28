@@ -16,24 +16,26 @@
             </div>
           </div>
           <div class="col-sm-12">
-            <table id="userstable" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>No</th>
-                <th>Nama Ayah</th>
-                <th>Nama Ibu</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Pekerjaan Ayah</th>
-                <th>Pekerjaan Ibu</th>
-                <th>Telepon</th>
-                <th>Status</th>
-                <th></th>
-                <th></th>
-                <th></th>
-              </tr>
-              </thead>
-            </table>
+            <div class="table-responsive">
+              <table id="userstable" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Ayah</th>
+                  <th>Nama Ibu</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Pekerjaan Ayah</th>
+                  <th>Pekerjaan Ibu</th>
+                  <th>Telepon</th>
+                  <th>Status</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                </thead>
+              </table>
+            </div>
           </div>
         </div>
       </div>

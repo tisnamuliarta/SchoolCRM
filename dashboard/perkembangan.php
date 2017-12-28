@@ -45,21 +45,23 @@
             </div>
           </div>
           <div class="col-sm-12">
-            <table id="perkembanganTable" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>NIS</th>
-                <th>Nama</th>
-                <th>Kelas</th>
-                <th>Tanggal</th>
-                <th>Sosialisasi</th>
-                <th>Motorik</th>
-                <th>Daya Ingat</th>
-                <th>Keaktifan</th>
-                <th></th>
-              </tr>
-              </thead>
-            </table>
+            <div class="table-responsive">
+              <table id="perkembanganTable" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>NIS</th>
+                  <th>Nama</th>
+                  <th>Kelas</th>
+                  <th>Tanggal</th>
+                  <th>Sosialisasi</th>
+                  <th>Motorik</th>
+                  <th>Daya Ingat</th>
+                  <th>Keaktifan</th>
+                  <th></th>
+                </tr>
+                </thead>
+              </table>
+            </div>
           </div>
         </div>
       </div>

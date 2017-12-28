@@ -18,20 +18,22 @@
             </div>
           </div> -->
           <div class="col-sm-12">
-            <table id="siswatable" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>No</th>
-                <th>Orang Tua</th>
-                <th>Nama</th>
-                <th>Jenis Kelamin</th>
-                <th>Tanggal Lahir</th>
-                <th>Alamat</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-              </thead>
-            </table>
+            <div class="table-responsive">
+              <table id="siswatable" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Orang Tua</th>
+                  <th>Nama</th>
+                  <th>Jenis Kelamin</th>
+                  <th>Tanggal Lahir</th>
+                  <th>Alamat</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+                </thead>
+              </table>
+            </div>
           </div>
         </div>
       </div>

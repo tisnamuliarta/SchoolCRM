@@ -1,4 +1,13 @@
 <?php require 'partials/head_guru.php'; ?>
+<style type="text/css">
+  @media screen and (min-width: 992px) {
+    .m-l-50 {
+      margin-left: -50px;
+    }
+  }
+</style>
+
+
 <span id="alert_action"></span>
 <div class="row">
   <div class="col-lg-12 col-xs-12">
@@ -33,21 +42,23 @@
             </div>
           </div>
           <div class="col-sm-12">
-            <table id="perkembanganTable" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>NIS</th>
-                <th>Nama</th>
-                <th>Kelas</th>
-                <th>Tanggal</th>
-                <th>Sosialisasi</th>
-                <th>Motorik</th>
-                <th>Daya Ingat</th>
-                <th>Keaktifan</th>
-                <th></th>
-              </tr>
-              </thead>
-            </table>
+            <div class="table-responsive">
+              <table id="perkembanganTable" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>NIS</th>
+                  <th>Nama</th>
+                  <th>Kelas</th>
+                  <th>Tanggal</th>
+                  <th>Sosialisasi</th>
+                  <th>Motorik</th>
+                  <th>Daya Ingat</th>
+                  <th>Keaktifan</th>
+                  <th></th>
+                </tr>
+                </thead>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -103,15 +114,15 @@
             <div class="col-md-6">
               <div class="row" style="margin-top: 5px;">
                 <div class="col-md-4"><label>Sosialisasi</label></div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <input type="text" name="sosial" id="sosial" class="form-control" readonly>
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 m-l-50">
               <div class="row" style="margin-top: 5px;">
-                <div class="col-md-4"><label>Daya Ingat</label></div>
-                <div class="col-md-6">
+                <div class="col-md-5"><label>Daya Ingat</label></div>
+                <div class="col-md-4">
                   <input type="text" name="daya_ingat" id="daya_ingat" class="form-control" readonly>
                 </div>
               </div>
@@ -119,15 +130,15 @@
             <div class="col-md-6">
               <div class="row" style="margin-top: 5px;">
                 <div class="col-md-4"><label>Motorik</label></div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <input type="text" name="motorik" id="motorik" class="form-control" readonly>
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 m-l-50">
               <div class="row" style="margin-top: 5px;">
-                <div class="col-md-4"><label>Keaktifan</label></div>
-                <div class="col-md-6">
+                <div class="col-md-5"><label>Keaktifan</label></div>
+                <div class="col-md-4">
                   <input type="text" name="aktif" id="aktif" class="form-control" readonly>
                 </div>
               </div>
@@ -302,6 +313,7 @@
       $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Nilai Perkembangan");
       $('#action').val('Add');
       $('#btn_action').val('Add');
+      console.log($('#tahun_ajaran').val())
     });
     // on change select nis
     $('#nis').change(function(){
