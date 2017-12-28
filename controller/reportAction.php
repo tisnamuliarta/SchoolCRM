@@ -5,13 +5,37 @@ include 'function.php';
 $isSame = false;
 $output = [];
 
+
+function getNilaiMotorik($connect, $nis, $tahun) {
+	$query = '
+		SELECT 
+		SUM(motorik="A") as motorik_a, 
+		SUM(motorik="B") as motorik_b, 
+		SUM(motorik="C") as motorik_c 
+		FROM tb_perkembangan 
+		LEFT JOIN tb_siswa ON tb_perkembangan.nis = tb_siswa.nis
+		LEFT JOIN tb_detail_siswa ON tb_detail_siswa.id_siswa = tb_siswa.id
+		LEFT JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran
+		LEFT JOIN tb_kelas ON tb_kelas.id = tb_detail_siswa.id_kelas
+		WHERE tb_siswa.nis IS NOT NULL AND tb_detail_siswa.id_kelas = :id_kelas AND tb_detail_siswa.id_tahun_ajaran = :id_tahun_ajaran AND tgl BETWEEN tb_tahun_ajaran.tgl_mulai AND tb_tahun_ajaran.tgl_selesai ';
+
+	$statement = $connect->prepare($query);
+	$statement->execute(array(
+		':id_kelas'			=> $id_kelas,
+		':id_tahun_ajaran'	=> $id_tahun_ajaran,
+		':start_date'		=> $start_date,
+		':end_date'			=> $end_date
+	));
+}
+
+
 if (isset($_GET['btn_action'])) {
 	if ($_GET['btn_action'] == 'load_nis_by_semester') {
 		echo listNisBySemester($connect,$_GET['tahun']);
 	}
 
 	if ($_GET['btn_action'] == 'fill_blank_input') {
-		
+		$motorik = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun']);
 	}
 }
 

@@ -347,7 +347,7 @@
       var nis = $('#nis').val();
       var btn_action = 'load_nama_siswa';
       getNamaSiswa(nis, btn_action);
-      fillTheBlankInput(nis,'fill_blank_input');
+      fillTheBlankInput(nis,'fill_blank_input',tahun);
     })
 
     // Fill nama siswa field
@@ -373,11 +373,11 @@
       });
     }
 
-    function fillTheBlankInput(nis, btn_action){
+    function fillTheBlankInput(nis, btn_action,tahun){
       $.ajax({
         url: '../controller/reportAction.php',
         method: 'GET',
-        data: {nis:nis,btn_action:btn_action},
+        data: {nis:nis,btn_action:btn_action,tahun:tahun},
         success: function(data) {
 
         }
