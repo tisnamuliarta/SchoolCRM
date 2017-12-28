@@ -5,6 +5,19 @@ function selectData($connect,$table){
 	return $statement->execute();
 }
 
+function getListPekerjaan($connect) {
+	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query = "SELECT * FROM tb_pekerjaan ORDER BY pekerjaan ASC";
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$output = '';
+	foreach ($result as $row) {
+		$output .= '<option value="'.$row['id'].'" >'.$row['pekerjaan'].'</option>' ;
+	}
+	return $output;
+}
+
 function getListKelas($connect) {
 	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$query = "SELECT * FROM tb_kelas ORDER BY kelas ASC";

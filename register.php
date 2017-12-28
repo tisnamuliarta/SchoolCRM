@@ -5,6 +5,7 @@ if (isset($_SESSION['logged_id'])) {
   header("location: dashboard/auth-ortu.php");
 }
 $message = "";
+$registerSuccess = "";
 $oldUsername;
 if (isset($_POST['register'])) {
   $query = "SELECT * FROM tb_ortu";
@@ -14,6 +15,7 @@ if (isset($_POST['register'])) {
   // if there are any user data on database
   if ($statement->rowCount() > 0) {
     $result = $statement->fetchAll();
+    $noError = false;
     foreach ($result as $row) {
       if ($row['username'] == $_POST['username']) {
         $message .= "Username tidak boleh sama!" ."<br>";
@@ -25,69 +27,116 @@ if (isset($_POST['register'])) {
         $message .= "Nomer telepon harus valid dan diawali dengan 62!" ."<br>";
       }
       else {
-        $query = "INSERT INTO tb_ortu (nama,email,username,password,tgl_lahir,alamat,jenis_kelamin,tlpn,status) 
-          VALUES (:nama,:email,:username,:password,:tgl_lahir,:alamat,:jenis_kelamin,:tlpn,:status)";
+        $noError = true;
+      }
+    }
+    if ($noError) {
+      $query = "INSERT INTO tb_ortu (email,username,password,alamat,tlpn,status,nama_ayah,nama_ibu,pekerjaan_ayah,pekerjaan_ibu) 
+          VALUES (:email,:username,:password,:alamat,:tlpn,:status,:nama_ayah,:nama_ibu,:pekerjaan_ayah,:pekerjaan_ibu)";
+      $statement = $connect->prepare($query);
+      $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
+      $statement->execute(
+        array(
+          ':nama_ayah'        => $_POST['nama_ayah'],
+          ':nama_ibu'         => $_POST['nama_ibu'],
+          ':pekerjaan_ayah'   => ($_POST['pekerjaan_ayah']) ? $_POST['pekerjaan_ayah'] : null,
+          ':pekerjaan_ibu'    => ($_POST['pekerjaan_ibu']) ? $_POST['pekerjaan_ibu'] : null,
+          ':email'            => $_POST['email'],
+          ':username'         => $_POST['username'],
+          ':password'         => $password,
+          ':alamat'           => $_POST['alamat'],
+          ':tlpn'             => $_POST['tlpn'],
+          ':status'            => 'active'
+        )
+      );
+      header("Refresh: 2; auth-ortu.php");
+      $registerSuccess .= "Registrasi berhasil, anda akan diarahkan ke halaman login!" ."<br>";
+    }
+  }else {
+    $query = "INSERT INTO tb_ortu (email,username,password,alamat,tlpn,status,nama_ayah,nama_ibu,pekerjaan_ayah,pekerjaan_ibu) 
+          VALUES (:email,:username,:password,:alamat,:tlpn,:status,:nama_ayah,:nama_ibu,:pekerjaan_ayah,:pekerjaan_ibu)";
         $statement = $connect->prepare($query);
         $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
         $statement->execute(
           array(
-            ':nama'     => $_POST['nama'],
-            ':email'    => $_POST['email'],
-            ':username'   => $_POST['username'],
-            ':password'   => $password,
-            ':tgl_lahir'  => $_POST['tgl_lahir'],
-            ':alamat'   => $_POST['alamat'],
-            ':jenis_kelamin'=> $_POST['jenis_kelamin'],
-            ':tlpn'     => $_POST['tlpn'],
-            ':status'   => 'active'
+            ':nama_ayah'        => $_POST['nama_ayah'],
+            ':nama_ibu'         => $_POST['nama_ibu'],
+            ':pekerjaan_ayah'   => ($_POST['pekerjaan_ayah']) ? $_POST['pekerjaan_ayah'] : null,
+            ':pekerjaan_ibu'    => ($_POST['pekerjaan_ibu']) ? $_POST['pekerjaan_ibu'] : null,
+            ':email'            => $_POST['email'],
+            ':username'         => $_POST['username'],
+            ':password'         => $password,
+            ':alamat'           => $_POST['alamat'],
+            ':tlpn'             => $_POST['tlpn'],
+            ':status'            => 'active'
           )
         );
-        header("location: auth-ortu.php");
-      }
-    }
-  }else {
-    $query = "INSERT INTO tb_ortu (nama,email,username,password,tgl_lahir,alamat,jenis_kelamin,tlpn,status) 
-          VALUES (:nama,:email,:username,:password,:tgl_lahir,:alamat,:jenis_kelamin,:tlpn,:status)";
-    $statement = $connect->prepare($query);
-    $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
-    $statement->execute(
-      array(
-        ':nama'     => $_POST['nama'],
-        ':email'    => $_POST['email'],
-        ':username'   => $_POST['username'],
-        ':password'   => $password,
-        ':tgl_lahir'  => $_POST['tgl_lahir'],
-        ':alamat'   => $_POST['alamat'],
-        ':jenis_kelamin'=> $_POST['jenis_kelamin'],
-        ':tlpn'     => $_POST['tlpn'],
-        ':status'   => 'active'
-      )
-    );
-    header("location: auth-ortu.php");
+        header("Refresh: 2; auth-ortu.php");
+        $registerSuccess .= "Registrasi berhasil, anda akan diarahkan ke halaman login!" ."<br>";
   }
 }
 ?>
 <div class="row">
   <div class="col-md-4 col-md-offset-4">
     <div class="box">
-      <div class="login-logo">
-        <a href="javascript:void(0)"><b>Register</b></a>
+      <div class="box-header">
+        <a class="box-title" href="javascript:void(0)"><b>Register</b></a>
         <hr>
       </div>
       <!-- /.login-logo -->
       <div class="box-body">
         <div class="">
           <form method="post" id="formRegister">
+            <?php if ($registerSuccess != ""): ?>
+              <div class="text-center">
+                <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                <span class="sr-only">Loading...</span>
+              </div>
+              <br>
+              <div class="alert alert-info alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-check"></i> Alert!</h4> <?php echo $registerSuccess; ?></div>
+            <?php endif ?>
+
             <?php if ($message != ""): ?>
               <div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><?php echo $message; ?></div>
             <?php endif ?>
+
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Nama</label>
-                  <input type="text" name="nama" id="nama" class="form-control" required />
+                  <label>Nama Ayah</label>
+                  <input type="text" name="nama_ayah" id="nama_ayah" class="form-control" required />
                 </div>
               </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Nama Ibu</label>
+                  <input type="text" name="nama_ibu" id="nama_ibu" class="form-control" required />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Pekerjaan Ayah</label>
+                  <select name="pekerjaan_ayah" id="pekerjaan_ayah" class="form-control" required>
+                    <option value="">Pilih Pekerjaan</option>
+                    <?php echo getListPekerjaan($connect); ?>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Pekerjaan Ibu</label>
+                  <select name="pekerjaan_ibu" id="pekerjaan_ibu" class="form-control" required>
+                    <option value="">Pilih Pekerjaan</option>
+                    <?php echo getListPekerjaan($connect); ?>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Email</label>
@@ -95,12 +144,21 @@ if (isset($_POST['register'])) {
                   <div class="text-danger" id="emailError"></div>
                 </div>
               </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label>Handphone</label>
+                  <input type="number" class="form-control" name="tlpn" id="tlpn" required value="62" title="Nomer handphone tidak mengandung spasi!" />
+                  <div class="text-danger" id="tlpnError"></div>
+                </div>
+              </div>
             </div>
+
             <div class="form-group">
               <label>Alamat</label>
               <textarea class="form-control" id="alamat" name="alamat" required></textarea>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label>Jenis Kelamin</label>
               <div class="row">
                 <div class="col-md-6">
@@ -114,23 +172,8 @@ if (isset($_POST['register'])) {
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group has-feedback">
-                  <label>Tanggal Lahir</label>
-                  <input class="form-control getDatePicker" name="tgl_lahir" id="tgl_lahir" required/>
-                  <span class="fa fa-calendar form-control-feedback"></span>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label>Handphone</label>
-                  <input type="number" class="form-control" name="tlpn" id="tlpn" required value="62" title="Nomer handphone tidak mengandung spasi!" />
-                  <div class="text-danger" id="tlpnError"></div>
-                </div>
-              </div>
-            </div>
+            </div> -->
+
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">

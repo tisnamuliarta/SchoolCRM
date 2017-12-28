@@ -10,16 +10,18 @@
       <!-- small box -->
       <div class="box">
         <div class="box-body">
-          <?php  
-            $query = "SELECT * FROM tb_tentang";
-            $statement = $connect->prepare($query);
-            $statement->execute();
-            $result = $statement->fetchAll();
-          ?>
+          <section class="content">
+            <?php  
+              $query = "SELECT * FROM tb_tentang";
+              $statement = $connect->prepare($query);
+              $statement->execute();
+              $result = $statement->fetchAll();
+            ?>
 
-          <?php foreach ($result as $row): ?>
-            <section><span><?php echo $row['content']; ?></span></section>
-          <?php endforeach ?>
+            <?php foreach ($result as $row): ?>
+              <section><span><?php echo $row['content']; ?></span></section>
+            <?php endforeach ?>
+          </section>
         </div>
       </div>
     </div>

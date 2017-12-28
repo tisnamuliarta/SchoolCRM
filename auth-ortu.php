@@ -23,7 +23,9 @@ if (isset($_POST['login'])) {
         if (password_verify($_POST['password'], $row['password'])) {
           $_SESSION['logged_id'] = true;
           $_SESSION['id'] = $row['id'];
-          $_SESSION['nama'] = $row['nama'];
+          $_SESSION['nama_ayah'] = $row['nama_ayah'];
+          $_SESSION['nama_ibu'] = $row['nama_ibu'];
+          $_SESSION['email'] = $row['email'];
           $_SESSION['username'] = $row['username'];
           $_SESSION['status'] = 'ortu';
           header("location: dashboard/index-ortu.php");

@@ -1,5 +1,6 @@
 <?php  
 include 'connection.php';
+require_once('./controller/function.php');
 
 // if (!isset($_SESSION['logged_id'])) {
 //   header("location:login.php");

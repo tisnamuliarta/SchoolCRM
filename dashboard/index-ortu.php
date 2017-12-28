@@ -6,7 +6,7 @@
     <div class="small-box bg-aqua">
       <div class="inner">
 
-        <p>Selamat datang, <?php echo $_SESSION['nama'] ?></p>
+        <p>Selamat datang, <?php echo $_SESSION['username'] ?></p>
       </div>
       <div class="icon">
         <i class="ion ion-bag"></i>
