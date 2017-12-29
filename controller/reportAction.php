@@ -64,9 +64,10 @@ if (isset($_POST['btn_action'])) {
 	 * ====================================
 	 */
 	if ($_POST['btn_action'] == 'fetch_single') {
+		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$query = " SELECT tb_raport.*, tb_siswa.nama, tb_siswa.jenis_kelamin, DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir , DATE_FORMAT(tb_raport.tgl,'%d %M %Y') as tanggal_raport ,
 			(SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas,
-			(SELECT tb_tahun_ajaran.tahun FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as tahun_ajaran,
+			(SELECT CONCAT(tb_tahun_ajaran.tahun,' - ',tb_tahun_ajaran.semester) FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran ORDER BY tb_tahun_ajaran.tahun DESC) as tahun_ajaran,
 			(SELECT tb_tahun_ajaran.semester FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as semester
 			from tb_raport 
 		    LEFT JOIN tb_siswa on tb_siswa.nis = tb_raport.nis
@@ -80,8 +81,8 @@ if (isset($_POST['btn_action'])) {
 		// $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
 		foreach ($result as $row) {
 			$output['id'] = $row['id'];
-			$output['tahun'] = $row['tahun'];
 			$output['nip'] = $row['nip'];
+			$output['tahun'] = $row['tahun'];
 			$output['nis'] = $row['nis'];
 			$output['nama'] = $row['nama'];
 			$output['motorik'] = $row['motorik'];
@@ -92,6 +93,7 @@ if (isset($_POST['btn_action'])) {
 			$output['kesenian'] = $row['kesenian'];
 			$output['mendengarkan'] = $row['mendengarkan'];
 			$output['menulis'] = $row['menulis'];
+			$output['tahun_ajaran'] = $row['tahun_ajaran'];
 			$output['tgl'] = $row['tgl'];
 		}
 		echo json_encode($output);
@@ -103,12 +105,12 @@ if (isset($_POST['btn_action'])) {
 	 * ==================================================
 	 * */
 	if ($_POST['btn_action'] == 'Edit') {
+		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$query = "
 			UPDATE tb_raport
-			set nis = :nis,
-			tahun = :tahun,
+			set
 			motorik = :motorik,
-			sosialisasi = :sosial,
+			sosialisai = :sosial,
 			keaktifan = :aktif,
 			daya_ingat = :daya_ingat,
 			kesenian = :kesenian,
@@ -121,8 +123,6 @@ if (isset($_POST['btn_action'])) {
 		$statement = $connect->prepare($query);
 		$statement->execute(
 			array(
-				':nis' 			=> $_POST['nis'],
-				':tahun' 		=> $_POST['tahun'],
 				':motorik' 		=> $_POST['motorik'],
 				':sosial' 		=> $_POST['sosial'],
 				':aktif' 		=> $_POST['aktif'],
@@ -132,14 +132,14 @@ if (isset($_POST['btn_action'])) {
 				':membaca' 		=> $_POST['membaca'],
 				':menulis' 		=> $_POST['menulis'],
 				':tgl' 			=> $_POST['tgl'],
-				':id'			=> $_POST['id_perkembangan']
+				':id'			=> $_POST['id_raport']
 			)
 		);
-		updateRaportTotal($connect,$_POST['nis'],$_POST['tahun']);
-		
+		updateRaportTotal($connect,$_POST['no_induk'],$_POST['tahun']);
+
 		$result = $statement->fetchAll();
 		if (isset($result)) {
-			echo "Perkembangan siswa telah diapdate!";
+			echo "Raport siswa telah diapdate!";
 		}
 	}
 

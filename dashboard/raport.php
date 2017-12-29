@@ -82,7 +82,7 @@
         <div class="modal-body" style="padding-left: 30px;">
           <div class="row">
             <div class="col-sm-10"><label>Data siswa : </label><hr></div>
-            <div class="col-sm-12">
+            <div class="col-sm-12" id="forNewTahun" >
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-4">
@@ -101,7 +101,7 @@
               </div>
             </div>
 
-            <div class="col-sm-12">
+            <div class="col-sm-12" id="forNewNIS" >
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-4">
@@ -117,6 +117,37 @@
               </div>
             </div>
           </div>
+
+          <div class="row isHide" id="forEditTahun">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label>Tahun Ajaran</label>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" name="thn_ajaran" id="thn_ajaran" class="form-control" readonly required />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row isHide" id="forEditNIS">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label>Nomer Induk Siswa</label>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" name="no_induk" id="no_induk" class="form-control" readonly required />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
@@ -337,6 +368,13 @@
       $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Nilai Perkembangan");
       $('#action').val('Add');
       $('#btn_action').val('Add');
+
+      $('#tahun').attr('required','required');
+      $('#nis').attr('required','required');
+      $('#forEditTahun').addClass('isHide');
+      $('#forEditNIS').addClass('isHide');
+      $('#forNewTahun').removeClass('isHide');
+      $('#forNewNIS').removeClass('isHide');
     });
     // on change select nis
     $('#tahun').change(function(){
@@ -419,6 +457,12 @@
       var id = $(this).attr("id");
       $('.modal-user-title').html("<i class='fa fa-plus'></i> Edit Raport");
       var btn_action = 'fetch_single';
+      $('#tahun').removeAttr('required');
+      $('#nis').removeAttr('required');
+      $('#forEditTahun').removeClass('isHide');
+      $('#forEditNIS').removeClass('isHide');
+      $('#forNewTahun').addClass('isHide');
+      $('#forNewNIS').addClass('isHide');
       $.ajax({
         url: '../controller/reportAction.php',
         method: 'POST',
@@ -427,9 +471,10 @@
         success: function(data){
           $('#raportModal').modal('show');
           $('select[name="tahun"] option[value="'+data.tahun+'"]').prop('selected','selected');
-          getSiswaNISByTahun(data.tahun, 'load_nis_by_semester');
           $('select[name="nis"] option[value="'+data.nis+'"]').prop('selected','selected');
           // $('#nis').val(data.nis);
+          $('#thn_ajaran').val(data.tahun_ajaran);
+          $('#no_induk').val(data.nis);
           $('#nama').val(data.nama);
           $('#tgl').val(data.tgl);
           $('#sosial').val(data.sosial);

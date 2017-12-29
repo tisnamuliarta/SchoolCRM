@@ -46,6 +46,7 @@ function getNilaiMotorik($connect, $nis, $tahun,$perkembangan) {
 }
 
 function updateRaportTotal($connect,$nis,$tahun) {
+	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$querySelect = "SELECT tb_raport.* FROM tb_raport
 		LEFT JOIN tb_siswa ON tb_siswa.nis = tb_raport.nis
 		LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa 
@@ -61,13 +62,14 @@ function updateRaportTotal($connect,$nis,$tahun) {
 
 	$count = 8;
 	$all = returnValue($rs['sosialisai']) + returnValue($rs['daya_ingat']) + returnValue($rs['motorik']) + returnValue($rs['keaktifan']) + returnValue($rs['kesenian']) + returnValue($rs['mendengarkan']) + returnValue($rs['membaca']) + returnValue($rs['menulis']);
-	$average = (double)$all / (double)$count;
+	$average = round(((double)$all / (double)$count),2 );
+	// echo $average;
 
-	if (($average >= 1) && ($average <= 1.6)) {
+	if (($average >= 1.00) && ($average <= 1.69)) {
 		$total = 'C';
-	}elseif (($average >= 1.7) && ($average <= 2.3)) {
+	}elseif (($average >= 1.70) && ($average <= 2.39)) {
 		$total = 'B';
-	}elseif (($average >= 2.4) && ($average <= 3)) {
+	}elseif (($average >= 2.40) && ($average <= 3.00)) {
 		$total = 'A';
 	}
 
