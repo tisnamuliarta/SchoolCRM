@@ -28,38 +28,34 @@ if (isset($_POST['btn_action'])) {
 	 * ==========================================
 	 */
 	if ($_POST['btn_action'] == 'Add') {
-		$query_select = "SELECT * FROM tb_perkembangan WHERE nip=:nip AND nis=:nis AND tgl=:tgl";
-		$sc = $connect->prepare($query_select);
-		$sc->execute(array(
-			':nip'		=> $_SESSION['nip'],
-			':nis'		=> $_POST['nis'],
-			':tgl'		=> $_POST['tgl']
-		));
-		$count = $sc->rowCount();
-		if ($count > 0) {
-			echo "Ups terjadi kesalahan!! Penilaian hanya boleh sekali dalam seminggu!";
-		}else {
-			$query = "
-				INSERT INTO tb_perkembangan (nip,nis,aktif,sosial,motorik,daya_ingat,tgl) 
-				VALUES (:nip,:nis,:aktif,:sosial,:motorik,:daya_ingat,:tgl)
-			";
-			// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$statement = $connect->prepare($query);
-			$statement->execute(
-				array(
-					':nip' 			=> $_SESSION['nip'],
-					':nis' 			=> $_POST['nis'],
-					':aktif' 		=> $_POST['aktif'],
-					':sosial' 		=> $_POST['sosial'],
-					':motorik' 		=> $_POST['motorik'],
-					':daya_ingat' 	=> $_POST['daya_ingat'],
-					':tgl'			=> $_POST['tgl'],
-				)
-			);
-			$result = $statement->fetchAll();
-			if (isset($result)) {
-				echo 'Nilai Perkembangan berhasil ditambahkan!!';
-			}
+		$query = "
+			INSERT INTO tb_raport (tahun,nip,nis,keaktifan,sosialisai,motorik,daya_ingat,kesenian,mendengarkan,membaca,menulis,tgl) 
+			VALUES (:tahun,:nip,:nis,:keaktifan,:sosialisai,:motorik,:daya_ingat,:kesenian,:mendengarkan,:membaca,:menulis,:tgl)
+		";
+		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$statement = $connect->prepare($query);
+		$statement->execute(
+			array(
+				':tahun' 			=> $_POST['tahun'],
+				':nip' 				=> $_SESSION['nip'],
+				':nis' 				=> $_POST['nis'],
+				':keaktifan' 		=> $_POST['aktif'],
+				':sosialisai' 		=> $_POST['sosial'],
+				':motorik' 			=> $_POST['motorik'],
+				':daya_ingat' 		=> $_POST['daya_ingat'],
+				':kesenian' 		=> $_POST['kesenian'],
+				':mendengarkan' 	=> $_POST['mendengarkan'],
+				':membaca' 			=> $_POST['membaca'],
+				':menulis' 		=> $_POST['menulis'],
+				':tgl'				=> $_POST['tgl'],
+			)
+		);
+
+		updateRaportTotal($connect,$_POST['nis'],$_POST['tahun']);
+
+		$result = $statement->fetchAll();
+		if (isset($result)) {
+			echo 'Nilai Raport berhasil ditambahkan!!';
 		}
 	}
 	/**
@@ -68,15 +64,14 @@ if (isset($_POST['btn_action'])) {
 	 * ====================================
 	 */
 	if ($_POST['btn_action'] == 'fetch_single') {
-		$query = " SELECT tb_perkembangan.*, tb_siswa.nama, tb_siswa.jenis_kelamin, DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir ,
+		$query = " SELECT tb_raport.*, tb_siswa.nama, tb_siswa.jenis_kelamin, DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir , DATE_FORMAT(tb_raport.tgl,'%d %M %Y') as tanggal_raport ,
 			(SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas,
 			(SELECT tb_tahun_ajaran.tahun FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as tahun_ajaran,
 			(SELECT tb_tahun_ajaran.semester FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as semester
-			from tb_perkembangan 
-		    LEFT JOIN tb_siswa on tb_siswa.nis = tb_perkembangan.nis
-			LEFT JOIN tb_pendaftaran on tb_pendaftaran.id_siswa = tb_siswa.id
+			from tb_raport 
+		    LEFT JOIN tb_siswa on tb_siswa.nis = tb_raport.nis
 			LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
-			WHERE tb_siswa.nis IS NOT NULL AND tb_perkembangan.id = :id ";
+			WHERE tb_siswa.nis IS NOT NULL AND tb_raport.id = :id ";
 		$statement = $connect->prepare($query);
 		$statement->execute([
 			':id' => $_POST['id']
@@ -85,13 +80,18 @@ if (isset($_POST['btn_action'])) {
 		// $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
 		foreach ($result as $row) {
 			$output['id'] = $row['id'];
+			$output['tahun'] = $row['tahun'];
 			$output['nip'] = $row['nip'];
 			$output['nis'] = $row['nis'];
 			$output['nama'] = $row['nama'];
 			$output['motorik'] = $row['motorik'];
-			$output['sosial'] = $row['sosial'];
+			$output['sosial'] = $row['sosialisai'];
 			$output['daya_ingat'] = $row['daya_ingat'];
-			$output['aktif'] = $row['aktif'];
+			$output['aktif'] = $row['keaktifan'];
+			$output['membaca'] = $row['membaca'];
+			$output['kesenian'] = $row['kesenian'];
+			$output['mendengarkan'] = $row['mendengarkan'];
+			$output['menulis'] = $row['menulis'];
 			$output['tgl'] = $row['tgl'];
 		}
 		echo json_encode($output);
@@ -104,12 +104,17 @@ if (isset($_POST['btn_action'])) {
 	 * */
 	if ($_POST['btn_action'] == 'Edit') {
 		$query = "
-			UPDATE tb_perkembangan
+			UPDATE tb_raport
 			set nis = :nis,
+			tahun = :tahun,
 			motorik = :motorik,
-			sosial = :sosial,
-			aktif = :aktif,
+			sosialisasi = :sosial,
+			keaktifan = :aktif,
 			daya_ingat = :daya_ingat,
+			kesenian = :kesenian,
+			mendengarkan = :mendengarkan,
+			membaca = :membaca,
+			menulis = :menulis,
 			tgl = :tgl
 			WHERE id = :id
 		";
@@ -117,15 +122,22 @@ if (isset($_POST['btn_action'])) {
 		$statement->execute(
 			array(
 				':nis' 			=> $_POST['nis'],
+				':tahun' 		=> $_POST['tahun'],
 				':motorik' 		=> $_POST['motorik'],
 				':sosial' 		=> $_POST['sosial'],
 				':aktif' 		=> $_POST['aktif'],
 				':daya_ingat' 	=> $_POST['daya_ingat'],
+				':kesenian' 	=> $_POST['kesenian'],
+				':mendengarkan' => $_POST['mendengarkan'],
+				':membaca' 		=> $_POST['membaca'],
+				':menulis' 		=> $_POST['menulis'],
 				':tgl' 			=> $_POST['tgl'],
 				':id'			=> $_POST['id_perkembangan']
 			)
 		);
-		$result = $statement->fetch();
+		updateRaportTotal($connect,$_POST['nis'],$_POST['tahun']);
+		
+		$result = $statement->fetchAll();
 		if (isset($result)) {
 			echo "Perkembangan siswa telah diapdate!";
 		}
@@ -133,12 +145,12 @@ if (isset($_POST['btn_action'])) {
 
 	/**
 	 * ================================
-	 * Change tb_perkembangan status
+	 * Change tb_raport status
 	 * ===============================
 	 */
 	if ($_POST['btn_action'] == 'delete') {
 		$query ="
-			DELETE FROM tb_perkembangan 
+			DELETE FROM tb_raport 
 			WHERE id = :id
 		";
 		$statement = $connect->prepare($query);

@@ -25,7 +25,9 @@ if (!isset($_SESSION['logged_id']) || ($_SESSION['status'] != "guru")) {
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
   <link rel="stylesheet" href="plugins/datatables/buttons.bootstrap.min.css">
+  <link rel="stylesheet" href="plugins/datatables/extensions/FixedColumns/css/fixedColumns.dataTables.min.css">
   <link rel="stylesheet" href="plugins/select2/select2.min.css">
+  <link rel="stylesheet" href="dist/css/app.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

@@ -42,4 +42,52 @@ function getNilaiMotorik($connect, $nis, $tahun,$perkembangan) {
 	}elseif (($average >= 2.4) && ($average <= 3)) {
 		return 'A';
 	}
+
+}
+
+function updateRaportTotal($connect,$nis,$tahun) {
+	$querySelect = "SELECT tb_raport.* FROM tb_raport
+		LEFT JOIN tb_siswa ON tb_siswa.nis = tb_raport.nis
+		LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa 
+		WHERE tb_raport.nis = :nis AND tb_detail_siswa.id_tahun_ajaran = :tahun";
+
+	$sts = $connect->prepare($querySelect);
+	$sts->execute(array(
+		':nis'		=> $nis,
+		':tahun'	=> $tahun
+	));
+	$rs = $sts->fetch(PDO::FETCH_ASSOC);
+	$total = '';
+
+	$count = 8;
+	$all = returnValue($rs['sosialisai']) + returnValue($rs['daya_ingat']) + returnValue($rs['motorik']) + returnValue($rs['keaktifan']) + returnValue($rs['kesenian']) + returnValue($rs['mendengarkan']) + returnValue($rs['membaca']) + returnValue($rs['menulis']);
+	$average = (double)$all / (double)$count;
+
+	if (($average >= 1) && ($average <= 1.6)) {
+		$total = 'C';
+	}elseif (($average >= 1.7) && ($average <= 2.3)) {
+		$total = 'B';
+	}elseif (($average >= 2.4) && ($average <= 3)) {
+		$total = 'A';
+	}
+
+	// Update
+	$queryUpdate = "UPDATE tb_raport
+	SET total_nilai = :total
+	WHERE nis = :nis AND tahun = :tahun";
+	$statementUpdate = $connect->prepare($queryUpdate);
+	$statementUpdate->execute(array(
+		':total'	=> $total,
+		':nis'		=> $nis,
+		':tahun'	=> $tahun
+	));
+}
+
+function returnValue($field) {
+	if ($field == 'A')
+		return 3;
+	elseif ($field == 'B')
+		return 2;
+	elseif ($field == 'C')
+		return 1;
 }

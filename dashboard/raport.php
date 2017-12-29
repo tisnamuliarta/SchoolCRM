@@ -37,23 +37,27 @@
                 <button type="button" name="tampilkan_siswa" id="tampilkan_siswa" class="btn form-control btn-info btn-xs">Tampilkan</button><br><br>
               </div>
               <div class="col-sm-1 pull-right">
-                <button type="button" name="add" id="add_perkembangan_button" class="btn form-control btn-success btn-xs">Add</button><br><br>
+                <button type="button" name="add" id="add_raport_button" class="btn form-control btn-success btn-xs">Add</button><br><br>
               </div>
             </div>
           </div>
           <div class="col-sm-12">
             <div class="table-responsive">
-              <table id="perkembanganTable" class="table table-bordered table-striped">
+              <table id="raportTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>NIS</th>
                   <th>Nama</th>
                   <th>Kelas</th>
-                  <th>Tanggal</th>
                   <th>Sosialisasi</th>
                   <th>Motorik</th>
                   <th>Daya Ingat</th>
                   <th>Keaktifan</th>
+                  <th>Kesenian</th>
+                  <th>Mendengarkan</th>
+                  <th>Membaca</th>
+                  <th>Menulis</th>
+                  <th>Nilai Akhir</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -66,9 +70,9 @@
   </div>
 </div>
 
-<div id="perkembanganModal" class="modal fade">
+<div id="raportModal" class="modal fade">
   <div class="modal-dialog">
-    <form method="post" id="formPerkembangan">
+    <form method="post" id="formRaport">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -173,7 +177,7 @@
                     <label>Kesenian</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="kesenian" id="kesenian" value="A"> A</label></div>
+                    <div class="radio"><label><input required type="radio" name="kesenian" id="kesenian" value="A"> A</label></div>
                   </div>
                   <div class="col-md-1">
                     <div class="radio"><label><input type="radio" name="kesenian" id="kesenian" value="B"> B</label></div>
@@ -191,7 +195,7 @@
                     <label>Mendengarkan</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="mendengarkan" id="mendengarkan" value="A"> A</label></div>
+                    <div class="radio"><label><input required type="radio" name="mendengarkan" id="mendengarkan" value="A"> A</label></div>
                   </div>
                   <div class="col-md-1">
                     <div class="radio"><label><input type="radio" name="mendengarkan" id="mendengarkan" value="B"> B</label></div>
@@ -210,7 +214,7 @@
                     <label>Membaca</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="membaca" id="membaca" value="A"> A</label></div>
+                    <div class="radio"><label><input required type="radio" name="membaca" id="membaca" value="A"> A</label></div>
                   </div>
                   <div class="col-md-1">
                     <div class="radio"><label><input type="radio" name="membaca" id="membaca" value="B"> B</label></div>
@@ -229,7 +233,7 @@
                     <label>Menulis</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="menulis" id="menulis" value="A"> A</label></div>
+                    <div class="radio"><label><input required type="radio" name="menulis" id="menulis" value="A"> A</label></div>
                   </div>
                   <div class="col-md-1">
                     <div class="radio"><label><input type="radio" name="menulis" id="menulis" value="B"> B</label></div>
@@ -246,14 +250,15 @@
             <div class="col-sm-10">
               <label>Ket.</label>
             </div>
-            <div class="col-md-4"><span>A : 75-100</span></div>
-            <div class="col-md-4"><span>B : 50-74</span></div>
-            <div class="col-md-4"><span>C : 0-49</span></div>
+            <div class="col-md-4"><span>A : 2.4-3.0</span></div>
+            <div class="col-md-4"><span>B : 1.7-2.3</span></div>
+            <div class="col-md-4"><span>C : 1.0-1.6</span></div>
           </div>
         </div>
         <div class="modal-footer">
-          <input type="hidden" name="id_perkembangan" id="id_perkembangan" />
+          <input type="hidden" name="id_raport" id="id_raport" />
           <input type="hidden" name="btn_action" id="btn_action" />
+          <input type="hidden" name="tgl" id="tgl" value="<?php echo date('Y-m-d') ?>">
           <input type="submit" name="action" id="action" class="btn btn-info" value="Add" />
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
@@ -291,20 +296,20 @@
      * ===================================
      */
     fetchData('no');
-    function fetchData(isSearch,kelas='',tahunAjaran='',tgl_perkembangan_mulai='',tgl_perkembangan_akhir=''){
-      var perkembanganTable = $('#perkembanganTable').DataTable({
+    function fetchData(isSearch,kelas='',tahunAjaran=''){
+      var raportTable = $('#raportTable').DataTable({
         "processing":true,
         "serverSide":true,
         "order":[],
         "ajax":{
-          url: "../controller/data/perkembangan.php",
-          type: "POST",
-          data:{kegiatan: "ta",isSearch:isSearch,kelas:kelas,tahunAjaran:tahunAjaran,tgl_perkembangan_mulai:tgl_perkembangan_mulai,tgl_perkembangan_akhir:tgl_perkembangan_akhir}
+          url: "../controller/data/dataraport.php",
+          type: "GET",
+          data:{kegiatan: "ta",isSearch:isSearch,kelas:kelas,tahunAjaran:tahunAjaran}
         },
         "columnDefs":[
-          {"targets":1,"width":"20%"},
+          { "width": "20%", "targets": 0 },
           {
-            "targets":[8],
+            "targets":[12],
             "orderable":false,
           },
         ],
@@ -318,7 +323,7 @@
       var tgl_perkembangan_mulai = $('#tgl_perkembangan_mulai').val();
       var tgl_perkembangan_akhir = $('#tgl_perkembangan_akhir').val();
       if (kelas != '' && tahun_ajaran != '') {
-        $('#perkembanganTable').DataTable().destroy();
+        $('#raportTable').DataTable().destroy();
         fetchData('yes',kelas,tahun_ajaran,tgl_perkembangan_mulai,tgl_perkembangan_akhir);
       }else{
         alert("Tanggal diperlukan untuk pencarian data");
@@ -326,9 +331,9 @@
     })
 
     // Add perkembangan button
-    $('#add_perkembangan_button').click(function(){
-      $('#perkembanganModal').modal('show');
-      $('#formPerkembangan')[0].reset();
+    $('#add_raport_button').click(function(){
+      $('#raportModal').modal('show');
+      $('#formRaport')[0].reset();
       $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Nilai Perkembangan");
       $('#action').val('Add');
       $('#btn_action').val('Add');
@@ -392,43 +397,50 @@
     }
 
     // ============= save data ======
-    $(document).on('submit','#formPerkembangan', function(e){
+    $(document).on('submit','#formRaport', function(e){
       e.preventDefault();
       $('#action').attr('disabled','disabled');
       var formData = $(this).serialize();
       $.ajax({
-        url: "../controller/perkembanganaction.php",
+        url: "../controller/reportAction.php",
         method: "POST",
         data: formData,
         success: function(data){
-          $('#formPerkembangan')[0].reset();
-          $('#perkembanganModal').modal('hide');
+          $('#formRaport')[0].reset();
+          $('#raportModal').modal('hide');
           $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
           $('#action').attr('disabled', false);
-          $('#perkembanganTable').DataTable().ajax.reload();
+          $('#raportTable').DataTable().ajax.reload();
         }
       })
     });
     // ============= Display single data and update
-    $(document).on('click','.update-perkembangan',function(){
+    $(document).on('click','.update-raport',function(){
       var id = $(this).attr("id");
-      $('.modal-user-title').html("<i class='fa fa-plus'></i> Edit Perkembangan Siswa");
+      $('.modal-user-title').html("<i class='fa fa-plus'></i> Edit Raport");
       var btn_action = 'fetch_single';
       $.ajax({
-        url: '../controller/perkembanganaction.php',
+        url: '../controller/reportAction.php',
         method: 'POST',
         data: { id:id, btn_action:btn_action },
         dataType: 'json',
         success: function(data){
-          $('#perkembanganModal').modal('show');
-          $('#nis').val(data.nis);
+          $('#raportModal').modal('show');
+          $('select[name="tahun"] option[value="'+data.tahun+'"]').prop('selected','selected');
+          getSiswaNISByTahun(data.tahun, 'load_nis_by_semester');
+          $('select[name="nis"] option[value="'+data.nis+'"]').prop('selected','selected');
+          // $('#nis').val(data.nis);
           $('#nama').val(data.nama);
           $('#tgl').val(data.tgl);
-          $('input[name="sosial"][value="'+data.sosial+'"]').prop('checked',true);
-          $('input[name="motorik"][value="'+data.motorik+'"]').prop('checked',true);
-          $('input[name="aktif"][value="'+data.aktif+'"]').prop('checked',true);
-          $('input[name="daya_ingat"][value="'+data.daya_ingat+'"]').prop('checked',true);
-          $('#id_perkembangan').val(id)
+          $('#sosial').val(data.sosial);
+          $('#motorik').val(data.motorik);
+          $('#aktif').val(data.aktif);
+          $('#daya_ingat').val(data.daya_ingat);
+          $('input[name="kesenian"][value="'+data.kesenian+'"]').prop('checked',true);
+          $('input[name="membaca"][value="'+data.membaca+'"]').prop('checked',true);
+          $('input[name="mendengarkan"][value="'+data.mendengarkan+'"]').prop('checked',true);
+          $('input[name="menulis"][value="'+data.menulis+'"]').prop('checked',true);
+          $('#id_raport').val(id)
           $('#action').val("Edit");
           $('#btn_action').val("Edit");
         }
@@ -441,12 +453,12 @@
       var btn_action = 'delete';
       if (confirm("Anda yakin akan menghapus data ini?")) {
         $.ajax({
-          url: '../controller/perkembanganaction.php',
+          url: '../controller/reportAction.php',
           method: 'POST',
           data: {id: id, btn_action:btn_action},
           success: function(data) {
             $('#alert_action').fadeIn().html('<div class="alert alert-info alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>')
-            $('#perkembanganTable').DataTable().ajax.reload();
+            $('#raportTable').DataTable().ajax.reload();
           }
         })
       }else {
