@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 28, 2017 at 04:56 PM
+-- Generation Time: Dec 29, 2017 at 03:27 PM
 -- Server version: 5.7.18
 -- PHP Version: 5.6.31
 
@@ -352,7 +352,7 @@ INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `aktif`, `sosial`, `motorik`,
 (9, '1010101', '0002', 'B', 'B', 'A', 'A', '2017-12-08'),
 (10, '1010101', '0003', 'C', 'B', 'A', 'A', '2017-12-08'),
 (11, '1010101', '0004', 'B', 'B', 'A', 'A', '2017-12-08'),
-(12, '1010101', '0005', 'B', 'C', 'A', 'B', '2017-12-08'),
+(12, '1010101', '0005', 'B', 'C', 'B', 'B', '2017-12-08'),
 (13, '1010101', '0001', 'B', 'B', 'B', 'A', '2017-12-15'),
 (14, '1010101', '0002', 'C', 'B', 'A', 'B', '2017-12-15'),
 (15, '1010101', '0003', 'B', 'B', 'A', 'B', '2017-12-15'),
@@ -367,7 +367,7 @@ INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `aktif`, `sosial`, `motorik`,
 (25, '1010101', '0002', 'B', 'B', 'A', 'A', '2017-12-29'),
 (26, '1010101', '0003', 'A', 'B', 'A', 'A', '2017-12-29'),
 (27, '1010101', '0004', 'B', 'A', 'B', 'B', '2017-12-29'),
-(28, '1010101', '0005', 'B', 'B', 'A', 'A', '2017-12-29');
+(28, '1010101', '0005', 'B', 'B', 'B', 'A', '2017-12-29');
 
 -- --------------------------------------------------------
 
@@ -388,8 +388,16 @@ CREATE TABLE `tb_raport` (
   `mendengarkan` varchar(3) DEFAULT NULL,
   `membaca` varchar(3) DEFAULT NULL,
   `menulis` varchar(3) DEFAULT NULL,
-  `total_nilai` varchar(3) DEFAULT NULL
+  `total_nilai` varchar(3) DEFAULT NULL,
+  `tgl` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_raport`
+--
+
+INSERT INTO `tb_raport` (`id`, `tahun`, `nip`, `nis`, `sosialisai`, `daya_ingat`, `motorik`, `keaktifan`, `kesenian`, `mendengarkan`, `membaca`, `menulis`, `total_nilai`, `tgl`) VALUES
+(3, 6, '1010101', '0001', 'B', 'A', 'A', 'A', 'A', 'B', 'B', 'C', 'B', '2017-12-29');
 
 -- --------------------------------------------------------
 
@@ -731,12 +739,12 @@ ALTER TABLE `tb_pendaftaran`
 -- AUTO_INCREMENT for table `tb_perkembangan`
 --
 ALTER TABLE `tb_perkembangan`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `tb_raport`
 --
 ALTER TABLE `tb_raport`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tb_riwayat_kelas`
 --
