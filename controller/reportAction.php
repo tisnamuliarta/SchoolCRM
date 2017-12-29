@@ -17,15 +17,31 @@ function getNilaiMotorik($connect, $nis, $tahun) {
 		LEFT JOIN tb_detail_siswa ON tb_detail_siswa.id_siswa = tb_siswa.id
 		LEFT JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran
 		LEFT JOIN tb_kelas ON tb_kelas.id = tb_detail_siswa.id_kelas
-		WHERE tb_siswa.nis IS NOT NULL AND tb_detail_siswa.id_kelas = :id_kelas AND tb_detail_siswa.id_tahun_ajaran = :id_tahun_ajaran AND tgl BETWEEN tb_tahun_ajaran.tgl_mulai AND tb_tahun_ajaran.tgl_selesai ';
+		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.nis = :nis  AND tb_detail_siswa.id_tahun_ajaran = :id_tahun_ajaran AND tgl BETWEEN tb_tahun_ajaran.tgl_mulai AND tb_tahun_ajaran.tgl_selesai ';
 
 	$statement = $connect->prepare($query);
 	$statement->execute(array(
-		':id_kelas'			=> $id_kelas,
-		':id_tahun_ajaran'	=> $id_tahun_ajaran,
-		':start_date'		=> $start_date,
-		':end_date'			=> $end_date
+		':nis'				=> $nis,
+		':id_tahun_ajaran'	=> $tahun
 	));
+
+	$result = $statement->fetch(PDO::FETCH_ASSOC);
+	$final = [];
+	$final['motorik_a'] = $result['motorik_a'];
+	$final['motorik_b'] = $result['motorik_b'];
+	$final['motorik_c'] = $result['motorik_c'];
+
+	$count = $final['motorik_a'] + $final['motorik_b'] + $final['motorik_c'];
+	$all = (3 * $final['motorik_a']) + (2 * $final['motorik_b']) + (1 * $final['motorik_c']);
+	$average = $all / $count;
+
+	if (($average >= 1) && ($average <= 1.6)) {
+		return 'C';
+	}elseif (($average >= 1.7) && ($average <= 2.3)) {
+		return 'B';
+	}elseif (($average >= 2.4) && ($average <= 3)) {
+		return 'B';
+	}
 }
 
 
@@ -36,6 +52,7 @@ if (isset($_GET['btn_action'])) {
 
 	if ($_GET['btn_action'] == 'fill_blank_input') {
 		$motorik = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun']);
+		echo json_encode(['motorik' => $motorik]);
 	}
 }
 

@@ -332,7 +332,6 @@
       $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Nilai Perkembangan");
       $('#action').val('Add');
       $('#btn_action').val('Add');
-      console.log($('#tahun_ajaran').val())
     });
     // on change select nis
     $('#tahun').change(function(){
@@ -379,7 +378,7 @@
         method: 'GET',
         data: {nis:nis,btn_action:btn_action,tahun:tahun},
         success: function(data) {
-
+          console.log(data.motorik)
         }
       });
     }
