@@ -5,6 +5,14 @@ function selectData($connect,$table){
 	return $statement->execute();
 }
 
+function getActivity($connect) {
+	$query = "SELECT tb_kegiatan.*, DATE_FORMAT(tb_kegiatan.tgl,'%d %M %Y') as tanggal_kegiatan FROM tb_kegiatan";
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	return $result;
+}
+
 function getListPekerjaan($connect) {
 	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$query = "SELECT * FROM tb_pekerjaan ORDER BY pekerjaan ASC";

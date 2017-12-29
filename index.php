@@ -41,7 +41,7 @@ if (isset($_POST['login'])) {
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-lg-12 col-xs-12">
+    <div class="col-md-12">
       <box class="box box-solid">
         <div class="box-body">
           <div class="jumbotron container-fluid">
@@ -83,8 +83,37 @@ if (isset($_POST['login'])) {
     </div>
     <div class="col-md-9">
       <div class="box box-solid">
+        <div class="box-header with-border">
+          <div class="box-title"><h2>Kegiatan</h2></div>
+        </div>
         <div class="box-body">
-          Login
+          <?php  
+            $kegiatan = getActivity($connect);
+          ?>
+          <section class="content">
+            <div class="row">
+              <div class="col-md-12">
+                  <ul class="timeline">
+                  <?php foreach ($kegiatan as $row): ?>
+                    <li class="time-label">
+                      <span class="bg-red">
+                        <?php echo $row['tanggal_kegiatan'] ?>
+                      </span>
+                    </li>
+                    <li>
+                      <div class="timeline-item">
+                        <h3 class="timeline-header"><?php echo $row['nama'] ?></h3>
+                        <div class="timeline-body">
+                          <?php echo $row['deskripsi'] ?>
+                        </div>
+                      </div>
+                    </li>
+                  <?php endforeach ?>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
         </div>
       </div>
     </div>
