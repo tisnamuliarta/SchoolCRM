@@ -29,7 +29,7 @@
 
 <?php else: ?>
   <header class="main-header">
-    <a href="index.php" class="logo">
+    <a href="" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>TK</b>SP</span>
       <!-- logo for regular state and mobile devices -->

@@ -11,7 +11,6 @@
 <script src="dashboard/dist/js/moment.min.js"></script>
 <script src="dashboard/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="dashboard/plugins/datepicker/bootstrap-datepicker.js"></script>
-<script src="dashboard/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script src="dashboard/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <script src="dashboard/plugins/fastclick/fastclick.js"></script>
 <script src="dashboard/dist/js/app.min.js"></script>

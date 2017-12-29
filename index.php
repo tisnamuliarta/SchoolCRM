@@ -1,17 +1,92 @@
 <?php require 'partials/head.php'; ?>
 
-<div class="row">
-  <div class="col-lg-12 col-xs-12">
-    <!-- small box -->
-    <div class="small-box bg-aqua">
-      <div class="inner">
+<?php  
+$message = "";
+$oldUsername = "";
+if (isset($_POST['login'])) {
+  $_SESSION['oldUsername'] = $_POST['username'];
+  $oldUsername = $_POST['username'];
+  $query = "SELECT * FROM tb_ortu WHERE username = :username";
+  $statement = $connect->prepare($query);
+  $statement->execute([
+    'username' => $_POST['username']
+  ]);
+  $count = $statement->rowCount();
+  if ($count > 0) {
+    $result = $statement->fetchAll();
+    foreach ($result as $row) {
+      if ($row['status'] == 'active') {
+        if (password_verify($_POST['password'], $row['password'])) {
+          $_SESSION['logged_id'] = true;
+          $_SESSION['id'] = $row['id'];
+          $_SESSION['nama_ayah'] = $row['nama_ayah'];
+          $_SESSION['nama_ibu'] = $row['nama_ibu'];
+          $_SESSION['email'] = $row['email'];
+          $_SESSION['username'] = $row['username'];
+          $_SESSION['status'] = 'ortu';
+          header("location: dashboard/index-ortu.php");
+        }else {
+          $message = "<label class='text-danger'>Password salah!</label>";
+        }
+      }else {
+        $message = "<label class='text-danger'>Akun anda telah di nonaktifkan</label>";
+      }
+    }
+  }else {
+    $message = "<label class='text-danger'>Username salah!</label>";
+  }
+}
 
-        <p>Root</p>
+?>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 col-xs-12">
+      <box class="box box-solid">
+        <div class="box-body">
+          <div class="jumbotron container-fluid">
+            <h1>TK SINAR PRIMA</h1> 
+            <p>Ayo sekolah di TK Sinar Prima.</p> 
+          </div>
+        </div>
+      </box>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3">
+      <div class="box box-solid">
+        <div class="box-header">
+          <span class="box-title">Login</span>
+        </div>
+        <div class="box-body">
+          <form method="post">
+            <?php echo $message; ?>
+            <div class="form-group has-feedback">
+              <input type="text" name="username" required class="form-control" placeholder="Username" >
+              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+              <input type="password" name="password" class="form-control" placeholder="Password" required>
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+              <div class="col-xs-8">
+              </div>
+              <div class="col-xs-4">
+                <button type="submit" name="login" class="btn btn-primary btn-block btn-flat">Login</button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="icon">
-        <i class="ion ion-bag"></i>
+    </div>
+    <div class="col-md-9">
+      <div class="box box-solid">
+        <div class="box-body">
+          Login
+        </div>
       </div>
-      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
     </div>
   </div>
 </div>
