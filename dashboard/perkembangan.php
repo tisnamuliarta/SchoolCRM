@@ -53,10 +53,10 @@
                   <th>Nama</th>
                   <th>Kelas</th>
                   <th>Tanggal</th>
-                  <th>Sosialisasi</th>
+                  <th>Pembiasaan</th>
+                  <th>Bahasa</th>
+                  <th>Daya Fikir</th>
                   <th>Motorik</th>
-                  <th>Daya Ingat</th>
-                  <th>Keaktifan</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -136,25 +136,73 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-4">
-                    <label>Sosialisasi</label>
+                    <label>Pembiasaan</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="sosial" id="sosial" value="A"> A</label></div>
+                    <div class="radio"><label><input type="radio" name="pembiasaan" id="pembiasaan" value="A"> A</label></div>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="sosial" id="sosial" value="B"> B</label></div>
+                    <div class="radio"><label><input type="radio" name="pembiasaan" id="pembiasaan" value="B"> B</label></div>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="sosial" id="sosial" value="C"> C</label></div>
+                    <div class="radio"><label><input type="radio" name="pembiasaan" id="pembiasaan" value="C"> C</label></div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="radio"><label><input type="radio" name="pembiasaan" id="pembiasaan" value="D"> D</label></div>
                   </div>
                 </div>
               </div>
             </div>
+
             <div class="col-sm-12" style="margin-top: -25px;">
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-4">
-                    <label>Motorik</label>
+                    <label>Bahasa</label>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="radio"><label><input type="radio" name="bahasa" id="bahasa" value="A"> A</label></div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="radio"><label><input type="radio" name="bahasa" id="bahasa" value="B"> B</label></div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="radio"><label><input type="radio" name="bahasa" id="bahasa" value="C"> C</label></div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="radio"><label><input type="radio" name="bahasa" id="bahasa" value="D"> D</label></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12" style="margin-top: -25px;">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label>Daya Fikir/Daya Cipta</label>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="radio"><label><input type="radio" name="daya_fikir" id="daya_fikir" value="A"> A</label></div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="radio"><label><input type="radio" name="daya_fikir" id="daya_fikir" value="B"> B</label></div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="radio"><label><input type="radio" name="daya_fikir" id="daya_fikir" value="C"> C</label></div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="radio"><label><input type="radio" name="daya_fikir" id="daya_fikir" value="D"> D</label></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12" style="margin-top: -25px;">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label>Fisik/Motorik</label>
                   </div>
                   <div class="col-md-1">
                     <div class="radio"><label><input type="radio" name="motorik" id="motorik" value="A"> A</label></div>
@@ -165,56 +213,23 @@
                   <div class="col-md-1">
                     <div class="radio"><label><input type="radio" name="motorik" id="motorik" value="C"> C</label></div>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-sm-12" style="margin-top: -25px;">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-4">
-                    <label>Daya Ingat</label>
-                  </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="daya_ingat" id="daya_ingat" value="A"> A</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="daya_ingat" id="daya_ingat" value="B"> B</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="daya_ingat" id="daya_ingat" value="C"> C</label></div>
+                    <div class="radio"><label><input type="radio" name="motorik" id="motorik" value="D"> D</label></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="col-sm-12" style="margin-top: -25px;">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-4">
-                    <label>Keaktifan</label>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="aktif" id="aktif" value="A"> A</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="aktif" id="aktif" value="B"> B</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="aktif" id="aktif" value="C"> C</label></div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
           
           <div class="row">
             <div class="col-sm-10">
               <label>Ket.</label>
             </div>
-            <div class="col-md-4"><span>A : 75-100</span></div>
-            <div class="col-md-4"><span>B : 50-74</span></div>
-            <div class="col-md-4"><span>C : 0-49</span></div>
+            <div class="col-md-3"><span>A : 3.28-4.03</span></div>
+            <div class="col-md-3"><span>B : 2.52-3.27</span></div>
+            <div class="col-md-3"><span>C : 1.76-2.51</span></div>
+            <div class="col-md-3"><span>D : 1.00-1.75</span></div>
           </div>
         </div>
         <div class="modal-footer">
@@ -345,10 +360,10 @@
           $('#nis').val(data.nis);
           $('#nama').val(data.nama);
           $('#tgl').val(data.tgl);
-          $('input[name="sosial"][value="'+data.sosial+'"]').prop('checked',true);
+          $('input[name="pembiasaan"][value="'+data.pembiasaan+'"]').prop('checked',true);
+          $('input[name="bahasa"][value="'+data.bahasa+'"]').prop('checked',true);
+          $('input[name="daya_fikir"][value="'+data.daya_fikir+'"]').prop('checked',true);
           $('input[name="motorik"][value="'+data.motorik+'"]').prop('checked',true);
-          $('input[name="aktif"][value="'+data.aktif+'"]').prop('checked',true);
-          $('input[name="daya_ingat"][value="'+data.daya_ingat+'"]').prop('checked',true);
           $('#id_perkembangan').val(id)
           $('#action').val("Edit");
           $('#btn_action').val("Edit");

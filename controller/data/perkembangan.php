@@ -62,10 +62,10 @@ foreach ($result as $row) {
 	$sub_array[] = $row['nama'];
 	$sub_array[] = $row['kelas'];
 	$sub_array[] = $row['tanggal_perkembangan'];
-	$sub_array[] = $row['sosial'];
+	$sub_array[] = $row['pembiasaan'];
+	$sub_array[] = $row['bahasa'];
+	$sub_array[] = $row['daya_fikir'];
 	$sub_array[] = $row['motorik'];
-	$sub_array[] = $row['daya_ingat'];
-	$sub_array[] = $row['aktif'];
 	$sub_array[] = $button;
 	$data[] = $sub_array;
 }

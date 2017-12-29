@@ -26,11 +26,11 @@ if (isset($_POST['btn_action'])) {
 		));
 		$count = $sc->rowCount();
 		if ($count > 0) {
-			echo "Ups terjadi kesalahan!! Penilaian hanya boleh sekali dalam seminggu!";
+			echo "Ups terjadi kesalahan!! Penilaian hanya boleh sekali dalam sehari!";
 		}else {
 			$query = "
-				INSERT INTO tb_perkembangan (nip,nis,aktif,sosial,motorik,daya_ingat,tgl) 
-				VALUES (:nip,:nis,:aktif,:sosial,:motorik,:daya_ingat,:tgl)
+				INSERT INTO tb_perkembangan (nip,nis,pembiasaan,bahasa,daya_fikir,motorik,tgl) 
+				VALUES (:nip,:nis,:pembiasaan,:bahasa,:daya_fikir,:motorik,:tgl)
 			";
 			// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$statement = $connect->prepare($query);
@@ -38,10 +38,10 @@ if (isset($_POST['btn_action'])) {
 				array(
 					':nip' 			=> $_SESSION['nip'],
 					':nis' 			=> $_POST['nis'],
-					':aktif' 		=> $_POST['aktif'],
-					':sosial' 		=> $_POST['sosial'],
-					':motorik' 		=> $_POST['motorik'],
-					':daya_ingat' 	=> $_POST['daya_ingat'],
+					':pembiasaan' 		=> $_POST['pembiasaan'],
+					':bahasa' 		=> $_POST['bahasa'],
+					':daya_fikir' 		=> $_POST['daya_fikir'],
+					':motorik' 	=> $_POST['motorik'],
 					':tgl'			=> $_POST['tgl'],
 				)
 			);
@@ -77,10 +77,10 @@ if (isset($_POST['btn_action'])) {
 			$output['nip'] = $row['nip'];
 			$output['nis'] = $row['nis'];
 			$output['nama'] = $row['nama'];
+			$output['daya_fikir'] = $row['daya_fikir'];
+			$output['bahasa'] = $row['bahasa'];
 			$output['motorik'] = $row['motorik'];
-			$output['sosial'] = $row['sosial'];
-			$output['daya_ingat'] = $row['daya_ingat'];
-			$output['aktif'] = $row['aktif'];
+			$output['pembiasaan'] = $row['pembiasaan'];
 			$output['tgl'] = $row['tgl'];
 		}
 		echo json_encode($output);
@@ -95,10 +95,10 @@ if (isset($_POST['btn_action'])) {
 		$query = "
 			UPDATE tb_perkembangan
 			set nis = :nis,
+			daya_fikir = :daya_fikir,
+			bahasa = :bahasa,
+			pembiasaan = :pembiasaan,
 			motorik = :motorik,
-			sosial = :sosial,
-			aktif = :aktif,
-			daya_ingat = :daya_ingat,
 			tgl = :tgl
 			WHERE id = :id
 		";
@@ -106,10 +106,10 @@ if (isset($_POST['btn_action'])) {
 		$statement->execute(
 			array(
 				':nis' 			=> $_POST['nis'],
-				':motorik' 		=> $_POST['motorik'],
-				':sosial' 		=> $_POST['sosial'],
-				':aktif' 		=> $_POST['aktif'],
-				':daya_ingat' 	=> $_POST['daya_ingat'],
+				':daya_fikir' 		=> $_POST['daya_fikir'],
+				':bahasa' 		=> $_POST['bahasa'],
+				':pembiasaan' 		=> $_POST['pembiasaan'],
+				':motorik' 	=> $_POST['motorik'],
 				':tgl' 			=> $_POST['tgl'],
 				':id'			=> $_POST['id_perkembangan']
 			)
