@@ -20,7 +20,7 @@
         <div class="box-body">
           <div class="box-group" id="accordion">
             <?php foreach ($result as $row): ?>
-              <div class="panel box box-info">
+              <div class="panel box box-solid">
                 <div class="box-header with-border">
                   <h4 class="box-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $idx ?>">

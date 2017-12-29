@@ -5,6 +5,21 @@ function selectData($connect,$table){
 	return $statement->execute();
 }
 
+function getListSiswaByOrtu($connect,$id_ortu) {
+	$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query = "SELECT * FROM tb_siswa WHERE id_ortu = :id_ortu ORDER BY nama  ASC";
+	$statement = $connect->prepare($query);
+	$statement->execute(array(
+		':id_ortu'	=> $id_ortu
+	));
+	$result = $statement->fetchAll();
+	$output = '';
+	foreach ($result as $row) {
+		$output .= '<option value="'.$row['nis'].'" >'.$row['nama'].'</option>' ;
+	}
+	return $output;
+}
+
 function getActivity($connect) {
 	$query = "SELECT tb_kegiatan.*, DATE_FORMAT(tb_kegiatan.tgl,'%d %M %Y') as tanggal_kegiatan FROM tb_kegiatan";
 	$statement = $connect->prepare($query);
