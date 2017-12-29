@@ -1,48 +1,10 @@
 <?php  
 include '../connection.php';
 include 'function.php';
+include 'data/reportaction.php';
 
 $isSame = false;
 $output = [];
-
-
-function getNilaiMotorik($connect, $nis, $tahun) {
-	$query = '
-		SELECT 
-		SUM(motorik="A") as motorik_a, 
-		SUM(motorik="B") as motorik_b, 
-		SUM(motorik="C") as motorik_c 
-		FROM tb_perkembangan 
-		LEFT JOIN tb_siswa ON tb_perkembangan.nis = tb_siswa.nis
-		LEFT JOIN tb_detail_siswa ON tb_detail_siswa.id_siswa = tb_siswa.id
-		LEFT JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran
-		LEFT JOIN tb_kelas ON tb_kelas.id = tb_detail_siswa.id_kelas
-		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.nis = :nis  AND tb_detail_siswa.id_tahun_ajaran = :id_tahun_ajaran AND tgl BETWEEN tb_tahun_ajaran.tgl_mulai AND tb_tahun_ajaran.tgl_selesai ';
-
-	$statement = $connect->prepare($query);
-	$statement->execute(array(
-		':nis'				=> $nis,
-		':id_tahun_ajaran'	=> $tahun
-	));
-
-	$result = $statement->fetch(PDO::FETCH_ASSOC);
-	$final = [];
-	$final['motorik_a'] = $result['motorik_a'];
-	$final['motorik_b'] = $result['motorik_b'];
-	$final['motorik_c'] = $result['motorik_c'];
-
-	$count = $final['motorik_a'] + $final['motorik_b'] + $final['motorik_c'];
-	$all = (3 * $final['motorik_a']) + (2 * $final['motorik_b']) + (1 * $final['motorik_c']);
-	$average = $all / $count;
-
-	if (($average >= 1) && ($average <= 1.6)) {
-		return 'C';
-	}elseif (($average >= 1.7) && ($average <= 2.3)) {
-		return 'B';
-	}elseif (($average >= 2.4) && ($average <= 3)) {
-		return 'B';
-	}
-}
 
 
 if (isset($_GET['btn_action'])) {
@@ -51,8 +13,11 @@ if (isset($_GET['btn_action'])) {
 	}
 
 	if ($_GET['btn_action'] == 'fill_blank_input') {
-		$motorik = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun']);
-		echo json_encode(['motorik' => $motorik]);
+		$motorik = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'motorik');
+		$sosialisasi = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'sosial');
+		$keaktifan = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'aktif');
+		$daya_ingat = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'daya_ingat');
+		echo json_encode(['motorik' => $motorik,'sosialisasi' => $sosialisasi,'keaktifan' => $keaktifan, 'daya_ingat' => $daya_ingat ]);
 	}
 }
 

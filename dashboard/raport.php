@@ -339,6 +339,10 @@
       var btn_action = 'load_nis_by_semester';
       getSiswaNISByTahun(tahun, btn_action);
       $('#nama').val("")
+      $('#sosial').val("")
+      $('#daya_ingat').val("")
+      $('#motorik').val("")
+      $('#aktif').val("")
     })
 
     $('#nis').change(function(){
@@ -378,7 +382,11 @@
         method: 'GET',
         data: {nis:nis,btn_action:btn_action,tahun:tahun},
         success: function(data) {
-          console.log(data.motorik)
+          var result = $.parseJSON(data);
+          $('#sosial').val(result.sosialisasi)
+          $('#daya_ingat').val(result.daya_ingat)
+          $('#motorik').val(result.motorik)
+          $('#aktif').val(result.keaktifan)
         }
       });
     }
