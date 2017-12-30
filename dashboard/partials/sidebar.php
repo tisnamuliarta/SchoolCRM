@@ -98,10 +98,10 @@
         <li id="link-sidebar"><a href="siswa-baru.php"><i class="fa fa-users"></i> 
           <span>Daftar Siswa Baru</span></a>
         </li>
-        <li id="link-sidebar"><a href="hasil-belajar.php"><i class="fa fa-book"></i> 
+        <li id="link-sidebar"><a href="buku-penghubung.php"><i class="fa fa-book"></i> 
           <span>Buku Penghubung</span></a>
         </li>
-        <li id="link-sidebar"><a href="buku-penghubung.php"><i class="fa fa-star"></i> 
+        <li id="link-sidebar"><a href="hasil-belajar.php"><i class="fa fa-star"></i> 
           <span>Hasil Belajar</span></a>
         </li>
         <li id="link-sidebar"><a href="pengaturan-akun.php"><i class="fa fa-gears"></i> 

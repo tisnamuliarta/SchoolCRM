@@ -15,6 +15,8 @@
               <br><br>
             </div>
           </div>
+        </div>
+        <div class="row">
           <div class="col-sm-12">
             <div class="table-responsive">
               <table id="gurutable" class="table table-bordered table-striped">

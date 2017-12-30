@@ -19,6 +19,8 @@
               <br><br>
             </div>
           </div>
+        </div>
+        <div class="row">
           <div class="col-sm-12">
             <table id="diskonTable" class="table table-bordered table-striped">
               <thead>

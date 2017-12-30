@@ -15,19 +15,25 @@
               <br><br>
             </div>
           </div>
+        </div>
+        <div class="row">
+        </div>
+        <div class="row">
           <div class="col-sm-12">
-            <table id="kegiatanTable" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>NO</th>
-                <th>Nama</th>
-                <th>Deskripsi</th>
-                <th>Tanggal</th>
-                <th></th>
-                <th></th>
-              </tr>
-              </thead>
-            </table>
+            <div class="table-responsive">
+              <table id="kegiatanTable" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>NO</th>
+                  <th>Nama</th>
+                  <th>Deskripsi</th>
+                  <th>Tanggal</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                </thead>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -122,7 +128,7 @@
           data:{kegiatan: "ta"}
         },
         "columnDefs":[
-          {"targets":3,"width":"20%"},
+          {"targets":2,"width":"500"},
           {
             "targets":[0,4,5],
             "orderable":false,

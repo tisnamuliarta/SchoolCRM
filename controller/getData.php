@@ -38,6 +38,90 @@ if (isset($_POST['kelas']))
 if (isset($_POST['daftarsiswa']))
 	getDaftarSiswaDatatable($connect);
 
+if (isset($_GET['hasilBelajar']))
+	getHasilBelajarSiswaDatatable($connect);
+
+function getHasilBelajarSiswaDatatable($connect) {
+	$query = '';
+	$id_ortu = $_GET['id_ortu'];
+	$tahunAjaran = $_GET['tahun_ajaran'];
+	$nis = $_GET['nis'];
+
+	$output = [];
+	$query .= " 
+		SELECT tb_siswa.nama, tb_raport.*, 
+			(SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas,
+			(SELECT tb_tahun_ajaran.tahun FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as tahun_ajaran,
+			(SELECT tb_tahun_ajaran.semester FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as semester
+		from tb_raport
+		LEFT JOIN tb_siswa ON tb_siswa.nis = tb_raport.nis
+		LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
+		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.id_ortu = $id_ortu
+	";
+	if ($_GET['isSearch'] == 'yes') {
+		$query .= " AND tb_detail_siswa.id_tahun_ajaran = $tahunAjaran AND tb_siswa.nis = $nis ";
+	}
+
+	if (isset($_GET["search"]["value"])) {
+		$query .= 'AND concat(tb_siswa.nama,"",tb_raport.nis)  LIKE "%'.$_GET["search"]["value"].'%" ';
+	}
+	if (isset($_GET["order"])) {
+		$query .= 'ORDER BY '.$_GET['order']['0']['column'].' '.$_GET['order']['0']['dir'].' ';
+	}else {
+		$query .= 'ORDER BY tb_raport.id ASC ';
+	}
+	if ($_GET["length"] != -1) {
+		$query .= 'LIMIT ' . $_GET['start'] . ', ' . $_GET['length'];
+	}
+
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$data = [];
+	$filtered_rows = $statement->rowCount();
+	$start = $_REQUEST['start'];
+	$idx = 0;
+	foreach ($result as $row) {
+		$idx++;
+		$sub_array = [];
+		$sub_array[] = $idx;
+		$sub_array[] = $row['nis'];
+		$sub_array[] = $row['nama'];
+		$sub_array[] = $row['kelas'];
+		$sub_array[] = $row['tahun_ajaran'];
+		$sub_array[] = $row['semester'];
+		$sub_array[] = $row['pembiasaan'];
+		$sub_array[] = $row['bahasa'];
+		$sub_array[] = $row['daya_fikir'];
+		$sub_array[] = $row['motorik'];
+		$sub_array[] = $row['total_nilai'];
+		$sub_array[] = $row['keterangan'];
+		$data[] = $sub_array;
+	}
+
+	$output = [
+		"draw" => intval($_GET["draw"]),
+		"recordsTotal" => $filtered_rows,
+		"recordsFiltered"  => get_total_hasil_belajar_siswa($connect,$id_ortu,$tahunAjaran,$nis,$_GET['isSearch']),
+		"data" => $data
+	];
+
+	echo json_encode($output);
+}
+
+function get_total_hasil_belajar_siswa($connect,$id_ortu,$tahunAjaran,$nis,$isSearch){
+	$query = "SELECT tb_raport.* FROM tb_raport 
+		LEFT JOIN  tb_siswa ON tb_siswa.nis = tb_raport.nis 
+		LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
+		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.id_ortu = $id_ortu";
+	if ($isSearch == 'yes') {
+		$query .= " AND tb_detail_siswa.id_tahun_ajaran = $tahunAjaran AND tb_siswa.nis = $nis ";
+	}
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	return $statement->rowCount();
+}
+
 
 function getDaftarSiswaDatatable($connect) {
 	$query = '';
