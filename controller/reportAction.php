@@ -13,11 +13,11 @@ if (isset($_GET['btn_action'])) {
 	}
 
 	if ($_GET['btn_action'] == 'fill_blank_input') {
+		$pembiasaan = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'pembiasaan');
+		$bahasa = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'bahasa');
+		$daya_fikir = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'daya_fikir');
 		$motorik = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'motorik');
-		$sosialisasi = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'sosial');
-		$keaktifan = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'aktif');
-		$daya_ingat = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'daya_ingat');
-		echo json_encode(['motorik' => $motorik,'sosialisasi' => $sosialisasi,'keaktifan' => $keaktifan, 'daya_ingat' => $daya_ingat ]);
+		echo json_encode(['pembiasaan' => $pembiasaan,'bahasa' => $bahasa,'daya_fikir' => $daya_fikir, 'motorik' => $motorik ]);
 	}
 }
 
@@ -29,8 +29,8 @@ if (isset($_POST['btn_action'])) {
 	 */
 	if ($_POST['btn_action'] == 'Add') {
 		$query = "
-			INSERT INTO tb_raport (tahun,nip,nis,keaktifan,sosialisai,motorik,daya_ingat,kesenian,mendengarkan,membaca,menulis,tgl) 
-			VALUES (:tahun,:nip,:nis,:keaktifan,:sosialisai,:motorik,:daya_ingat,:kesenian,:mendengarkan,:membaca,:menulis,:tgl)
+			INSERT INTO tb_raport (tahun,nip,nis,pembiasaan,bahasa,motorik,daya_fikir,keterangan,naik_kelas,tgl) 
+			VALUES (:tahun,:nip,:nis,:pembiasaan,:bahasa,:motorik,:daya_fikir,:keterangan,:naik_kelas,:tgl)
 		";
 		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$statement = $connect->prepare($query);
@@ -39,14 +39,12 @@ if (isset($_POST['btn_action'])) {
 				':tahun' 			=> $_POST['tahun'],
 				':nip' 				=> $_SESSION['nip'],
 				':nis' 				=> $_POST['nis'],
-				':keaktifan' 		=> $_POST['aktif'],
-				':sosialisai' 		=> $_POST['sosial'],
+				':pembiasaan' 		=> $_POST['pembiasaan'],
+				':bahasa' 			=> $_POST['bahasa'],
 				':motorik' 			=> $_POST['motorik'],
-				':daya_ingat' 		=> $_POST['daya_ingat'],
-				':kesenian' 		=> $_POST['kesenian'],
-				':mendengarkan' 	=> $_POST['mendengarkan'],
-				':membaca' 			=> $_POST['membaca'],
-				':menulis' 		=> $_POST['menulis'],
+				':daya_fikir' 		=> $_POST['daya_fikir'],
+				':keterangan' 		=> $_POST['keterangan'],
+				':naik_kelas' 		=> $_POST['naik_kelas'],
 				':tgl'				=> $_POST['tgl'],
 			)
 		);
@@ -86,13 +84,11 @@ if (isset($_POST['btn_action'])) {
 			$output['nis'] = $row['nis'];
 			$output['nama'] = $row['nama'];
 			$output['motorik'] = $row['motorik'];
-			$output['sosial'] = $row['sosialisai'];
-			$output['daya_ingat'] = $row['daya_ingat'];
-			$output['aktif'] = $row['keaktifan'];
-			$output['membaca'] = $row['membaca'];
-			$output['kesenian'] = $row['kesenian'];
-			$output['mendengarkan'] = $row['mendengarkan'];
-			$output['menulis'] = $row['menulis'];
+			$output['pembiasaan'] = $row['pembiasaan'];
+			$output['bahasa'] = $row['bahasa'];
+			$output['daya_fikir'] = $row['daya_fikir'];
+			$output['keterangan'] = $row['keterangan'];
+			$output['naik_kelas'] = $row['naik_kelas'];
 			$output['tahun_ajaran'] = $row['tahun_ajaran'];
 			$output['tgl'] = $row['tgl'];
 		}

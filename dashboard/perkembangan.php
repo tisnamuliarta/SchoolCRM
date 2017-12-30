@@ -139,7 +139,7 @@
                     <label>Pembiasaan</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="pembiasaan" id="pembiasaan" value="A"> A</label></div>
+                    <div class="radio"><label><input type="radio" name="pembiasaan" id="pembiasaan" value="A" required> A</label></div>
                   </div>
                   <div class="col-md-1">
                     <div class="radio"><label><input type="radio" name="pembiasaan" id="pembiasaan" value="B"> B</label></div>
@@ -161,7 +161,7 @@
                     <label>Bahasa</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="bahasa" id="bahasa" value="A"> A</label></div>
+                    <div class="radio"><label><input type="radio" name="bahasa" id="bahasa" value="A" required> A</label></div>
                   </div>
                   <div class="col-md-1">
                     <div class="radio"><label><input type="radio" name="bahasa" id="bahasa" value="B"> B</label></div>
@@ -183,7 +183,7 @@
                     <label>Daya Fikir/Daya Cipta</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="daya_fikir" id="daya_fikir" value="A"> A</label></div>
+                    <div class="radio"><label><input type="radio" name="daya_fikir" id="daya_fikir" value="A" required> A</label></div>
                   </div>
                   <div class="col-md-1">
                     <div class="radio"><label><input type="radio" name="daya_fikir" id="daya_fikir" value="B"> B</label></div>
@@ -205,7 +205,7 @@
                     <label>Fisik/Motorik</label>
                   </div>
                   <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="motorik" id="motorik" value="A"> A</label></div>
+                    <div class="radio"><label><input type="radio" name="motorik" id="motorik" value="A" required> A</label></div>
                   </div>
                   <div class="col-md-1">
                     <div class="radio"><label><input type="radio" name="motorik" id="motorik" value="B"> B</label></div>

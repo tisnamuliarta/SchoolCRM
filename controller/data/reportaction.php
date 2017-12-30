@@ -11,7 +11,8 @@ function getNilaiMotorik($connect, $nis, $tahun,$perkembangan) {
 		SELECT 
 		SUM({$perkembangan}='A') as {$perkembangan}_a, 
 		SUM({$perkembangan}='B') as {$perkembangan}_b, 
-		SUM({$perkembangan}='C') as {$perkembangan}_c 
+		SUM({$perkembangan}='C') as {$perkembangan}_c,
+		SUM({$perkembangan}='D') as {$perkembangan}_d 
 		FROM tb_perkembangan 
 		LEFT JOIN tb_siswa ON tb_perkembangan.nis = tb_siswa.nis
 		LEFT JOIN tb_detail_siswa ON tb_detail_siswa.id_siswa = tb_siswa.id
@@ -30,16 +31,20 @@ function getNilaiMotorik($connect, $nis, $tahun,$perkembangan) {
 	$final["{$perkembangan}_a"] = $result["{$perkembangan}_a"];
 	$final["{$perkembangan}_b"] = $result["{$perkembangan}_b"];
 	$final["{$perkembangan}_c"] = $result["{$perkembangan}_c"];
+	$final["{$perkembangan}_d"] = $result["{$perkembangan}_d"];
 
-	$count = $final["{$perkembangan}_a"] + $final["{$perkembangan}_b"] + $final["{$perkembangan}_c"];
-	$all = (3 * $final["{$perkembangan}_a"]) + (2 * $final["{$perkembangan}_b"]) + (1 * $final["{$perkembangan}_c"]);
+	$count = $final["{$perkembangan}_a"] + $final["{$perkembangan}_b"] + $final["{$perkembangan}_c"] + $final["{$perkembangan}_d"];
+	$all = (4 * $final["{$perkembangan}_a"]) + (3 * $final["{$perkembangan}_b"]) + (2 * $final["{$perkembangan}_c"]) + (2 * $final["{$perkembangan}_a"]);
+	echo $all." count => ".$count;
 	$average = (double)$all / (double)$count;
 
-	if (($average >= 1) && ($average <= 1.6)) {
+	if (($average >= 1) && ($average <= 1.75)) {
+		return 'D';
+	}elseif (($average >= 1.76) && ($average <= 2.51)) {
 		return 'C';
-	}elseif (($average >= 1.7) && ($average <= 2.3)) {
+	}elseif (($average >= 2.52) && ($average <= 3.27)) {
 		return 'B';
-	}elseif (($average >= 2.4) && ($average <= 3)) {
+	}elseif (($average >= 3.28) && ($average <= 4.03)) {
 		return 'A';
 	}
 
@@ -60,17 +65,19 @@ function updateRaportTotal($connect,$nis,$tahun) {
 	$rs = $sts->fetch(PDO::FETCH_ASSOC);
 	$total = '';
 
-	$count = 8;
-	$all = returnValue($rs['sosialisai']) + returnValue($rs['daya_ingat']) + returnValue($rs['motorik']) + returnValue($rs['keaktifan']) + returnValue($rs['kesenian']) + returnValue($rs['mendengarkan']) + returnValue($rs['membaca']) + returnValue($rs['menulis']);
+	$count = 4;
+	$all = returnValue($rs['pembiasaan']) + returnValue($rs['bahasa']) + returnValue($rs['motorik']) + returnValue($rs['daya_fikir']) ;
 	$average = round(((double)$all / (double)$count),2 );
 	// echo $average;
 
-	if (($average >= 1.00) && ($average <= 1.69)) {
+	if (($average >= 1.00) && ($average <= 1.75)) {
+		$total = 'D';
+	}elseif (($average >= 1.76) && ($average <= 2.51)) {
 		$total = 'C';
-	}elseif (($average >= 1.70) && ($average <= 2.39)) {
+	}elseif (($average >= 2.52) && ($average <= 3.27)) {
 		$total = 'B';
-	}elseif (($average >= 2.40) && ($average <= 3.00)) {
-		$total = 'A';
+	}elseif (($average >= 3.28) && ($average <= 4.03)) {
+		$total = 'B';
 	}
 
 	// Update
@@ -87,9 +94,11 @@ function updateRaportTotal($connect,$nis,$tahun) {
 
 function returnValue($field) {
 	if ($field == 'A')
-		return 3;
+		return 4;
 	elseif ($field == 'B')
-		return 2;
+		return 3;
 	elseif ($field == 'C')
+		return 2;
+	elseif ($field == 'D')
 		return 1;
 }

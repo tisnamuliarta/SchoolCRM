@@ -49,14 +49,10 @@
                   <th>NIS</th>
                   <th>Nama</th>
                   <th>Kelas</th>
-                  <th>Sosialisasi</th>
+                  <th>Pembiasaan</th>
+                  <th>Bahasa</th>
+                  <th>Daya Fikir</th>
                   <th>Motorik</th>
-                  <th>Daya Ingat</th>
-                  <th>Keaktifan</th>
-                  <th>Kesenian</th>
-                  <th>Mendengarkan</th>
-                  <th>Membaca</th>
-                  <th>Menulis</th>
                   <th>Nilai Akhir</th>
                   <th></th>
                 </tr>
@@ -189,6 +185,7 @@
                 </div>
               </div>
             </div>
+
             <div class="col-md-6 m-l-50">
               <div class="row" style="margin-top: 5px;">
                 <div class="col-md-5"><label>Keaktifan</label></div>
@@ -201,76 +198,17 @@
 
           <div class="row">
             <div class="col-sm-10"><hr><label>Nilai Raport : </label><hr></div>
+          </div>
+
+          <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-4">
-                    <label>Kesenian</label>
+                    <label>Keterangan</label>
                   </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input required type="radio" name="kesenian" id="kesenian" value="A"> A</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="kesenian" id="kesenian" value="B"> B</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="kesenian" id="kesenian" value="C"> C</label></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12" style="margin-top: -25px;">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-4">
-                    <label>Mendengarkan</label>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input required type="radio" name="mendengarkan" id="mendengarkan" value="A"> A</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="mendengarkan" id="mendengarkan" value="B"> B</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="mendengarkan" id="mendengarkan" value="C"> C</label></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-sm-12" style="margin-top: -25px;">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-4">
-                    <label>Membaca</label>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input required type="radio" name="membaca" id="membaca" value="A"> A</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="membaca" id="membaca" value="B"> B</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="membaca" id="membaca" value="C"> C</label></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-sm-12" style="margin-top: -25px;">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-4">
-                    <label>Menulis</label>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input required type="radio" name="menulis" id="menulis" value="A"> A</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="menulis" id="menulis" value="B"> B</label></div>
-                  </div>
-                  <div class="col-md-1">
-                    <div class="radio"><label><input type="radio" name="menulis" id="menulis" value="C"> C</label></div>
+                  <div class="col-md-6">
+                    <textarea name="keterangan" id="keterangan" class="form-control" required></textarea>
                   </div>
                 </div>
               </div>
@@ -278,12 +216,32 @@
           </div>
           
           <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label>Naik Kelas / Tinggal Kelas</label>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="radio"><label><input type="radio" name="naik_kelas" id="naik_kelas" value="A"> Naik Kelas</label></div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="radio"><label><input type="radio" name="naik_kelas" id="naik_kelas" value="B"> Tingggal Kelas</label></div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          
+          <div class="row">
             <div class="col-sm-10">
+              <hr>
               <label>Ket.</label>
             </div>
-            <div class="col-md-4"><span>A : 2.4-3.0</span></div>
-            <div class="col-md-4"><span>B : 1.7-2.3</span></div>
-            <div class="col-md-4"><span>C : 1.0-1.6</span></div>
+            <div class="col-md-3"><span>A : 3.28-4.03</span></div>
+            <div class="col-md-3"><span>B : 2.52-3.27</span></div>
+            <div class="col-md-3"><span>C : 1.76-2.51</span></div>
+            <div class="col-md-3"><span>D : 1.00-1.75</span></div>
           </div>
         </div>
         <div class="modal-footer">
@@ -340,7 +298,7 @@
         "columnDefs":[
           { "width": "20%", "targets": 0 },
           {
-            "targets":[12],
+            "targets":[8],
             "orderable":false,
           },
         ],
@@ -426,10 +384,10 @@
         data: {nis:nis,btn_action:btn_action,tahun:tahun},
         success: function(data) {
           var result = $.parseJSON(data);
-          $('#sosial').val(result.sosialisasi)
-          $('#daya_ingat').val(result.daya_ingat)
+          $('#pembiasaan').val(result.pembiasaan)
+          $('#bahasa').val(result.bahasa)
+          $('#daya_fikir').val(result.daya_fikir)
           $('#motorik').val(result.motorik)
-          $('#aktif').val(result.keaktifan)
         }
       });
     }
@@ -477,10 +435,10 @@
           $('#no_induk').val(data.nis);
           $('#nama').val(data.nama);
           $('#tgl').val(data.tgl);
-          $('#sosial').val(data.sosial);
+          $('#pembiasaan').val(data.pembiasaan);
+          $('#bahasa').val(data.bahasa);
           $('#motorik').val(data.motorik);
-          $('#aktif').val(data.aktif);
-          $('#daya_ingat').val(data.daya_ingat);
+          $('#daya_fikir').val(data.daya_fikir);
           $('input[name="kesenian"][value="'+data.kesenian+'"]').prop('checked',true);
           $('input[name="membaca"][value="'+data.membaca+'"]').prop('checked',true);
           $('input[name="mendengarkan"][value="'+data.mendengarkan+'"]').prop('checked',true);
