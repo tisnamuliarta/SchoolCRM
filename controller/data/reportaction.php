@@ -34,9 +34,11 @@ function getNilaiMotorik($connect, $nis, $tahun,$perkembangan) {
 	$final["{$perkembangan}_d"] = $result["{$perkembangan}_d"];
 
 	$count = $final["{$perkembangan}_a"] + $final["{$perkembangan}_b"] + $final["{$perkembangan}_c"] + $final["{$perkembangan}_d"];
-	$all = (4 * $final["{$perkembangan}_a"]) + (3 * $final["{$perkembangan}_b"]) + (2 * $final["{$perkembangan}_c"]) + (2 * $final["{$perkembangan}_a"]);
-	echo $all." count => ".$count;
+	$all = (4 * $final["{$perkembangan}_a"]) + (3 * $final["{$perkembangan}_b"]) + (2 * $final["{$perkembangan}_c"]) + (1 * $final["{$perkembangan}_a"]);
+
 	$average = (double)$all / (double)$count;
+
+	// echo "Average ".$average;
 
 	if (($average >= 1) && ($average <= 1.75)) {
 		return 'D';
@@ -77,7 +79,7 @@ function updateRaportTotal($connect,$nis,$tahun) {
 	}elseif (($average >= 2.52) && ($average <= 3.27)) {
 		$total = 'B';
 	}elseif (($average >= 3.28) && ($average <= 4.03)) {
-		$total = 'B';
+		$total = 'A';
 	}
 
 	// Update

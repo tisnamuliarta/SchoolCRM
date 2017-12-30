@@ -105,28 +105,16 @@ if (isset($_POST['btn_action'])) {
 		$query = "
 			UPDATE tb_raport
 			set
-			motorik = :motorik,
-			sosialisai = :sosial,
-			keaktifan = :aktif,
-			daya_ingat = :daya_ingat,
-			kesenian = :kesenian,
-			mendengarkan = :mendengarkan,
-			membaca = :membaca,
-			menulis = :menulis,
+			keterangan = :keterangan,
+			naik_kelas = :naik_kelas,
 			tgl = :tgl
 			WHERE id = :id
 		";
 		$statement = $connect->prepare($query);
 		$statement->execute(
 			array(
-				':motorik' 		=> $_POST['motorik'],
-				':sosial' 		=> $_POST['sosial'],
-				':aktif' 		=> $_POST['aktif'],
-				':daya_ingat' 	=> $_POST['daya_ingat'],
-				':kesenian' 	=> $_POST['kesenian'],
-				':mendengarkan' => $_POST['mendengarkan'],
-				':membaca' 		=> $_POST['membaca'],
-				':menulis' 		=> $_POST['menulis'],
+				':keterangan' 		=> $_POST['keterangan'],
+				':naik_kelas' 		=> $_POST['naik_kelas'],
 				':tgl' 			=> $_POST['tgl'],
 				':id'			=> $_POST['id_raport']
 			)

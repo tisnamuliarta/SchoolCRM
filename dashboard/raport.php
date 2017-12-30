@@ -54,6 +54,7 @@
                   <th>Daya Fikir</th>
                   <th>Motorik</th>
                   <th>Nilai Akhir</th>
+                  <th>Keterangan</th>
                   <th></th>
                 </tr>
                 </thead>
@@ -163,17 +164,17 @@
             <div class="col-md-10"><label>Nilai Perkembangan : </label><hr></div>
             <div class="col-md-6">
               <div class="row" style="margin-top: 5px;">
-                <div class="col-md-4"><label>Sosialisasi</label></div>
+                <div class="col-md-4"><label>Pembiasaan</label></div>
                 <div class="col-md-4">
-                  <input type="text" name="sosial" id="sosial" class="form-control" readonly>
+                  <input type="text" name="pembiasaan" id="pembiasaan" class="form-control" readonly>
                 </div>
               </div>
             </div>
             <div class="col-md-6 m-l-50">
               <div class="row" style="margin-top: 5px;">
-                <div class="col-md-5"><label>Daya Ingat</label></div>
+                <div class="col-md-5"><label>Bahasa</label></div>
                 <div class="col-md-4">
-                  <input type="text" name="daya_ingat" id="daya_ingat" class="form-control" readonly>
+                  <input type="text" name="bahasa" id="bahasa" class="form-control" readonly>
                 </div>
               </div>
             </div>
@@ -188,9 +189,9 @@
 
             <div class="col-md-6 m-l-50">
               <div class="row" style="margin-top: 5px;">
-                <div class="col-md-5"><label>Keaktifan</label></div>
+                <div class="col-md-5"><label>Daya Fikir</label></div>
                 <div class="col-md-4">
-                  <input type="text" name="aktif" id="aktif" class="form-control" readonly>
+                  <input type="text" name="daya_fikir" id="daya_fikir" class="form-control" readonly>
                 </div>
               </div>
             </div>
@@ -223,10 +224,10 @@
                       <label>Naik Kelas / Tinggal Kelas</label>
                     </div>
                     <div class="col-md-3">
-                      <div class="radio"><label><input type="radio" name="naik_kelas" id="naik_kelas" value="A"> Naik Kelas</label></div>
+                      <div class="radio"><label><input type="radio" name="naik_kelas" id="naik_kelas" value="1"> Naik Kelas</label></div>
                     </div>
                     <div class="col-md-3">
-                      <div class="radio"><label><input type="radio" name="naik_kelas" id="naik_kelas" value="B"> Tingggal Kelas</label></div>
+                      <div class="radio"><label><input type="radio" name="naik_kelas" id="naik_kelas" value="0"> Tingggal Kelas</label></div>
                     </div>
                   </div>
                 </div>
@@ -296,9 +297,9 @@
           data:{kegiatan: "ta",isSearch:isSearch,kelas:kelas,tahunAjaran:tahunAjaran}
         },
         "columnDefs":[
-          { "width": "20%", "targets": 0 },
+          { "width": "15%", "targets": [1,8] },
           {
-            "targets":[8],
+            "targets":[9],
             "orderable":false,
           },
         ],
@@ -384,6 +385,7 @@
         data: {nis:nis,btn_action:btn_action,tahun:tahun},
         success: function(data) {
           var result = $.parseJSON(data);
+          console.log(result)
           $('#pembiasaan').val(result.pembiasaan)
           $('#bahasa').val(result.bahasa)
           $('#daya_fikir').val(result.daya_fikir)
@@ -443,6 +445,8 @@
           $('input[name="membaca"][value="'+data.membaca+'"]').prop('checked',true);
           $('input[name="mendengarkan"][value="'+data.mendengarkan+'"]').prop('checked',true);
           $('input[name="menulis"][value="'+data.menulis+'"]').prop('checked',true);
+          $('#keterangan').val(data.keterangan);
+          $('input[name="naik_kelas"][value="'+data.naik_kelas+'"]').prop('checked',true);
           $('#id_raport').val(id)
           $('#action').val("Edit");
           $('#btn_action').val("Edit");

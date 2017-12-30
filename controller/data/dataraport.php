@@ -58,6 +58,7 @@ foreach ($result as $row) {
 	$sub_array[] = $row['daya_fikir'];
 	$sub_array[] = $row['motorik'];
 	$sub_array[] = $row['total_nilai'];
+	$sub_array[] = $row['keterangan'];
 	$sub_array[] = $button;
 	$data[] = $sub_array;
 }
