@@ -552,7 +552,7 @@ function getGuruDetail($connect,$nip) {
  * @return array
  */
 function getKonfirmasiPembayaranDetails($connect,$id_pendaftaran) {
-	$qp = "SELECT tb_pendaftaran.*, tb_ortu.nama FROM tb_pendaftaran LEFT JOIN tb_ortu on tb_ortu.id = tb_pendaftaran.id_ortu WHERE tb_pendaftaran.id= :id ";
+	$qp = "SELECT tb_pendaftaran.*, tb_ortu.nama_ayah,tb_ortu.nama_ibu FROM tb_pendaftaran LEFT JOIN tb_ortu on tb_ortu.id = tb_pendaftaran.id_ortu WHERE tb_pendaftaran.id= :id ";
 	$dbsg = $connect->prepare($qp);
 	$dbsg->execute(array(
 		':id' => $id_pendaftaran
@@ -569,8 +569,12 @@ function getKonfirmasiPembayaranDetails($connect,$id_pendaftaran) {
 		$jenis_kelamin = '';
 		$output .= '
 		<tr>
-			<td>Nama Orang Tua</td>
-			<td>: '.$row["nama"].'</td>
+			<td>Nama Ayah</td>
+			<td>: '.$row["nama_ayah"].'</td>
+		</tr>
+		<tr>
+			<td>Nama Ibu</td>
+			<td>: '.$row["nama_ibu"].'</td>
 		</tr>
 		<tr>
 			<td>Tanggal Daftar</td>

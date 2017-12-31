@@ -169,6 +169,40 @@
   </div>
 </div>
 
+<div id="tolakSiswaModal" class="modal fade">
+  <div class="modal-dialog modal-sm">
+      <form method="post" id="tolak_form">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title"><i class="fa fa-plus"></i> Form Penolakan</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label>Nama</label>
+                      <span type="text" class="form-control" name="nama_siswa_ditolak" id="nama_siswa_ditolak"></span>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="form-group">
+                        <label>Alasan Penolakan</label>
+                        <textarea class="form-control" name="keterangan" id="keterangan"></textarea>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <input type="hidden" name="id_tolak_siswa" id="id_tolak_siswa">
+                  <input type="hidden" name="id_tolak_pendaftaran" id="id_tolak_pendaftaran">
+                  <input type="hidden" name="btn_action_tolak" id="btn_action_tolak" />
+                  <input type="submit" name="action_tolak" id="action_tolak" class="btn btn-info" value="Add" />
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+
 
 
 <?php require 'partials/footer.php'; ?>
@@ -313,7 +347,7 @@
           $('#nama').val(data.nama);
           $('#tgl_lahir').val(data.tgl_lahir);
           $('#alamat').val(data.alamat);
-          $('#jumlah_bayar').val(data.jumlah_bayar);
+          $('#biayaPendaftaran').val(data.jumlah_bayar);
           $('input[name="jenis_kelamin"][value="'+data.jenis_kelamin+'"]').prop('checked',true);
           $('input[name="metodePembayaran"][value="'+data.cara_bayar+'"]').prop('checked',true);
           $('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit Siswa");
@@ -373,4 +407,35 @@
         return false;
       }
     })
+    // open form tolak siswa
+    $(document).on('click','.tolak-siswa',function(){
+      var pendaftaran_id = $(this).attr("id");
+      var id_siswa = $(this).data("idsiswa");
+      var nama_siswa = $(this).data("namasiswa");
+      $('#id_tolak_siswa').val(id_siswa);
+      $('#id_tolak_pendaftaran').val(pendaftaran_id);
+      $('#nama_siswa_ditolak').html(nama_siswa);
+      $('#tolakSiswaModal').modal('show');
+      $('#tolak_form')[0].reset();
+      $('#action_tolak').val('Tolak Siswa');
+      $('#btn_action_tolak').val('tolak_siswa');
+    })
+    // action form tolak siswa
+    $(document).on('submit','#tolak_form', function(e){
+      e.preventDefault();
+      $('#action').attr('disabled','disabled');
+      var formData = $(this).serialize();
+      $.ajax({
+        url: "../controller/siswaaction.php",
+        method: "POST",
+        data: formData,
+        success: function(data){
+          $('#tolak_form')[0].reset();
+          $('#tolakSiswaModal').modal('hide');
+          $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
+          $('#action_tolak').attr('disabled', false);
+          dataSiswaTable.ajax.reload();
+        }
+      })
+    });
 </script>

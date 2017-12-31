@@ -20,12 +20,14 @@
                 <button type="button" name="add" id="add_button" class="btn form-control btn-success btn-xs">Tambah</button>
                 <br><br>
               </div>
-              <div class="col-sm-2 pull-right">
+              <!-- <div class="col-sm-2 pull-right">
                 <button type="button" name="konfirmasi_pendaftaran" id="konfirmasi_pendaftaran_btn" class="btn form-control btn-info btn-xs">Konfirmasi Pendaftaran</button>
                 <br><br>
-              </div>
+              </div> -->
             <?php endif ?>
           </div>
+        </div>
+        <div class="row">
           <div class="col-sm-12">
             <div class="table-responsive">
               <table id="siswatable" class="table table-bordered table-striped">
@@ -39,8 +41,10 @@
                   <th>Alamat</th>
                   <th>Jumlah Pembayaran</th>
                   <th>Metode Pembayaran</th>
-                  <th>Status Pembayaran</th>
-                  <th></th>
+                  <th>Status</th>
+                  <th>Update</th>
+                  <th>Konfirmasi</th>
+                  <th>Keterangan</th>
                 </tr>
                 </thead>
               </table>
@@ -162,7 +166,7 @@
     </form>
   </div>
 </div>
-
+<!-- Konfirmasi dengan tombol diatas -->
 <div id="konfirmasiSiswaModal" class="modal fade">
   <div class="modal-dialog modal-sm">
     <form method="post" id="formKonfirmasiPendaftaran" enctype="multipart/form-data">
@@ -192,6 +196,40 @@
           <input type="hidden" name="pendaftaran_id" id="pendaftaran_id" />
           <input type="hidden" name="btn_action_konfirm" id="btn_action_konfirm" />
           <input type="submit" name="action_konfirm" id="action_konfirm" class="btn btn-info" value="Add" />
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Konfirmasi dengan tombol disamping -->
+<div id="konfirmasiSiswaModalSamping" class="modal fade">
+  <div class="modal-dialog modal-sm">
+    <form method="post" id="formKonfirmasiSiswa" enctype="multipart/form-data">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-konfirmasi-title"><i class="fa fa-user"></i> Konfirmasi Pendaftaran</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Nama Siswa</label>
+            <input type="text" name="nama_konfirmasi_siswa" id="nama_konfirmasi_siswa" class="form-control">
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Bukti Pembayaran</label>
+                <input class="form-control" type="file" name="fotoBukti" id="fotoBukti" required/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" name="id_konfirmasi_pendaftaran" id="id_konfirmasi_pendaftaran" />
+          <input type="hidden" name="btn_action_konfirmasi" id="btn_action_konfirmasi" />
+          <input type="submit" name="action_konfirmasi" id="action_konfirmasi" class="btn btn-info" value="Add" />
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -241,7 +279,7 @@
         },
         "columnDefs":[
           {"width":"20px","targets":0},
-          {"width":"15%","targets":[2,5,7]},
+          {"width":"20%","targets":[2,5,7]},
           {
             "targets":[0,8,9],
             "orderable":false,
@@ -373,30 +411,36 @@
       })
     });
 
-    // Konfirmasi Siswa
-    $(document).on('click','.konfirmasi-siswa',function(){
-      var id = $(this).attr("id");
-      var btn_action = 'konfirmasi_siswa';
+    $(document).on('submit','#formKonfirmasiSiswa', function(e){
+      e.preventDefault();
+      $('#action_konfirmasi').attr('disabled','disabled');
       $.ajax({
-        url: '../controller/siswaaction.php',
-        method: 'POST',
-        data: {id:id, btn_action:btn_action},
-        dataType: 'json',
+        url: "../controller/siswaaction.php",
+        method: "POST",
+        data: new FormData(this),
+        contentType: false,
+        processData: false,
         success: function(data){
-          $('#siswaBaruModal').modal('show');
-          $('#nama').val(data.nama);
-          $('#tgl_lahir').val(data.tgl_lahir);
-          $('#alamat').val(data.alamat);
-          $('#email').val(data.email);
-          $('input[name="jenis_kelamin"][value="'+data.jenis_kelamin+'"]').prop('checked',true);
-          $('#'+data.status+'').prop('checked',true);
-          $('#tlpn').val(data.tlpn);
-          $('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit User");
-          $('#action').val("Edit");
-          $('#user_id').val(id)
-          $('#btn_action').val("Edit");
+          $('#konfirmasiSiswaModalSamping').modal('hide');
+          $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
+          $('#action_konfirmasi').attr('disabled', false);
+          userTable.ajax.reload();
+          // window.location.reload(true);
         }
       })
+    });
+
+    // Konfirmasi Siswa button clicked
+    $(document).on('click','.konfirmasi-siswa',function(){
+      var id = $(this).attr("id");
+      var nama = $(this).data("nama");
+      var btn_action = 'fetch_konfirmasi_siswa';
+      $('#konfirmasiSiswaModalSamping').modal('show');
+      $('#nama_konfirmasi_siswa').val(nama);
+      $('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Konfirmasi");
+      $('#action_konfirmasi').val("Konfirmasi Pendaftaran");
+      $('#id_konfirmasi_pendaftaran').val(id)
+      $('#btn_action_konfirmasi').val("konfirmasi_pendaftaran");
     });
 
     // ============= Display single data and update
@@ -414,7 +458,7 @@
           $('#tgl_lahir').val(data.tgl_lahir);
           $('#alamat').val(data.alamat);
           $('#tahun_ajaran').val(data.id_tahun_ajaran);
-          $('#jumlah_bayar').val(data.jumlah_bayar);
+          $('#biayaPendaftaran').val(data.jumlah_bayar);
           $('input[name="jenis_kelamin"][value="'+data.jenis_kelamin+'"]').prop('checked',true);
           $('input[name="metodePembayaran"][value="'+data.cara_bayar+'"]').prop('checked',true);
           $('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit Siswa");

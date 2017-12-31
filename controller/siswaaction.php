@@ -71,8 +71,12 @@ if (isset($_POST['btn_action'])) {
 		}
 		echo json_encode($output);
 	}
-
-	if ($_POST['btn_action'] == 'konfirmasi_siswa') {
+	/**
+	 * =================================
+	 * fetch konfirmasi pendaftaran data
+	 * =================================
+	 */
+	if ($_POST['btn_action'] == 'fetch_konfirmasi_siswa') {
 		$query = " SELECT * FROM tb_siswa WHERE id = :id ";
 		$statement = $connect->prepare($query);
 		$statement->execute([
@@ -83,16 +87,13 @@ if (isset($_POST['btn_action'])) {
 		foreach ($result as $row) {
 			$output['id'] = $row['id'];
 			$output['nama'] = $row['nama'];
-			$output['email'] = $row['email'];
-			$output['username'] = $row['username'];
-			$output['tgl_lahir'] = $row['tgl_lahir'];
-			$output['alamat'] = $row['alamat'];
-			$output['jenis_kelamin'] = $row['jenis_kelamin'];
-			$output['tlpn'] = $row['tlpn'];
-			$output['status'] = $row['status'];
 		}
 		echo json_encode($output);
 	}
+
+
+
+
 
 	/**
 	 * =================================================
@@ -154,17 +155,19 @@ if (isset($_POST['btn_action'])) {
 	}
 	/**
 	 * =====================
-	 * Konfirmasi Pembayaran
+	 * Konfirmasi Pembayaran, Page Guru
 	 * ======================
 	 */
 	if ($_POST['btn_action'] == 'konfirmasi_pembayaran') {
 		// query update pendaftaran
 		$query_pendaftaran = " UPDATE tb_pendaftaran 
-			set status = :status
+			set status = :status,
+			keterangan = :keterangan
 			WHERE id = :id_pendaftaran ";
 		$statement = $connect->prepare($query_pendaftaran);
 		$statement->execute(array(
 				':status' 	=> 'paid',
+				':keterangan' => null,
 				':id_pendaftaran' 	=> $_POST['id_pendaftaran']
 		));
 		// End query update pendaftaran
@@ -234,7 +237,79 @@ if (isset($_POST['btn_action'])) {
 			echo 'Data berhasil dikonfirmasi ';
 		}
 	}
+}
 
+if (isset($_POST['btn_action_tolak'])) {
+	if ($_POST['btn_action_tolak'] == 'tolak_siswa') {
+		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		// update pendaftaran
+		$query = " UPDATE tb_pendaftaran
+			set keterangan = :keterangan, status = :status
+			WHERE id = :id
+		";
+		$statement = $connect->prepare($query);
+		$statement->execute(
+			array(
+				':keterangan' 		=> $_POST['keterangan'],
+				':status' 			=> 'abort',
+				':id'				=> $_POST['id_tolak_pendaftaran']
+			)
+		);
+		// update siswa
+		$query_siswa = " UPDATE tb_siswa
+			status = :status
+			WHERE id = :id
+		";
+		$statement_siswa = $connect->prepare($query_siswa);
+		$statement_siswa->execute(
+			array(
+				':status' 			=> 'non-active',
+				':id'				=> $_POST['id_tolak_siswa']
+			)
+		);
+
+		$result = $statement->fetch();
+		if (isset($result)) {
+			echo "Siswa ditolak!";
+		}
+	}
+}
+
+if (isset($_POST['btn_action_konfirmasi'])) {
+	/**
+	 * =======================
+	 * Konfirmasi pendaftaran
+	 * ======================
+	 */
+	if ($_POST['btn_action_konfirmasi'] == 'konfirmasi_pendaftaran') {
+		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		if (isset($_FILES['fotoBukti']['name'])) {
+			$fileName = explode(".", $_FILES['fotoBukti']['name']);
+			$allowedExt = array("jpg","jpeg","png");
+			if (in_array($fileName[1], $allowedExt)) {
+				$newName = md5(rand()).'.'.$fileName[1];
+				$sourcePath = $_FILES['fotoBukti']['tmp_name'];
+				$destination = '../uploads/'.$newName;
+				move_uploaded_file($sourcePath,$destination);
+				// Update tb_pembayaran
+				$query = " UPDATE tb_pendaftaran 
+				SET status = :status,
+				foto = :fotoBukti
+				WHERE tb_pendaftaran.id = :id_konfirmasi_pendaftaran";
+
+				$statement = $connect->prepare($query);
+				$statement->execute(array(
+					':status' 	=> 'waiting',
+					':fotoBukti'			=> $newName,
+					':id_konfirmasi_pendaftaran' => $_POST['id_konfirmasi_pendaftaran']
+				));
+				$result = $statement->fetchAll();
+				if (isset($result)) {
+					echo 'Konfirmasi telah terkirim dan sedang diproses oleh administrator!';			
+				}
+			}
+		}
+	}
 }
 
 if (isset($_POST['btn_action_konfirm'])) {
