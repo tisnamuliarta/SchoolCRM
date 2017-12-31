@@ -23,8 +23,9 @@
                 <thead>
                 <tr>
                   <th>No</th>
-                  <th>Orang Tua</th>
                   <th>Nama</th>
+                  <th>Nama Ayah</th>
+                  <th>Nama Ibu</th>
                   <th>Jenis Kelamin</th>
                   <th>Tanggal Lahir</th>
                   <th>Alamat</th>
@@ -184,13 +185,13 @@
           {
             extend: 'print',
             exportOptions: {
-              columns: [ 1,2,3,4,5 ]
+              columns: [ 1,2,3,4,5,6 ]
             }
           },
           {
             extend: 'pdf',
             exportOptions: {
-              columns: [ 1,2,3,4,5 ]
+              columns: [ 1,2,3,4,5,6 ]
             }
           }
         ],
@@ -205,7 +206,7 @@
         "columnDefs":[
           {
             "width":"8%",
-            "targets":[0,6,7],
+            "targets":[0,7,8],
             "orderable":false,
           },
         ],

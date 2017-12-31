@@ -21,11 +21,58 @@
   </div>
 </div>
 
+<div class="contentHasilBelajar">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center">TK SINAR PRIMA</h2>
+    </div>
+    <div class="col-sm-12 col-md-12">
+      <div class="box box-solid">
+        <div class="box-body">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th width="70%" rowspan="2" style="text-align: center;top: 0">Kompetensi Dasar</th>
+                <th width="30%" colspan="4" style="text-align: center;">Hasil Belajar</th>
+              </tr>
+              <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+              </tr>
+              <tr></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nama</td>
+                <td></td>
+                <td><input type="checkbox" name="nilai" checked=""></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Nama</td>
+                <td>Ayu</td>
+              </tr>
+              <tr>
+                <td>Nama</td>
+                <td>Ayu</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <span id="alert_action"></span>
 <div class="row">
   <div class="col-lg-12 col-xs-12">
     <!-- small box -->
-    <div class="box">
+    <!-- <div class="box">
       <div class="box-header  with-border">
         <h3 class="box-title"><i class="fa fa-user"></i> Hasil Belajar Siswa</h3>
       </div>
@@ -56,7 +103,7 @@
           
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 

@@ -260,7 +260,7 @@ function getDataSiswaDatatable($connect) {
 	$query = '';
 	$output = [];
 	$query .= " 
-		SELECT tb_siswa.*, DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir ,tb_pendaftaran.id as id_pendaftaran,tb_pendaftaran.jumlah_bayar,tb_pendaftaran.cara_bayar,tb_pendaftaran.status as status_pembayaran, (SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas, tb_ortu.nama as nama_ortu
+		SELECT tb_siswa.*, DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir ,tb_pendaftaran.id as id_pendaftaran,tb_pendaftaran.jumlah_bayar,tb_pendaftaran.cara_bayar,tb_pendaftaran.status as status_pembayaran, (SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas, tb_ortu.nama_ayah, tb_ortu.nama_ibu
 		from tb_siswa
 		LEFT JOIN tb_pendaftaran on tb_pendaftaran.id_siswa = tb_siswa.id
 		LEFT JOIN tb_ortu ON tb_ortu.id = tb_siswa.id_ortu
@@ -344,8 +344,9 @@ function getDataSiswaDatatable($connect) {
 		}
 		$sub_array = [];
 		$sub_array[] = $idx;
-		$sub_array[] = $row['nama_ortu'];
 		$sub_array[] = $row['nama'];
+		$sub_array[] = $row['nama_ayah'];
+		$sub_array[] = $row['nama_ibu'];
 		$sub_array[] = $jk;
 		$sub_array[] = $row['tanggal_lahir'];
 		$sub_array[] = $row['alamat'];
