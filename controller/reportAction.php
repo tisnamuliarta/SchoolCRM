@@ -19,6 +19,38 @@ if (isset($_GET['btn_action'])) {
 		$motorik = getNilaiMotorik($connect,$_GET['nis'],$_GET['tahun'],'motorik');
 		echo json_encode(['pembiasaan' => $pembiasaan,'bahasa' => $bahasa,'daya_fikir' => $daya_fikir, 'motorik' => $motorik ]);
 	}
+
+	if ($_GET['btn_action'] == 'getHasilBelajar') {
+		$query = '';
+		$id_ortu = $_GET['id_ortu'];
+		$tahunAjaran = $_GET['tahun_ajaran'];
+		$nis = $_GET['nis'];
+		$data = array();
+
+		$query = "SELECT tb_siswa.nama, tb_raport.*, 
+			(SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas,
+			(SELECT tb_tahun_ajaran.tahun FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as tahun_ajaran,
+			(SELECT tb_tahun_ajaran.semester FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as semester
+		from tb_raport
+		LEFT JOIN tb_siswa ON tb_siswa.nis = tb_raport.nis
+		LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
+		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.id_ortu = {$id_ortu} AND tb_detail_siswa.id_tahun_ajaran = {$tahunAjaran} AND tb_siswa.nis = {$nis}";
+
+		$statement = $connect->prepare($query);
+		$statement->execute();
+		$result = $statement->fetchAll();
+		$single = $statement->fetch(PDO::FETCH_ASSOC);
+		foreach ($result as $row) {
+			$data[] = array('kompetensi' => 'pembiasaan','nilai' => $row['pembiasaan']);
+			$data[] = array('kompetensi' => 'bahasa','nilai' => $row['bahasa']);
+			$data[] = array('kompetensi' => 'daya_fikir','nilai' => $row['daya_fikir']);
+			$data[] = array('kompetensi' => 'motorik','nilai' => $row['motorik']);
+			$data[] = array('kompetensi' => 'total_nilai','nilai' => $row['total_nilai']);
+			$data[] = array('kompetensi' => $row['keterangan'],'nilai' => '');
+		}
+
+		echo json_encode($data);
+	}
 }
 
 if (isset($_POST['btn_action'])) {

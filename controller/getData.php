@@ -84,18 +84,8 @@ function getHasilBelajarSiswaDatatable($connect) {
 	foreach ($result as $row) {
 		$idx++;
 		$sub_array = [];
-		$sub_array[] = $idx;
-		$sub_array[] = $row['nis'];
 		$sub_array[] = $row['nama'];
-		$sub_array[] = $row['kelas'];
-		$sub_array[] = $row['tahun_ajaran'];
-		$sub_array[] = $row['semester'];
-		$sub_array[] = $row['pembiasaan'];
-		$sub_array[] = $row['bahasa'];
-		$sub_array[] = $row['daya_fikir'];
-		$sub_array[] = $row['motorik'];
 		$sub_array[] = $row['total_nilai'];
-		$sub_array[] = $row['keterangan'];
 		$data[] = $sub_array;
 	}
 
