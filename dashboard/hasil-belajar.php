@@ -34,8 +34,8 @@
               <table class="table table-striped table-bordered" id="siswatable">
                 <thead>
                   <tr>
-                    <th width="80%" style="text-align: center;top: 0">Kompetensi Dasar</th>
-                    <th width="20%" style="text-align: center;">Hasil Belajar</th>
+                    <th width="80%" style="text-align: center;top: 0">KOMPETENSI DASAR</th>
+                    <th width="20%" style="text-align: center;">HASIL BELAJAR</th>
                   </tr>
                 </thead>
                 <tbody></tbody>

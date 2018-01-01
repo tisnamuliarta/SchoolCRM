@@ -41,12 +41,12 @@ if (isset($_GET['btn_action'])) {
 		$result = $statement->fetchAll();
 		$single = $statement->fetch(PDO::FETCH_ASSOC);
 		foreach ($result as $row) {
-			$data[] = array('kompetensi' => 'pembiasaan','nilai' => $row['pembiasaan']);
-			$data[] = array('kompetensi' => 'bahasa','nilai' => $row['bahasa']);
-			$data[] = array('kompetensi' => 'daya_fikir','nilai' => $row['daya_fikir']);
-			$data[] = array('kompetensi' => 'motorik','nilai' => $row['motorik']);
-			$data[] = array('kompetensi' => 'total_nilai','nilai' => $row['total_nilai']);
-			$data[] = array('kompetensi' => $row['keterangan'],'nilai' => '');
+			$data[] = array('kompetensi' => '<strong>I. PEMBIASAAN</strong><br>Anak mampu melakukan ibadah, terbiasa mengikuti aturan dan dapat hidup bersih dan mulai belajar membedakan benar dan salah, terbiasa berprilaku terpuji','nilai' => $row['pembiasaan']);
+			$data[] = array('kompetensi' => '<strong>II. BAHASA</strong><br>Anak Mampu mendengarkan, berkomunikasi secara lisan, memiliki kesederhanaan kata dan mengenal simbul-simbul yang melambangkan - Nya untuk mempersiapkan membaca dan menulis','nilai' => $row['bahasa']);
+			$data[] = array('kompetensi' => '<strong>III. DAYA FIKIR / DAYA CIPTA</strong><br>Anak mampu memahami konsep sederhana memecahkan masalah sederhana dalam kehidupan sehari-hari.','nilai' => $row['daya_fikir']);
+			$data[] = array('kompetensi' => '<strong>IV. FISIK / MOTORIK</strong><br>Anak mampu melakukan aktivitas fisik secara terkoordinasi dalam rangka kelenturan, dan persiapan untuk menulis, kesembangan dan melatih keberanian.','nilai' => $row['motorik']);
+			$data[] = array('kompetensi' => '<strong>TOTAL NILAI</strong>','nilai' => $row['total_nilai']);
+			$data[] = array('kompetensi' => '<strong>KETERANGAN</strong> <br>'.$row['keterangan'],'nilai' => '');
 		}
 
 		echo json_encode($data);
