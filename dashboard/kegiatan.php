@@ -10,8 +10,11 @@
       <div class="box-body">
         <div class="row">
           <div class="col-sm-12">
-            <div class="col-sm-1 pull-right">
-              <button type="button" name="add" id="add_tahunajaran_button" class="btn form-control btn-success btn-xs">Add</button>
+            <div class="col-sm-3 pull-right">
+              <div class="btn-group">
+                <button type="button" name="add" id="add_tahunajaran_button" class="btn btn-success btn-sm" >Add</button>
+                <button type="button" name="add" id="add_buku_penghubung" class="btn btn-info btn-sm" style="margin-left: 10px;">Terbitkan Buku Penghubung</button>
+              </div>
               <br><br>
             </div>
           </div>
@@ -132,7 +135,6 @@
       var kegiatanTable = $('#kegiatanTable').DataTable({
         "processing":true,
         "serverSide":true,
-        "autoWidth":false,
         "order":[],
         "ajax":{
           url: "../controller/getData.php",
