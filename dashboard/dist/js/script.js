@@ -3,11 +3,13 @@ $(function() {
     //Date picker
     $('.getDatePicker').datepicker({
       autoclose: true,
-      format: 'yyyy-mm-dd'
+      format: 'yyyy-mm-dd',
+      endDate: '0d',
     });
     $('.displayDatePicker').datepicker({
       autoclose: true,
-      format: 'yyyy-mm-dd'
+      format: 'yyyy-mm-dd',
+      endDate: '0d',
     });
 
     // active link

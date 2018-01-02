@@ -195,9 +195,10 @@ function getKegiatanDatatable($connect) {
 	$output = [];
 	$nip = $_SESSION["nip"];
 	$query .= " 
-		SELECT tb_kegiatan.*,tb_guru.nama as nama_guru, DATE_FORMAT(tb_kegiatan.tgl,'%d %M %Y') as tgl_kegiatan
+		SELECT tb_kegiatan.*,tb_guru.nama as nama_guru, DATE_FORMAT(tb_kegiatan.tgl,'%d %M %Y') as tgl_kegiatan, tb_kelas.kelas
 		from tb_kegiatan
 		LEFT JOIN tb_guru on tb_guru.nip = tb_kegiatan.nip
+		LEFT JOIN tb_kelas ON tb_kelas.id = tb_kegiatan.id_kelas
 		WHERE tb_kegiatan.nip = $nip
 	";
 	if (isset($_POST["search"]["value"])) {
@@ -225,6 +226,7 @@ function getKegiatanDatatable($connect) {
 		$sub_array[] = $idx;
 		$sub_array[] = $row['nama'];
 		$sub_array[] = $row['deskripsi'];
+		$sub_array[] = $row['kelas'];
 		$sub_array[] = $row['tgl_kegiatan'];
 		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-kegiatan">Update</button>';
 		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-kegiatan">Delete</button>';
@@ -234,7 +236,7 @@ function getKegiatanDatatable($connect) {
 	$output = [
 		"draw" => intval($_POST["draw"]),
 		"recordsTotal" => $filtered_rows,
-		"recordsFiltered"  => get_total_all_records($connect,"tb_kegiatan"),
+		"recordsFiltered"  => get_total_all_kegiatan_records($connect,"tb_kegiatan",$nip),
 		"data" => $data
 	];
 
@@ -836,6 +838,12 @@ function get_total_all_null_siswa_records($connect,$table){
 
 function get_total_all_records($connect,$table){
 	$statement = $connect->prepare("SELECT * FROM $table");
+	$statement->execute();
+	return $statement->rowCount();
+}
+
+function get_total_all_kegiatan_records($connect,$table,$nip){
+	$statement = $connect->prepare("SELECT * FROM $table WHERE nip = {$nip}");
 	$statement->execute();
 	return $statement->rowCount();
 }

@@ -27,6 +27,7 @@
                   <th>NO</th>
                   <th>Nama</th>
                   <th>Deskripsi</th>
+                  <th>Kelas</th>
                   <th>Tanggal</th>
                   <th></th>
                   <th></th>
@@ -70,7 +71,17 @@
           </div>
           
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Kelas</label>
+                <select name="id_kelas" id="id_kelas" class="form-control" required>
+                  <option value="">Pilih Kelas</option>
+                  <?php echo getListKelas($connect) ?>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
               <div class="form-group">
                 <label>Tanggal Kegiatan</label>
                 <input type="text" name="tgl" id="tgl" class="form-control displayDatePicker" required />
@@ -121,6 +132,7 @@
       var kegiatanTable = $('#kegiatanTable').DataTable({
         "processing":true,
         "serverSide":true,
+        "autoWidth":false,
         "order":[],
         "ajax":{
           url: "../controller/getData.php",
@@ -128,7 +140,7 @@
           data:{kegiatan: "ta"}
         },
         "columnDefs":[
-          {"targets":2,"width":"500"},
+          {"targets":2,"width":"600"},
           {
             "targets":[0,4,5],
             "orderable":false,
@@ -178,6 +190,7 @@
           $('#deskripsi').val(data.deskripsi);
           $('#tgl').val(data.tgl);
           $('#id_kegiatan').val(id)
+          $('select[name="id_kelas"] option[value="'+data.id_kelas+'"]').prop('selected','selected');
           $('#action').val("Edit");
           $('#btn_action').val("Edit");
         }
