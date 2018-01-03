@@ -3,9 +3,19 @@
 <div class="row">
   <div class="col-md-12">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-2">
         <select name="nama-siswa" id="nama-siswa" class="form-control">
           <?php echo getListSiswaByOrtu($connect,$_SESSION['id']) ?>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <select name="month" id="month" class="form-control">
+          <?php 
+            for ($m=1; $m<=12; $m++) {
+             $month = date('F', mktime(0,0,0,$m, 1, date('Y')));
+             echo "<option value='{$m}'>{$month}</option>";
+             }
+          ?>
         </select>
       </div>
       <div class="col-md-3">
@@ -31,10 +41,10 @@
       <div class="box-body">
         <div class="row">
 
-          <div class="col-md-8">
-            <div class="box box-info">
+          <div class="col-md-6">
+            <div class="box box-success">
               <div class="box-header with-border">
-                <h3 class="box-title">Grafik Hasil Belajar</h3>
+                <h3 class="box-title">Motorik</h3>
 
                 <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -44,7 +54,63 @@
               </div>
               <div class="box-body">
                 <div class="chart">
-                  <canvas id="barChartHasilBelajar" style="height:230px"></canvas>
+                  <canvas id="barChartmotorik" style="height:230px"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="box box-info">
+              <div class="box-header with-border">
+                <h3 class="box-title">Pembiasaan</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+              <div class="box-body">
+                <div class="chart">
+                  <canvas id="barChartpembiasaan" style="height:230px"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="box box-danger">
+              <div class="box-header with-border">
+                <h3 class="box-title">Daya Fikir</h3>
+
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+              <div class="box-body">
+                <div class="chart">
+                  <canvas id="barChartdaya_fikir" style="height:230px"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Bahasa</h3>
+
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+              <div class="box-body">
+                <div class="chart">
+                  <canvas id="barChartbahasa" style="height:230px"></canvas>
                 </div>
               </div>
             </div>
@@ -62,17 +128,20 @@
   $('#tampilkan_siswa').click(function(){
     var nis = $('#nama-siswa').val();
     var tahun_ajaran = $('#tahun_ajaran').val();
+    var month = $('#month').val();
     $('#perkembanganTable').DataTable().destroy();
-    fetchDataMotorik('yes',nis,tahun_ajaran,'hasil');
+    fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'motorik');
+    fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'pembiasaan');
+    fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'bahasa');
+    fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'daya_fikir');
   })
 
-  function fetchDataMotorik(isSearch,nis,idTahunAjaran,lesson) {
+  function fetchDataPerkembanganSiswa(isSearch,nis,idTahunAjaran,month,lesson) {
     $.ajax({
-      url: '../controller/ajax/getGrafikHasilBelajar.php',
-      data: {chartType:lesson, isSearch:isSearch,nis:nis,idTahunAjaran:idTahunAjaran},
+      url: '../controller/ajax/getGrafikPerkembanganSiswa.php',
+      data: {chartType:lesson, isSearch:isSearch,nis:nis,idTahunAjaran:idTahunAjaran,month:month},
       method: 'GET',
       success: function(data){
-        console.log(data);
         var id = [];
         var nilai = [];
         var toJSON = $.parseJSON(data);

@@ -41,7 +41,7 @@ if (isset($_GET['isSearch'])) {
 		}
 		echo json_encode($data);
 	}
-	// daya ingat
+	// pembiasaan
 	if (($_GET['isSearch'] == 'yes') && ($_GET['chartType'] == 'pembiasaan')) {
 		$const = $_GET['chartType'];
 		$id_kelas 			= $_GET['idKelas'];
@@ -80,7 +80,7 @@ if (isset($_GET['isSearch'])) {
 		}
 		echo json_encode($data);
 	}
-	// keaktifan
+	// bahasa
 	if (($_GET['isSearch'] == 'yes') && ($_GET['chartType'] == 'bahasa')) {
 		$const = $_GET['chartType'];
 		$id_kelas 			= $_GET['idKelas'];
@@ -119,7 +119,7 @@ if (isset($_GET['isSearch'])) {
 		}
 		echo json_encode($data);
 	}
-	// Sosialisai
+	// daya_fikir
 	if (($_GET['isSearch'] == 'yes') && ($_GET['chartType'] == 'daya_fikir')) {
 		$const = $_GET['chartType'];
 		$id_kelas 			= $_GET['idKelas'];

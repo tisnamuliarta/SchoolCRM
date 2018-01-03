@@ -71,7 +71,7 @@
               // var result = $.parseJSON(data);
               
               var content = $('#buku_penghubung_content');
-              content.append("<p>Dear Parents,</p>"+"<p>Untuk minggu ke-"+week+" tahun "+tahun_ajaran+" anak-anak belajar</p>");
+              content.append("<p>Dear Parents,</p>"+"<p>Untuk minggu ke-"+week+" tahun ajaran "+tahun_ajaran+" anak-anak belajar</p>");
               $.each(data, function(idx, elem){
                 content.append(" "+"<strong>"+elem.nama+"</strong>"+ " seperti "+elem.deskripsi+", ")
               })
