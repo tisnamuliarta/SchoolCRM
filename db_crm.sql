@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.2
+-- version 4.6.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 29, 2017 at 03:27 PM
--- Server version: 5.7.18
--- PHP Version: 5.6.31
+-- Generation Time: Jan 03, 2018 at 12:34 AM
+-- Server version: 5.7.19
+-- PHP Version: 7.1.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -81,7 +79,8 @@ INSERT INTO `tb_detail_siswa` (`id`, `id_siswa`, `id_kelas`, `id_tahun_ajaran`) 
 (14, 6, 6, 6),
 (15, 7, 6, 6),
 (16, 8, 6, 6),
-(17, 11, 6, 6);
+(17, 11, 6, 6),
+(18, 13, 6, 6);
 
 -- --------------------------------------------------------
 
@@ -206,6 +205,7 @@ INSERT INTO `tb_guru` (`nip`, `nama`, `username`, `password`, `alamat`, `tgl_lah
 
 CREATE TABLE `tb_kegiatan` (
   `id` int(10) UNSIGNED NOT NULL,
+  `id_kelas` int(10) UNSIGNED DEFAULT NULL,
   `nip` varchar(20) DEFAULT NULL,
   `nama` varchar(200) DEFAULT NULL,
   `deskripsi` text,
@@ -216,8 +216,27 @@ CREATE TABLE `tb_kegiatan` (
 -- Dumping data for table `tb_kegiatan`
 --
 
-INSERT INTO `tb_kegiatan` (`id`, `nip`, `nama`, `deskripsi`, `tgl`) VALUES
-(2, '1010101', 'Menulis', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo', '2017-12-03');
+INSERT INTO `tb_kegiatan` (`id`, `id_kelas`, `nip`, `nama`, `deskripsi`, `tgl`) VALUES
+(4, 6, '1010101', 'Menulis', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-04'),
+(5, 6, '1010101', 'Berhitung', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-05'),
+(6, 6, '1010101', 'asasa', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-06'),
+(7, 6, '1010101', 'wdwdwd', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-07'),
+(8, 6, '1010101', 'aaa', 'Man bun venmo gochujang, synth quinoa scenester ethical', '2017-12-08'),
+(9, 6, '1010101', 'wsswwwdwfc', 'Man bun venmo gochujang, synth quinoa scenester', '2017-12-11'),
+(10, 6, '1010101', 'sdsfww', 'Sriracha direct trade portland live-edge swag.', '2017-12-12'),
+(11, 6, '1010101', 'akhakusha', ' direct trade portland live-edge swag.', '2017-12-13'),
+(12, 6, '1010101', 'dwdswdswd', ' tile. Sriracha direct trade portland live-edge swag.', '2017-12-14'),
+(13, 6, '1010101', 'Wdwsddsw', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art p', '2017-12-15'),
+(14, 6, '1010101', 'scsss', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-18'),
+(15, 6, '1010101', 'fefefwqasds', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-19'),
+(16, 6, '1010101', 'daas', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-20'),
+(17, 6, '1010101', 'asdaas', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-21'),
+(18, 6, '1010101', 'sasa', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-22'),
+(19, 6, '1010101', 'daasas', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-25'),
+(20, 6, '1010101', 'qsqqsq', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-26'),
+(21, 6, '1010101', 'dadad', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-27'),
+(22, 6, '1010101', 'wdwdwswd', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-28'),
+(23, 6, '1010101', 'wdwswsw', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-29');
 
 -- --------------------------------------------------------
 
@@ -306,20 +325,23 @@ CREATE TABLE `tb_pendaftaran` (
   `jumlah_bayar` float NOT NULL,
   `cara_bayar` varchar(200) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'unpaid',
-  `foto` varchar(200) DEFAULT NULL
+  `foto` varchar(200) DEFAULT NULL,
+  `keterangan` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_pendaftaran`
 --
 
-INSERT INTO `tb_pendaftaran` (`id`, `id_siswa`, `id_ortu`, `id_tahun_ajaran`, `tgl_daftar`, `jumlah_bayar`, `cara_bayar`, `status`, `foto`) VALUES
-(1, 4, 58, 6, '2017-12-21 10:53:11', 100000, 'transfer', 'paid', '51da8c3b9fd197afb41fc909af33b944.png'),
-(2, 5, 59, 6, '2017-12-21 11:04:31', 100000, 'tunai', 'paid', '47460723b0a47d88ba2979e088a5f95d.png'),
-(3, 6, 59, 6, '2017-12-24 02:59:21', 90000, 'transfer', 'paid', '06ec7291e7c5ae6cb940fef00b42cb76.png'),
-(4, 7, 58, 6, '2017-12-24 03:00:40', 90000, 'tunai', 'paid', '6bee1034b0763cc19d1384313c4b903b.png'),
-(5, 8, 58, 6, '2017-12-24 03:13:58', 90000, 'transfer', 'paid', 'dfd2e228ca51dabf574d6912a9bef315.jpg'),
-(8, 11, 58, 6, '2017-12-25 01:43:55', 90000, 'transfer', 'paid', '56a8da1d3bcb2e9b334a778be5b1d781.png');
+INSERT INTO `tb_pendaftaran` (`id`, `id_siswa`, `id_ortu`, `id_tahun_ajaran`, `tgl_daftar`, `jumlah_bayar`, `cara_bayar`, `status`, `foto`, `keterangan`) VALUES
+(1, 4, 58, 6, '2017-12-21 10:53:11', 100000, 'transfer', 'paid', '51da8c3b9fd197afb41fc909af33b944.png', NULL),
+(2, 5, 59, 6, '2017-12-21 11:04:31', 100000, 'tunai', 'paid', '47460723b0a47d88ba2979e088a5f95d.png', NULL),
+(3, 6, 59, 6, '2017-12-24 02:59:21', 90000, 'transfer', 'paid', '06ec7291e7c5ae6cb940fef00b42cb76.png', NULL),
+(4, 7, 58, 6, '2017-12-24 03:00:40', 90000, 'tunai', 'paid', '6bee1034b0763cc19d1384313c4b903b.png', NULL),
+(5, 8, 58, 6, '2017-12-24 03:13:58', 90000, 'transfer', 'paid', 'dfd2e228ca51dabf574d6912a9bef315.jpg', NULL),
+(8, 11, 58, 6, '2017-12-25 01:43:55', 90000, 'transfer', 'paid', '56a8da1d3bcb2e9b334a778be5b1d781.png', NULL),
+(10, 13, 58, 6, '2017-12-31 02:32:36', 90000, 'transfer', 'paid', '0552fd25d5b2312eb092cca17d9e868a.jpg', NULL),
+(11, 14, 58, 6, '2017-12-31 02:35:46', 90000, 'transfer', 'unpaid', 'ced5008753cb50b6bb424556dcc8f707.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -331,10 +353,10 @@ CREATE TABLE `tb_perkembangan` (
   `id` int(10) NOT NULL,
   `nip` varchar(20) DEFAULT NULL,
   `nis` varchar(10) DEFAULT NULL,
-  `aktif` varchar(50) DEFAULT NULL,
-  `sosial` varchar(50) DEFAULT NULL,
-  `motorik` varchar(50) DEFAULT NULL,
-  `daya_ingat` varchar(50) DEFAULT NULL,
+  `pembiasaan` varchar(1) DEFAULT NULL,
+  `bahasa` varchar(1) DEFAULT NULL,
+  `daya_fikir` varchar(1) DEFAULT NULL,
+  `motorik` varchar(1) DEFAULT NULL,
   `tgl` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -342,32 +364,30 @@ CREATE TABLE `tb_perkembangan` (
 -- Dumping data for table `tb_perkembangan`
 --
 
-INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `aktif`, `sosial`, `motorik`, `daya_ingat`, `tgl`) VALUES
-(3, '1010101', '0001', 'B', 'A', 'A', 'A', '2017-12-08'),
-(4, '1010101', '0002', 'B', 'A', 'c', 'A', '2017-12-01'),
-(5, '1010101', '0001', 'B', 'B', 'B', 'A', '2017-12-01'),
-(6, '1010101', '0003', 'C', 'B', 'A', 'A', '2017-12-01'),
-(7, '1010101', '0004', 'A', 'C', 'B', 'B', '2017-12-01'),
-(8, '1010101', '0005', 'B', 'B', 'C', 'A', '2017-12-01'),
-(9, '1010101', '0002', 'B', 'B', 'A', 'A', '2017-12-08'),
-(10, '1010101', '0003', 'C', 'B', 'A', 'A', '2017-12-08'),
-(11, '1010101', '0004', 'B', 'B', 'A', 'A', '2017-12-08'),
-(12, '1010101', '0005', 'B', 'C', 'B', 'B', '2017-12-08'),
-(13, '1010101', '0001', 'B', 'B', 'B', 'A', '2017-12-15'),
-(14, '1010101', '0002', 'C', 'B', 'A', 'B', '2017-12-15'),
-(15, '1010101', '0003', 'B', 'B', 'A', 'B', '2017-12-15'),
-(16, '1010101', '0004', 'B', 'B', 'B', 'A', '2017-12-15'),
-(17, '1010101', '0005', 'B', 'B', 'B', 'C', '2017-12-15'),
-(18, '1010101', '0001', 'A', 'B', 'B', 'A', '2017-12-22'),
-(19, '1010101', '0002', 'B', 'A', 'B', 'A', '2017-12-22'),
-(20, '1010101', '0003', 'C', 'B', 'A', 'A', '2017-12-22'),
-(21, '1010101', '0004', 'C', 'A', 'B', 'B', '2017-12-22'),
-(22, '1010101', '0005', 'A', 'A', 'A', 'B', '2017-12-22'),
-(24, '1010101', '0001', 'A', 'B', 'A', 'B', '2017-12-29'),
-(25, '1010101', '0002', 'B', 'B', 'A', 'A', '2017-12-29'),
-(26, '1010101', '0003', 'A', 'B', 'A', 'A', '2017-12-29'),
-(27, '1010101', '0004', 'B', 'A', 'B', 'B', '2017-12-29'),
-(28, '1010101', '0005', 'B', 'B', 'B', 'A', '2017-12-29');
+INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `pembiasaan`, `bahasa`, `daya_fikir`, `motorik`, `tgl`) VALUES
+(29, '1010101', '0001', 'A', 'B', 'A', 'B', '2017-12-04'),
+(30, '1010101', '0002', 'B', 'B', 'C', 'D', '2017-12-04'),
+(31, '1010101', '0003', 'C', 'B', 'A', 'B', '2017-12-04'),
+(32, '1010101', '0004', 'B', 'B', 'B', 'B', '2017-12-04'),
+(33, '1010101', '0005', 'D', 'B', 'B', 'B', '2017-12-04'),
+(34, '1010101', '0001', 'B', 'A', 'B', 'B', '2017-12-05'),
+(35, '1010101', '0002', 'B', 'B', 'B', 'B', '2017-12-05'),
+(36, '1010101', '0001', 'B', 'B', 'B', 'A', '2017-12-06'),
+(37, '1010101', '0001', 'C', 'C', 'A', 'A', '2017-12-07'),
+(38, '1010101', '0002', 'B', 'C', 'B', 'D', '2017-12-06'),
+(39, '1010101', '0002', 'C', 'A', 'B', 'B', '2017-12-07'),
+(40, '1010101', '0003', 'A', 'B', 'C', 'B', '2017-12-05'),
+(41, '1010101', '0003', 'B', 'B', 'C', 'A', '2017-12-06'),
+(42, '1010101', '0003', 'C', 'B', 'A', 'A', '2017-12-07'),
+(43, '1010101', '0004', 'C', 'B', 'B', 'A', '2017-12-05'),
+(44, '1010101', '0004', 'B', 'B', 'A', 'A', '2017-12-06'),
+(45, '1010101', '0004', 'B', 'B', 'A', 'A', '2017-12-07'),
+(46, '1010101', '0005', 'B', 'B', 'B', 'C', '2017-12-05'),
+(47, '1010101', '0005', 'B', 'B', 'C', 'C', '2017-12-06'),
+(48, '1010101', '0006', 'B', 'B', 'A', 'A', '2017-12-04'),
+(49, '1010101', '0006', 'C', 'B', 'C', 'C', '2017-12-05'),
+(50, '1010101', '0006', 'B', 'A', 'B', 'C', '2017-12-06'),
+(51, '1010101', '0006', 'B', 'B', 'C', 'D', '2017-12-07');
 
 -- --------------------------------------------------------
 
@@ -380,15 +400,13 @@ CREATE TABLE `tb_raport` (
   `tahun` int(10) UNSIGNED DEFAULT NULL,
   `nip` varchar(20) DEFAULT NULL,
   `nis` varchar(10) DEFAULT NULL,
-  `sosialisai` varchar(3) DEFAULT NULL,
-  `daya_ingat` varchar(3) DEFAULT NULL,
+  `pembiasaan` varchar(3) DEFAULT NULL,
+  `bahasa` varchar(3) DEFAULT NULL,
+  `daya_fikir` varchar(3) DEFAULT NULL,
   `motorik` varchar(3) DEFAULT NULL,
-  `keaktifan` varchar(3) DEFAULT NULL,
-  `kesenian` varchar(3) DEFAULT NULL,
-  `mendengarkan` varchar(3) DEFAULT NULL,
-  `membaca` varchar(3) DEFAULT NULL,
-  `menulis` varchar(3) DEFAULT NULL,
   `total_nilai` varchar(3) DEFAULT NULL,
+  `keterangan` text,
+  `naik_kelas` tinyint(1) DEFAULT NULL,
   `tgl` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -396,8 +414,8 @@ CREATE TABLE `tb_raport` (
 -- Dumping data for table `tb_raport`
 --
 
-INSERT INTO `tb_raport` (`id`, `tahun`, `nip`, `nis`, `sosialisai`, `daya_ingat`, `motorik`, `keaktifan`, `kesenian`, `mendengarkan`, `membaca`, `menulis`, `total_nilai`, `tgl`) VALUES
-(3, 6, '1010101', '0001', 'B', 'A', 'A', 'A', 'A', 'B', 'B', 'C', 'B', '2017-12-29');
+INSERT INTO `tb_raport` (`id`, `tahun`, `nip`, `nis`, `pembiasaan`, `bahasa`, `daya_fikir`, `motorik`, `total_nilai`, `keterangan`, `naik_kelas`, `tgl`) VALUES
+(4, 6, '1010101', '0001', 'B', 'B', 'A', 'A', 'A', 'hgfghwswsws', 1, '2017-12-30');
 
 -- --------------------------------------------------------
 
@@ -441,7 +459,9 @@ INSERT INTO `tb_siswa` (`nis`, `id`, `id_ortu`, `nama`, `alamat`, `tgl_lahir`, `
 ('0003', 6, 59, 'Putu Ayu', 'Denpasar', '2012-05-16', 2, 'active'),
 ('0004', 7, 58, 'Deka Sand', 'Denpasar', '2013-01-07', 1, 'active'),
 ('0005', 8, 58, 'Astuti', 'DPS', '2017-12-03', 2, 'active'),
-('0006', 11, 58, 'Azis', 'Denpasar', '2017-12-04', 1, 'active');
+('0006', 11, 58, 'Azis', 'Denpasar', '2017-12-04', 1, 'active'),
+('0007', 13, 58, 'anu', 'dps', '2017-12-27', 2, 'active'),
+(NULL, 14, 58, 'Nana', 'DPS', '2017-12-03', 2, 'non-active');
 
 -- --------------------------------------------------------
 
@@ -579,7 +599,9 @@ ALTER TABLE `tb_guru`
 -- Indexes for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_tb_kegiatan_tb_kelas` (`id_kelas`),
+  ADD KEY `FK_tb_kegiatan_tb_guru` (`nip`);
 
 --
 -- Indexes for table `tb_kelas`
@@ -689,7 +711,7 @@ ALTER TABLE `tb_detail_raport`
 -- AUTO_INCREMENT for table `tb_detail_siswa`
 --
 ALTER TABLE `tb_detail_siswa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `tb_diskon`
 --
@@ -714,7 +736,7 @@ ALTER TABLE `tb_galeri_detail`
 -- AUTO_INCREMENT for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `tb_kelas`
 --
@@ -734,17 +756,17 @@ ALTER TABLE `tb_pekerjaan`
 -- AUTO_INCREMENT for table `tb_pendaftaran`
 --
 ALTER TABLE `tb_pendaftaran`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tb_perkembangan`
 --
 ALTER TABLE `tb_perkembangan`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 --
 -- AUTO_INCREMENT for table `tb_raport`
 --
 ALTER TABLE `tb_raport`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tb_riwayat_kelas`
 --
@@ -754,7 +776,7 @@ ALTER TABLE `tb_riwayat_kelas`
 -- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `tb_tahun_ajaran`
 --
@@ -801,6 +823,13 @@ ALTER TABLE `tb_galeri_detail`
   ADD CONSTRAINT `FK_tb_galeri_detail_tb_galeri` FOREIGN KEY (`id_galeri`) REFERENCES `tb_galeri` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `tb_kegiatan`
+--
+ALTER TABLE `tb_kegiatan`
+  ADD CONSTRAINT `FK_tb_kegiatan_tb_guru` FOREIGN KEY (`nip`) REFERENCES `tb_guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_tb_kegiatan_tb_kelas` FOREIGN KEY (`id_kelas`) REFERENCES `tb_kelas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `tb_ortu`
 --
 ALTER TABLE `tb_ortu`
@@ -842,7 +871,6 @@ ALTER TABLE `tb_riwayat_kelas`
 --
 ALTER TABLE `tb_siswa`
   ADD CONSTRAINT `FK_tb_siswa_tb_ortu` FOREIGN KEY (`id_ortu`) REFERENCES `tb_ortu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

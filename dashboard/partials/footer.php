@@ -35,15 +35,20 @@
 		var url = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
 		$('ul.treeview-menu li a[href="' + url + '"]').parent().parent().parent().addClass('active');
 		$('ul.treeview-menu li a[href="' + url + '"]').parent().addClass('active');
-	    $('li#link-sidebar a[href="' + url + '"]').parent().addClass('active');
-
-	    // radio
-	    // $('input').iCheck({
-	    //   checkboxClass: 'icheckbox_square-blue',
-	    //   radioClass: 'iradio_square-blue',
-	    //   increaseArea: '20%' // optional
-	    // });	   
+	    $('li#link-sidebar a[href="' + url + '"]').parent().addClass('active');   
 		
+		$('#tgl_kegiatan_range').daterangepicker(
+			{
+				startDate: moment().subtract(29, 'days'),
+		        endDate: moment(),
+		        format: 'YYYY-MM-DD',
+			},
+			function (start, end) {
+	          $('#tgl_kegiatan_range span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+	          $('#startDate').val(start.format('YYYY-MM-DD'))
+	          $('#endDate').val(end.format('YYYY-MM-DD'))
+	        }
+		);
 	})
 </script>
 </body>

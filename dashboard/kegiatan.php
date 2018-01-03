@@ -13,7 +13,7 @@
             <div class="col-sm-3 pull-right">
               <div class="btn-group">
                 <button type="button" name="add" id="add_tahunajaran_button" class="btn btn-success btn-sm" >Add</button>
-                <button type="button" name="add" id="add_buku_penghubung" class="btn btn-info btn-sm" style="margin-left: 10px;">Terbitkan Buku Penghubung</button>
+                <button type="button" name="terbitkan_buku_penghubung" id="terbitkan_buku_penghubung" class="btn btn-info btn-sm" style="margin-left: 10px;">Terbitkan Buku Penghubung</button>
               </div>
               <br><br>
             </div>
@@ -123,7 +123,34 @@
   </div>
 </div>
 
-
+<div id="terbitkanBukuPenghubungModal" class="modal fade">
+  <div class="modal-dialog">
+      <form method="post" id="buku_penghubung_form">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title"><i class="fa fa-plus"></i>Terbitkan Buku Penghubung</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="col-sm-12">
+                    <div class="form-group has-feedback">
+                      <label>Pilih Tanggal Kegiatan</label>
+                      <input type="text" class="form-control" name="tgl_kegiatan" id="tgl_kegiatan_range">
+                      <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">         
+                  <input type="hidden" name="startDate" id="startDate" />
+                  <input type="hidden" name="endDate" id="endDate" />
+                  <input type="hidden" name="btn_action_terbitkan" id="btn_action_terbitkan" />         
+                  <input type="submit" name="action_terbitkan" id="action_terbitkan" class="btn btn-info" value="Add" />
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
 
 <?php require 'partials/footer.php'; ?>
 <script type="text/javascript">
@@ -158,6 +185,14 @@
         $('#action').val('Add');
         $('#btn_action').val('Add');
       });
+
+      $('#terbitkan_buku_penghubung').click(function(){
+        $('#terbitkanBukuPenghubungModal').modal('show');
+        $('#buku_penghubung_form')[0].reset();
+        $('.modal-user-title').html("<i class='fa fa-plus'></i> Terbitkan Buku Penghubung");
+        $('#btn_action_terbitkan').val('Add');
+        $('#btn_action_terbitkan').val('Add');
+      })
     // ============= save data ======
     $(document).on('submit','#formKegiatan', function(e){
       e.preventDefault();

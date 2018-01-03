@@ -2,15 +2,25 @@
 <div class="row">
   <div class="col-md-8 col-sm-12 col-md-offset-2">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-3">
         <select name="nama_siswa" id="nama_siswa" class="form-control">
           <?php echo getListSiswaByOrtu($connect,$_SESSION['id']) ?>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
+        <select name="week" id="week" class="form-control">
+          <?php  
+            $number = 0;
+            for ($i=1; $i <=53 ; $i++) { 
+              echo "<option value='{$i}''>Minggu ke-{$i}</option>";
+            }
+          ?>
+        </select>
+      </div>
+      <div class="col-md-3">
         <select name="tahun_ajaran" id="tahun_ajaran" class="form-control" required>
           <?php
-            echo getAllTahunAjaran($connect) 
+            echo getAllBukuPenghubungTahunAjaran($connect) 
           ?> 
         </select>
       </div>
@@ -23,24 +33,16 @@
 
 <div class="contentHasilBelajar">
   <div class="row">
-    <div class="col-md-12">
-      <h2 class="text-center">TK SINAR PRIMA</h2>
-    </div>
     <div class="col-sm-12 col-md-8 col-md-offset-2">
       <div id="formLoadRaport">
         <div class="box box-solid">
-          <div class="box-body">
-            <div class="">
-              <table class="table table-striped table-bordered" id="siswatable">
-                <thead>
-                  <tr>
-                    <th width="80%" style="text-align: center;top: 0">KOMPETENSI DASAR</th>
-                    <th width="20%" style="text-align: center;">HASIL BELAJAR</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
+          <div class="box-header with-border">
+            <h2 class="text-center">TK SINAR PRIMA</h2>
+          </div>
+          <div class="box-body" id="buku_penghubung_content">
+            <p>Dear Parents,</p>
+            <p>Untuk minggu ke- tahun .. anak-anak belajar</p>
+            <p>Demikian buku penghubung kegiatan siswa TK SINAR PRIMA. Atas perhatian Bapak/Ibu Orang Tua Siswa, kami ucapkan terima kasih.</p>
           </div>
         </div>
       </div>
@@ -54,53 +56,28 @@
 <?php require 'partials/footer.php'; ?>
 <script type="text/javascript">
   // ================== User datatable =============
-      // fetchData('no');
-
-      // function fetchData(isSearch,nis='',tahun_ajaran='') {
-      //   var id_ortu = <?php echo $_SESSION['id']; ?>;
-      //   var userTable = $('#siswatable').DataTable({
-      //     "paging":false,
-      //     "searching":false,
-      //     "ordering":false,
-      //     "info":false,
-      //     "processing":true,
-      //     "serverSide":true,
-      //     "order":[],
-      //     "ajax":{
-      //       url: "../controller/getData.php",
-      //       data: {isSearch:isSearch,hasilBelajar: "siswa-baru",id_ortu:id_ortu,nis:nis,tahun_ajaran:tahun_ajaran},
-      //       type: "GET"
-      //     },
-      //     "columnDefs":[
-      //       {
-      //         "targets":[0,1],
-      //         "orderable":false,
-      //       },
-      //     ],
-      //     "pageLength": 10
-      //   });
-      // }
 
       $('#tampilkan_siswa').click(function(e){
         e.preventDefault();
         $('#formLoadRaport').load(' #formLoadRaport')
         var nis = $('#nama_siswa').val();
         var tahun_ajaran = $('#tahun_ajaran').val();
+        var week = $('#week').val();
         var id_ortu = <?php echo $_SESSION['id']; ?>;
-        if (nis != '' && tahun_ajaran != '') {
-          // $('#siswatable').DataTable().destroy();
-          // fetchData('yes',nis,tahun_ajaran);
+        if (nis != '' && tahun_ajaran != '' week != '') {
           $.ajax({
             url: '../controller/reportAction.php',
             method: 'GET',
-            data: {btn_action:'getHasilBelajar',nis:nis,tahun_ajaran:tahun_ajaran,id_ortu:id_ortu},
+            data: {btn_action:'getBukuPenghubung',nis:nis,tahun_ajaran:tahun_ajaran,id_ortu:id_ortu,week:week},
             dataType: 'json',
             success: function(data){
               var result;
-              var table = $('#siswatable tbody');
-              $.each(data, function(idx, elem){
-                table.append("<tr><td>"+elem.kompetensi+"</td><td>"+elem.nilai+"</td> </tr>");
-              })
+              var content = $('#buku_penghubung_content');
+              content.append("<p>Dear Parents,</p>"+"<p>Untuk minggu ke-"+week+" tahun "+tahun_ajaran+" anak-anak belajar "+ 
+                  $.each(data, function(idx, elem){
+                    elem.nama+ " seperti " + elem.deskrisi
+                  })
+              +"</p>"+"<p>Demikian buku penghubung kegiatan siswa TK SINAR PRIMA. Atas perhatian Bapak/Ibu Orang Tua Siswa, kami ucapkan terima kasih.</p>");
             }
           });
         }

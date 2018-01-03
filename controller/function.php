@@ -68,6 +68,20 @@ function getAllTahunAjaran($connect) {
 	return $output;
 }
 
+function getAllBukuPenghubungTahunAjaran($connect) {
+	$query = "SELECT DISTINCT tb_tahun_ajaran.tahun, CONCAT(tb_tahun_ajaran.tahun) as tahun_ajaran 
+		FROM tb_tahun_ajaran
+		ORDER BY tb_tahun_ajaran.tahun DESC ";
+	$dbs = $connect->prepare($query);
+	$dbs->execute();
+	$result = $dbs->fetchAll();
+	$output = '';
+	foreach ($result as $row) {
+		$output .= '<option value="'.$row['tahun_ajaran'].'" >'.$row['tahun_ajaran'].'</option>' ;
+	}
+	return $output;
+}
+
 /**
  * Display list tahun ajaran
  * @param  integer $connect
