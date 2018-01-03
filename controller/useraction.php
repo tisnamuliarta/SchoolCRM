@@ -72,6 +72,7 @@ if (isset($_POST['btn_action'])) {
 	 * ==================================================
 	 * */
 	if ($_POST['btn_action'] == 'Edit') {
+		$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$query = "
 			UPDATE tb_ortu
 			set nama_ayah = :nama_ayah,
