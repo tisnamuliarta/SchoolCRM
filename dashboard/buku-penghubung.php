@@ -40,9 +40,6 @@
             <h2 class="text-center">TK SINAR PRIMA</h2>
           </div>
           <div class="box-body" id="buku_penghubung_content">
-            <p>Dear Parents,</p>
-            <p>Untuk minggu ke- tahun .. anak-anak belajar</p>
-            <p>Demikian buku penghubung kegiatan siswa TK SINAR PRIMA. Atas perhatian Bapak/Ibu Orang Tua Siswa, kami ucapkan terima kasih.</p>
           </div>
         </div>
       </div>
@@ -64,20 +61,21 @@
         var tahun_ajaran = $('#tahun_ajaran').val();
         var week = $('#week').val();
         var id_ortu = <?php echo $_SESSION['id']; ?>;
-        if (nis != '' && tahun_ajaran != '' week != '') {
+        if (nis != '' && tahun_ajaran != '' && week != '') {
           $.ajax({
             url: '../controller/reportAction.php',
             method: 'GET',
             data: {btn_action:'getBukuPenghubung',nis:nis,tahun_ajaran:tahun_ajaran,id_ortu:id_ortu,week:week},
             dataType: 'json',
             success: function(data){
-              var result;
+              // var result = $.parseJSON(data);
+              
               var content = $('#buku_penghubung_content');
-              content.append("<p>Dear Parents,</p>"+"<p>Untuk minggu ke-"+week+" tahun "+tahun_ajaran+" anak-anak belajar "+ 
-                  $.each(data, function(idx, elem){
-                    elem.nama+ " seperti " + elem.deskrisi
-                  })
-              +"</p>"+"<p>Demikian buku penghubung kegiatan siswa TK SINAR PRIMA. Atas perhatian Bapak/Ibu Orang Tua Siswa, kami ucapkan terima kasih.</p>");
+              content.append("<p>Dear Parents,</p>"+"<p>Untuk minggu ke-"+week+" tahun "+tahun_ajaran+" anak-anak belajar</p>");
+              $.each(data, function(idx, elem){
+                content.append(" "+"<strong>"+elem.nama+"</strong>"+ " seperti "+elem.deskripsi+", ")
+              })
+              content.append("<br><br><p>Demikian buku penghubung kegiatan siswa TK SINAR PRIMA. Atas perhatian Bapak/Ibu Orang Tua Siswa, kami ucapkan terima kasih.</p>")
             }
           });
         }

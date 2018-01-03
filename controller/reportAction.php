@@ -51,6 +51,34 @@ if (isset($_GET['btn_action'])) {
 
 		echo json_encode($data);
 	}
+	// Buku penghubung
+	if ($_GET['btn_action'] == 'getBukuPenghubung') {
+		$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$query = '';
+		$id_ortu = $_GET['id_ortu'];
+		$tahun_ajaran = $_GET['tahun_ajaran'];
+		$nis = $_GET['nis'];
+		$week = $_GET['week'];
+		$data = array();
+
+		$query = "SELECT tb_kegiatan.*
+		from tb_kegiatan
+		LEFT JOIN tb_kelas ON tb_kegiatan.id_kelas = tb_kelas.id
+		LEFT JOIN tb_detail_siswa ON tb_kelas.id = tb_detail_siswa.id_kelas
+		LEFT JOIN tb_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
+		LEFT JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran
+		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.id_ortu = {$id_ortu} AND tb_tahun_ajaran.tahun = '{$tahun_ajaran}' AND tb_siswa.nis = '{$nis}' AND WEEK(tb_kegiatan.tgl) IN ({$week}) ";
+		// echo $query;
+		$statement = $connect->prepare($query);
+		$statement->execute();
+		$result = $statement->fetchAll();
+		$single = $statement->fetch(PDO::FETCH_ASSOC);
+		foreach ($result as $row) {
+			$data[] = array('nama' => $row['nama'],'deskripsi' => $row['deskripsi']);
+		}
+
+		echo json_encode($data);
+	}
 }
 
 if (isset($_POST['btn_action'])) {
