@@ -5,6 +5,29 @@ include 'function.php';
 $isSame = false;
 $output = [];
 
+if (isset($_POST['btn_action_update_password'])) {
+	if ($_POST['btn_action_update_password'] == 'update_password' ) {
+		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$query = "
+			UPDATE tb_ortu
+			set password = :password
+			WHERE id = :id
+		";
+		$statement = $connect->prepare($query);
+		$statement->execute(
+			array(
+				':password'     => password_hash($_POST['password'],PASSWORD_DEFAULT),
+				':id'			=> $_POST['user_id_update']
+			)
+		);
+		$count = $statement->rowCount();
+		$result = $statement->fetch();
+		if (isset($result)) {
+			echo "Password telah diupdate!";
+		}
+	}
+}
+
 if (isset($_POST['btn_action'])) {
 	/**
 	 * ====================================

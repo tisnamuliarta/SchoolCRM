@@ -224,39 +224,34 @@
         $('#action').val('Add');
         $('#btn_action').val('Add');
       });
-
-      $('#terbitkan_buku_penghubung').click(function(){
-        $('#terbitkanBukuPenghubungModal').modal('show');
-        $('#buku_penghubung_form')[0].reset();
-        $('.modal-user-title').html("<i class='fa fa-plus'></i> Terbitkan Buku Penghubung");
-        $('#btn_action_terbitkan').val('Add');
-        $('#btn_action_terbitkan').val('Add');
-      })
-
+      //open update password modal
       $(document).on('click','.update-password',function(){
+        var id = $(this).attr("id");
         $('#updatePasswordModal').modal('show');
         $('#update_password_form')[0].reset();
-        $('#action_update_password').val('update_password');
-        $('#btn_action_update_password').val('Update Password');
+        $('#action_update_password').val('Update Password');
+        $('#btn_action_update_password').val('update_password');
+        $('#user_id_update').val(id);
       });
     // ============= save data ======
-    $(document).on('submit','#formKegiatan', function(e){
+    $(document).on('submit','#update_password_form', function(e){
       e.preventDefault();
-      $('#action').attr('disabled','disabled');
+      $('#action_update_password').attr('disabled','disabled');
       var formData = $(this).serialize();
       $.ajax({
-        url: "../controller/kegiatanaction.php",
+        url: "../controller/pengaturanakunaction.php",
         method: "POST",
         data: formData,
         success: function(data){
-          $('#formKegiatan')[0].reset();
-          $('#tahunAjaranModal').modal('hide');
+          $('#update_password_form')[0].reset();
+          $('#updatePasswordModal').modal('hide');
           $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
-          $('#action').attr('disabled', false);
+          $('#action_update_password').attr('disabled', false);
           ortuTable.ajax.reload();
         }
       })
     });
+
    // ============= Display single data and update
     $(document).on('click','.update-user',function(){
       var id = $(this).attr("id");
