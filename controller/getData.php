@@ -32,6 +32,9 @@ if (isset($_POST['datasiswa']))
 if (isset($_POST['kegiatan']))
 	getKegiatanDatatable($connect);
 
+if (isset($_POST['pengaturanakun']))
+	getPengaturanAkunDatatable($connect);
+
 if (isset($_POST['kelas']))
 	getKelasDatatable($connect);
 
@@ -237,6 +240,61 @@ function getKegiatanDatatable($connect) {
 		"draw" => intval($_POST["draw"]),
 		"recordsTotal" => $filtered_rows,
 		"recordsFiltered"  => get_total_all_kegiatan_records($connect,"tb_kegiatan",$nip),
+		"data" => $data
+	];
+
+	echo json_encode($output);
+}
+
+function getPengaturanAkunDatatable($connect) {
+	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$id_ortu = $_SESSION['id'];
+	$query = '';
+	$output = [];
+	$query .= " 
+		SELECT *, (SELECT tb_pekerjaan.pekerjaan FROM tb_pekerjaan WHERE tb_pekerjaan.id = tb_ortu.pekerjaan_ayah) as nama_pekerjaan_ayah, (SELECT tb_pekerjaan.pekerjaan FROM tb_pekerjaan WHERE tb_pekerjaan.id = tb_ortu.pekerjaan_ibu) as nama_pekerjaan_ibu 
+		from tb_ortu
+		WHERE tb_ortu.id = {$id_ortu}
+	";
+	if (isset($_POST["search"]["value"])) {
+		$query .= 'AND CONCAT(tb_ortu.nama_ayah,"",tb_ortu.nama_ibu,"",tb_ortu.username) LIKE "%'.$_POST["search"]["value"].'%" ';
+	}
+	if (isset($_POST["order"])) {
+		$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+	}else {
+		$query .= 'ORDER BY tb_ortu.id ASC ';
+	}
+	if ($_POST["length"] != -1) {
+		$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+	}
+
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$data = [];
+	$filtered_rows = $statement->rowCount();
+	$start = $_REQUEST['start'];
+	$idx = 0;
+	foreach ($result as $row) {
+		$idx++;
+		$sub_array = [];
+		$sub_array[] = $idx;
+		$sub_array[] = $row['nama_ayah'];
+		$sub_array[] = $row['nama_ibu'];
+		$sub_array[] = $row['username'];
+		$sub_array[] = $row['email'];
+		$sub_array[] = $row['nama_pekerjaan_ayah'];
+		$sub_array[] = $row['nama_pekerjaan_ibu'];
+		$sub_array[] = $row['tlpn'];
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-info btn-xs update-user">Update</button>';
+		$sub_array[] = '<button type="button" name="update_password" id="'.$row["id"].'" class="btn btn-success btn-xs update-password">Update Password</button>';
+		$data[] = $sub_array;
+	}
+
+	$output = [
+		"draw" => intval($_POST["draw"]),
+		"recordsTotal" => $filtered_rows,
+		"recordsFiltered"  => get_total_all_records($connect,"tb_ortu"),
 		"data" => $data
 	];
 
