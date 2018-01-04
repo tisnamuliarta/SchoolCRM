@@ -107,7 +107,7 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label>Username</label>
-                  <input class="form-control" name="username" id="username" pattern="^[A-Za-z0-9_]{1,15}$" title="Username tidak mengandung spasi!" required/>
+                  <input class="form-control" name="username" id="usernameUpdate" pattern="^[A-Za-z0-9_]{1,15}$" title="Username tidak mengandung spasi!" required/>
                   <input type="hidden" name="hiddenUsername" id="hiddenUsername">
                   <div class="text-danger" id="usernameError"></div>
                 </div>
@@ -136,11 +136,15 @@
               </div>
               <div class="modal-body">
                   <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="usernameUpdatePassword" id="usernameUpdatePassword" class="form-control" required="required">
+                  </div>
+                  <div class="form-group">
                     <label>Password</label>
                     <input type="password" name="password" id="update_password" class="form-control" required="required">
                   </div>
                   <div class="form-group">
-                      <label>Update Password</label>
+                      <label>Konfirmasi Password</label>
                       <input type="password" name="c_password" id="c_update_password" class="form-control" required="required">
                     </div>
               </div>
@@ -197,10 +201,6 @@
       var ortuTable = $('#userstable').DataTable({
         "processing":true,
         "serverSide":true,
-        "paging":false,
-        "searching":false,
-        "ordering":false,
-        "info":false,
         "order":[],
         "ajax":{
           url: "../controller/getData.php",
@@ -264,7 +264,7 @@
         success: function(data){
           $('#userModal').modal('show');
           $('#nama_ayah').val(data.nama_ayah);
-          $('#username').val(data.username);
+          $('#usernameUpdate').val(data.username);
           $('#nama_ibu').val(data.nama_ibu);
           // $('#pekerjaan_ayah').val(data.pekerjaan_ayah);
           $('select[name="pekerjaan_ayah"] option[value="'+data.pekerjaan_ayah+'"]').attr('selected','selected');

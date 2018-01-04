@@ -1,4 +1,4 @@
-<?php if ($_SESSION['status'] != 'ortu'): ?>
+<?php if ($_SESSION['status'] == 'admin'): ?>
   <header class="main-header">
     <!-- Logo -->
     <a href="index.php" class="logo">

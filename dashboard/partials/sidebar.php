@@ -47,6 +47,9 @@
         <li id="link-sidebar"><a href="diskon.php"><i class="fa fa-money"></i> 
           <span>Diskon</span></a>
         </li>
+        <li id="link-sidebar"><a href="pengaturan-akun-user.php"><i class="fa fa-gears"></i> 
+          <span>Pengaturan Akun</span></a>
+        </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-gear"></i> <span>Pengaturan Lain</span>
@@ -87,6 +90,12 @@
             <li><a href="perkembangan.php"><i class="fa fa-circle-o"></i> Perkembangan</a></li>
             <li><a href="raport.php"><i class="fa fa-circle-o"></i> Raport</a></li>
           </ul>
+        </li>
+        <li id="link-sidebar"><a href="../logout.php"><i class="fa fa-sign-out"></i> 
+          <span>Logout</span></a>
+        </li>
+        <li id="link-sidebar"><a href="pengaturan-akun-guru.php"><i class="fa fa-gears"></i> 
+          <span>Pengaturan Akun</span></a>
         </li>
       <?php elseif($_SESSION['status'] == 'ortu'): ?>
         <li id="link-sidebar"><a href="index-ortu.php"><i class="fa fa-home"></i> 

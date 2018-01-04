@@ -8,23 +8,117 @@ $output = [];
 if (isset($_POST['btn_action_update_password'])) {
 	if ($_POST['btn_action_update_password'] == 'update_password' ) {
 		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$query = "
-			UPDATE tb_ortu
-			set password = :password
-			WHERE id = :id
-		";
-		$statement = $connect->prepare($query);
-		$statement->execute(
-			array(
-				':password'     => password_hash($_POST['password'],PASSWORD_DEFAULT),
-				':id'			=> $_POST['user_id_update']
-			)
-		);
-		$count = $statement->rowCount();
-		$result = $statement->fetch();
-		if (isset($result)) {
-			echo "Password telah diupdate!";
-		}
+		$id = $_POST['user_id_update'];
+		$username = $_POST['usernameUpdatePassword'];
+		$query_ortu = "SELECT * FROM tb_ortu WHERE id = {$id} AND username = '{$username}'";
+	  	$statement_ortu =  $connect->prepare($query_ortu);
+	  	$statement_ortu->execute();
+	  	// echo $query_ortu;
+	  	if ($statement_ortu->rowCount() > 0) {
+	  		$query = "
+				UPDATE tb_ortu
+				set password = :password
+				WHERE id = :id
+			";
+			$statement = $connect->prepare($query);
+			$statement->execute(
+				array(
+					':password'     => password_hash($_POST['password'],PASSWORD_DEFAULT),
+					':id'			=> $_POST['user_id_update']
+				)
+			);
+			$result = $statement->fetchAll();
+			if (isset($result)) {
+				echo "Data telah diupdate!";
+			}
+	  	}else {
+	  		$query_guru = "SELECT * FROM tb_ortu WHERE username = '{$username}'";
+		  	$statement_guru =  $connect->prepare($query_guru);
+		  	$statement_guru->execute();
+
+		  	$result = $statement_guru->rowCount();
+		  	if ($result > 0) {
+			  	echo ("Ups username sudah terdaftar pada sistem, gunakan yang lain!");
+		  	}else {
+		  		$query = "
+					UPDATE tb_ortu
+					set password = :password,
+					username = :username
+					WHERE id = :id
+				";
+				$statement = $connect->prepare($query);
+				$statement->execute(
+					array(
+						':username'			=> $_POST['usernameUpdatePassword'],
+						':password'     => password_hash($_POST['password'],PASSWORD_DEFAULT),
+						':id'			=> $_POST['user_id_update']
+					)
+				);
+				$count = $statement->rowCount();
+				$result = $statement->fetchAll();
+				if (isset($result)) {
+					echo "Data telah diupdate!";
+				}
+		  	}
+	  	}
+		
+	}
+
+	if ($_POST['btn_action_update_password'] == 'update_password_guru' ) {
+		$username = $_POST['usernameUpdatePassword'];
+		$nip = $_POST['user_id_update'];
+		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$query_guru = "SELECT * FROM tb_guru WHERE nip = {$nip} AND username = '{$username}'";
+	  	$statement_guru =  $connect->prepare($query_guru);
+	  	$statement_guru->execute();
+	  	$noError = 0;
+	  	// if there are any guru with same username
+	  	if ($statement_guru->rowCount() > 0) {
+	  		$query = "
+				UPDATE tb_guru
+				set password = :password
+				WHERE nip = :nip
+			";
+			$statement = $connect->prepare($query);
+			$statement->execute(
+				array(
+					':password'     => password_hash($_POST['password'],PASSWORD_DEFAULT),
+					':nip'			=> $_POST['user_id_update']
+				)
+			);
+			$result = $statement->fetch();
+			if (isset($result)) {
+				echo "Password telah diupdate!";
+			}
+	  	}else {
+	  		$query_guru = "SELECT * FROM tb_guru WHERE username = '{$username}'";
+		  	$statement_guru =  $connect->prepare($query_guru);
+		  	$statement_guru->execute();
+
+		  	$count = $statement_guru->rowCount();
+		  	if ($count > 0) {
+		  		echo ("Username tidak boleh sama!");
+		  	}else {
+		  		$query = "
+					UPDATE tb_guru
+					set password = :password,
+					username = :username
+					WHERE nip = :nip
+				";
+				$statement = $connect->prepare($query);
+				$statement->execute(
+					array(
+						':username'			=> $_POST['usernameUpdatePassword'],
+						':password'     => password_hash($_POST['password'],PASSWORD_DEFAULT),
+						':nip'			=> $_POST['user_id_update']
+					)
+				);
+				$result = $statement->fetch();
+				if (isset($result)) {
+					echo "Password telah diupdate!";
+				}
+		  	}
+	  	}
 	}
 }
 

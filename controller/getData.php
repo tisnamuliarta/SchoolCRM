@@ -35,6 +35,9 @@ if (isset($_POST['kegiatan']))
 if (isset($_POST['pengaturanakun']))
 	getPengaturanAkunDatatable($connect);
 
+if (isset($_POST['pengaturanakunguru']))
+	getPengaturanAkunGuruDatatable($connect);
+
 if (isset($_POST['kelas']))
 	getKelasDatatable($connect);
 
@@ -192,6 +195,65 @@ function getDaftarSiswaDatatable($connect) {
 ////////////////////////////
 // Get data for datatable //
 ////////////////////////////
+
+function getPengaturanAkunGuruDatatable($connect) {
+	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$nip = $_SESSION['nip'];
+	$query = '';
+	$output = [];
+	$query .= " 
+		SELECT *
+		from tb_guru
+		WHERE tb_guru.nip = {$nip}
+	";
+	if (isset($_POST["search"]["value"])) {
+		$query .= 'AND CONCAT(tb_guru.nama,"",tb_guru.username) LIKE "%'.$_POST["search"]["value"].'%" ';
+	}
+	if (isset($_POST["order"])) {
+		$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+	}else {
+		$query .= 'ORDER BY tb_guru.nip ASC ';
+	}
+	if ($_POST["length"] != -1) {
+		$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+	}
+
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$data = [];
+	$filtered_rows = $statement->rowCount();
+	$start = $_REQUEST['start'];
+	$idx = 0;
+	foreach ($result as $row) {
+		$idx++;
+		$sub_array = [];
+		$sub_array[] = $idx;
+		$sub_array[] = $row['nama'];
+		$sub_array[] = $row['username'];
+		$sub_array[] = $row['alamat'];
+		$sub_array[] = $row['tlpn'];
+		$sub_array[] = '<button type="button" name="update_password" id="'.$row["nip"].'" class="btn btn-success btn-xs update-password">Update Password</button>';
+		$data[] = $sub_array;
+	}
+
+	$output = [
+		"draw" => intval($_POST["draw"]),
+		"recordsTotal" => $filtered_rows,
+		"recordsFiltered"  => get_total_guru_by_nip_records($connect,"tb_guru",$nip),
+		"data" => $data
+	];
+
+	echo json_encode($output);
+}
+
+function get_total_guru_by_nip_records($connect,$table,$nip){
+	$statement = $connect->prepare("SELECT * FROM $table WHERE nip = $nip");
+	$statement->execute();
+	return $statement->rowCount();
+}
+
+
 function getKegiatanDatatable($connect) {
 	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$query = '';
@@ -294,11 +356,17 @@ function getPengaturanAkunDatatable($connect) {
 	$output = [
 		"draw" => intval($_POST["draw"]),
 		"recordsTotal" => $filtered_rows,
-		"recordsFiltered"  => get_total_all_records($connect,"tb_ortu"),
+		"recordsFiltered"  => get_total_ortu_by_id_records($connect,"tb_ortu",$id_ortu),
 		"data" => $data
 	];
 
 	echo json_encode($output);
+}
+
+function get_total_ortu_by_id_records($connect,$table,$id_ortu){
+	$statement = $connect->prepare("SELECT * FROM $table WHERE id = $id_ortu");
+	$statement->execute();
+	return $statement->rowCount();
 }
 
 /**
