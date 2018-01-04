@@ -72,7 +72,7 @@ if (isset($_POST['btn_action'])) {
 	 * ==================================================
 	 * */
 	if ($_POST['btn_action'] == 'Edit') {
-		$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$query = "
 			UPDATE tb_ortu
 			set nama_ayah = :nama_ayah,
@@ -95,14 +95,14 @@ if (isset($_POST['btn_action'])) {
 	          	':email'            => $_POST['email'],
 	          	':alamat'           => $_POST['alamat'],
 	          	':tlpn'             => $_POST['tlpn'],
-				':status' 			=> $_POST['status'],
+				':status' 			=> ($_POST['status']) ? $_POST['status'] : 'active',
 				':id'				=> $_POST['user_id']
 			)
 		);
 		$count = $statement->rowCount();
 		$result = $statement->fetch();
 		if (isset($result)) {
-			echo "User updated!";
+			echo "Data telah diupdate!";
 		}
 	}
 

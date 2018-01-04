@@ -102,8 +102,9 @@
             <div class="form-group">
               <label>Alamat</label>
               <textarea class="form-control" id="alamat" name="alamat" required></textarea>
+              <input type="hidden" name="status" value="active">
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
                   <label>Username</label>
@@ -112,7 +113,7 @@
                   <div class="text-danger" id="usernameError"></div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
         </div>
         <div class="modal-footer">
@@ -247,6 +248,24 @@
           $('#updatePasswordModal').modal('hide');
           $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
           $('#action_update_password').attr('disabled', false);
+          ortuTable.ajax.reload();
+        }
+      })
+    });
+
+    $(document).on('submit','#user_form', function(e){
+      e.preventDefault();
+      $('#action').attr('disabled','disabled');
+      var formData = $(this).serialize();
+      $.ajax({
+        url: "../controller/useraction.php",
+        method: "POST",
+        data: formData,
+        success: function(data){
+          $('#user_form')[0].reset();
+          $('#userModal').modal('hide');
+          $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
+          $('#action').attr('disabled', false);
           ortuTable.ajax.reload();
         }
       })

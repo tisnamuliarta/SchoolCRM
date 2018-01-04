@@ -91,12 +91,13 @@
             <li><a href="raport.php"><i class="fa fa-circle-o"></i> Raport</a></li>
           </ul>
         </li>
-        <li id="link-sidebar"><a href="../logout.php"><i class="fa fa-sign-out"></i> 
-          <span>Logout</span></a>
-        </li>
         <li id="link-sidebar"><a href="pengaturan-akun-guru.php"><i class="fa fa-gears"></i> 
           <span>Pengaturan Akun</span></a>
         </li>
+        <li id="link-sidebar"><a href="../logout.php"><i class="fa fa-sign-out"></i> 
+          <span>Logout</span></a>
+        </li>
+        
       <?php elseif($_SESSION['status'] == 'ortu'): ?>
         <li id="link-sidebar"><a href="index-ortu.php"><i class="fa fa-home"></i> 
           <span>Home</span></a>

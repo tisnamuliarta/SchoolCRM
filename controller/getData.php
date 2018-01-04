@@ -233,6 +233,7 @@ function getPengaturanAkunGuruDatatable($connect) {
 		$sub_array[] = $row['username'];
 		$sub_array[] = $row['alamat'];
 		$sub_array[] = $row['tlpn'];
+		$sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-info btn-xs update-guru">Update</button>';
 		$sub_array[] = '<button type="button" name="update_password" id="'.$row["nip"].'" class="btn btn-success btn-xs update-password">Update Password</button>';
 		$data[] = $sub_array;
 	}
