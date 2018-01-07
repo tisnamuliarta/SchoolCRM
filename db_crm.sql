@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 03, 2018 at 12:34 AM
+-- Generation Time: Jan 07, 2018 at 11:33 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.7
 
@@ -19,6 +19,18 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_crm`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_biaya_pendaftaran`
+--
+
+CREATE TABLE `tb_biaya_pendaftaran` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `id_tahun_ajaran` int(10) UNSIGNED DEFAULT NULL,
+  `biaya` double UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -74,7 +86,7 @@ CREATE TABLE `tb_detail_siswa` (
 --
 
 INSERT INTO `tb_detail_siswa` (`id`, `id_siswa`, `id_kelas`, `id_tahun_ajaran`) VALUES
-(7, 4, 6, 6),
+(7, 4, 2, 8),
 (8, 5, 6, 6),
 (14, 6, 6, 6),
 (15, 7, 6, 6),
@@ -145,7 +157,9 @@ CREATE TABLE `tb_galeri` (
 
 INSERT INTO `tb_galeri` (`id`, `nip`, `judul`, `deskripsi`, `status`) VALUES
 (3, '1782928282', 'Menulis', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit', 'active'),
-(4, '1782928282', 'Membaca', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud', 'active');
+(4, '1782928282', 'Membaca', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud', 'active'),
+(5, '1782928282', 'Text', 'Retxxx', 'active'),
+(6, '1782928282', 'Test2', 'Tes2', 'active');
 
 -- --------------------------------------------------------
 
@@ -167,7 +181,11 @@ INSERT INTO `tb_galeri_detail` (`id`, `id_galeri`, `foto`) VALUES
 (35, 4, '29ee001d4f05f14d09ff6581edf7733f.png'),
 (36, 4, '4468a3e875ee4e91dc54a19f5098ceda.png'),
 (37, 3, 'ecf5164c8bc93625a0223a79e7680567.png'),
-(38, 3, '1353f0ee5e7683d092c4f705582b442a.png');
+(38, 3, '1353f0ee5e7683d092c4f705582b442a.png'),
+(39, 5, '01f746a56d33ad29a70f84a446f01c8c.jpg'),
+(40, 5, '7a87ecf2be0193b7644173687059a5a7.jpg'),
+(41, 6, 'af02e39f9dd87755be8860a4270b1050.jpg'),
+(42, 6, 'a35beb8d61d7117e25cbefe0514b58da.png');
 
 -- --------------------------------------------------------
 
@@ -193,9 +211,9 @@ CREATE TABLE `tb_guru` (
 --
 
 INSERT INTO `tb_guru` (`nip`, `nama`, `username`, `password`, `alamat`, `tgl_lahir`, `jenis_kelamin`, `tlpn`, `status`, `type`) VALUES
-('1010101', 'KAdek', 'kadek', '$2y$10$KpHvuv4Vd5yLq584wlkUMOwXhNZAaM6Y0kxYnyMN2U.WUFO3zzK4y', 'Lorem', '2017-11-28', 2, '010191919', 'active', 'guru'),
+('1010101', 'KAdek', 'kadek', '$2y$10$WeCujfSoUWgG49h3hTySMOXfq6Dc6jjCQkMWc67t38SPdGkz.ibB.', 'Lorem rsss', '2017-11-28', 2, '010192323', 'active', 'guru'),
 ('12312312', 'sdfw', 'admin3', '$2y$10$rzNrSDGKdpxtAIiPV/152uusSeAipITnjIGaAo0T1DRvZ4lUnawSO', 'wefwf', '2017-12-04', 1, '113e3', 'active', 'guru'),
-('1782928282', 'Wayan Adi', 'admin', '$2y$10$4vndF2p9G7iomU8vhQMnV.hDUpYF09A8ZQdNFzg/aIEwdfjGOv9Pm', 'DPS', '2017-01-10', 1, '0282882', 'active', 'admin');
+('1782928282', 'Wayan Adi', 'admin', '$2y$10$GK25lbYVQK5Z2fV.mlnc9eCP4RTtu5GCrysEUK/HO7BmwyYchx0nG', 'DPS', '2017-01-10', 1, '028288', 'active', 'admin');
 
 -- --------------------------------------------------------
 
@@ -283,7 +301,7 @@ CREATE TABLE `tb_ortu` (
 --
 
 INSERT INTO `tb_ortu` (`id`, `nama_ayah`, `nama_ibu`, `email`, `username`, `password`, `pekerjaan_ayah`, `pekerjaan_ibu`, `alamat`, `tlpn`, `status`) VALUES
-(58, 'Rizal', 'Anna', 'rizal@gmail.com', 'rizal', '$2y$10$K0acEZQAvsA54BVgSCaY0.jJjg8EXUJIYvlLj3ZO9moq4.ZvyxYTq', 2, 4, 'DPS', '08191', 'active'),
+(58, 'Rizal', 'Anna', 'rizal@gmail.com', 'rizal1', '$2y$10$ui5nq/QLg0Xg/We51E3Jc.9ecZiIhPzoblTvzfNb6FREhgNxd9y5K', 2, 4, 'DPS sdsd', '081912323', 'active'),
 (59, 'Arya', 'Wintari', 'desi@gmail.com', 'desi', '$2y$10$4vQ0ZXoNtzPaKaEZTd6zPejPE1Yn/b.GOKS2AIwK/3uHByfC3PyEi', 2, 4, 'Denpasar', '6281237773824', 'active'),
 (66, 'Wayan Adi', 'Desi', 'wayan@mail.com', 'dsn', '$2y$10$kz34le868zU0i7kTxh3dSOUZcBhuh.38an.G6TiEkdfHfM9JFqK.a', 2, 4, 'Denpasar', '6281237773821', 'active'),
 (67, 'Aziz', 'Ani', 'aziz@maial.com', 'aziz', '$2y$10$6ltJfp6YFhU.40zFvfcI6OznFWPuCFz8fYEY86.9UJ615.qHoudCm', 2, 5, 'Denpasar', '628128282822', 'active');
@@ -387,7 +405,16 @@ INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `pembiasaan`, `bahasa`, `daya
 (48, '1010101', '0006', 'B', 'B', 'A', 'A', '2017-12-04'),
 (49, '1010101', '0006', 'C', 'B', 'C', 'C', '2017-12-05'),
 (50, '1010101', '0006', 'B', 'A', 'B', 'C', '2017-12-06'),
-(51, '1010101', '0006', 'B', 'B', 'C', 'D', '2017-12-07');
+(51, '1010101', '0006', 'B', 'B', 'C', 'D', '2017-12-07'),
+(52, '1010101', '0001', 'B', 'C', 'B', 'A', '2018-01-01'),
+(53, '1010101', '0001', 'C', 'B', 'C', 'B', '2018-01-02'),
+(54, '1010101', '0001', 'B', 'A', 'B', 'B', '2018-01-03'),
+(55, '1010101', '0001', 'B', 'A', 'B', 'B', '2018-01-04'),
+(56, '1010101', '0001', 'C', 'B', 'B', 'C', '2018-01-05'),
+(57, '1010101', '0002', 'B', 'B', 'A', 'B', '2018-01-01'),
+(58, '1010101', '0002', 'B', 'B', 'A', 'B', '2018-01-02'),
+(59, '1010101', '0002', 'A', 'B', 'C', 'C', '2018-01-03'),
+(60, '1010101', '0002', 'A', 'B', 'A', 'B', '2018-01-04');
 
 -- --------------------------------------------------------
 
@@ -400,6 +427,7 @@ CREATE TABLE `tb_raport` (
   `tahun` int(10) UNSIGNED DEFAULT NULL,
   `nip` varchar(20) DEFAULT NULL,
   `nis` varchar(10) DEFAULT NULL,
+  `id_kelas` int(10) UNSIGNED DEFAULT NULL,
   `pembiasaan` varchar(3) DEFAULT NULL,
   `bahasa` varchar(3) DEFAULT NULL,
   `daya_fikir` varchar(3) DEFAULT NULL,
@@ -414,8 +442,9 @@ CREATE TABLE `tb_raport` (
 -- Dumping data for table `tb_raport`
 --
 
-INSERT INTO `tb_raport` (`id`, `tahun`, `nip`, `nis`, `pembiasaan`, `bahasa`, `daya_fikir`, `motorik`, `total_nilai`, `keterangan`, `naik_kelas`, `tgl`) VALUES
-(4, 6, '1010101', '0001', 'B', 'B', 'A', 'A', 'A', 'hgfghwswsws', 1, '2017-12-30');
+INSERT INTO `tb_raport` (`id`, `tahun`, `nip`, `nis`, `id_kelas`, `pembiasaan`, `bahasa`, `daya_fikir`, `motorik`, `total_nilai`, `keterangan`, `naik_kelas`, `tgl`) VALUES
+(20, 6, '1010101', '0001', 6, 'B', 'B', 'A', 'A', 'A', 'rer', 1, '2018-01-07'),
+(21, 7, '1010101', '0001', 6, 'C', 'A', 'B', 'C', 'A', 'er', 1, '2018-01-07');
 
 -- --------------------------------------------------------
 
@@ -484,9 +513,11 @@ CREATE TABLE `tb_tahun_ajaran` (
 INSERT INTO `tb_tahun_ajaran` (`id`, `tahun`, `semester`, `tgl_mulai`, `tgl_selesai`) VALUES
 (1, '2011/2012', 'semester 1', '2011-07-01', '2017-12-30'),
 (2, '2011/2012', 'semester 2', '2012-01-01', '2012-06-30'),
-(3, '2012/2013', 'semester 1', NULL, NULL),
+(3, '2012/2013', 'semester 1', '2019-08-02', '2019-12-21'),
 (6, '2017/2018', 'semester 1', '2017-07-01', '2017-12-31'),
-(7, '2017/2018', 'semester 2', '2018-01-04', '2018-06-27');
+(7, '2017/2018', 'semester 2', '2018-01-04', '2018-06-27'),
+(8, '2018/2019', 'semester 1', '2018-08-06', '2018-12-20'),
+(9, '2018/2019', 'semester 2', '2019-01-03', '2019-06-25');
 
 -- --------------------------------------------------------
 
@@ -533,6 +564,13 @@ INSERT INTO `tb_user` (`user_id`, `username`, `ortu_id`, `nip`, `password`, `sta
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tb_biaya_pendaftaran`
+--
+ALTER TABLE `tb_biaya_pendaftaran`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_tb_biaya_pendaftaran_tb_tahun_ajaran` (`id_tahun_ajaran`);
 
 --
 -- Indexes for table `tb_detail_kegiatan`
@@ -649,7 +687,8 @@ ALTER TABLE `tb_raport`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_tb_raport_tb_guru` (`nip`),
   ADD KEY `FK_tb_raport_tb_siswa` (`nis`),
-  ADD KEY `FK_tb_raport_tb_tahun_ajaran` (`tahun`);
+  ADD KEY `FK_tb_raport_tb_tahun_ajaran` (`tahun`),
+  ADD KEY `FK_tb_raport_tb_kelas` (`id_kelas`);
 
 --
 -- Indexes for table `tb_riwayat_kelas`
@@ -693,6 +732,11 @@ ALTER TABLE `tb_user`
 --
 
 --
+-- AUTO_INCREMENT for table `tb_biaya_pendaftaran`
+--
+ALTER TABLE `tb_biaya_pendaftaran`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `tb_detail_kegiatan`
 --
 ALTER TABLE `tb_detail_kegiatan`
@@ -726,12 +770,12 @@ ALTER TABLE `tb_faq`
 -- AUTO_INCREMENT for table `tb_galeri`
 --
 ALTER TABLE `tb_galeri`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tb_galeri_detail`
 --
 ALTER TABLE `tb_galeri_detail`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `tb_kegiatan`
 --
@@ -761,12 +805,12 @@ ALTER TABLE `tb_pendaftaran`
 -- AUTO_INCREMENT for table `tb_perkembangan`
 --
 ALTER TABLE `tb_perkembangan`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 --
 -- AUTO_INCREMENT for table `tb_raport`
 --
 ALTER TABLE `tb_raport`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `tb_riwayat_kelas`
 --
@@ -781,7 +825,7 @@ ALTER TABLE `tb_siswa`
 -- AUTO_INCREMENT for table `tb_tahun_ajaran`
 --
 ALTER TABLE `tb_tahun_ajaran`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tb_tentang`
 --
@@ -795,6 +839,12 @@ ALTER TABLE `tb_user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `tb_biaya_pendaftaran`
+--
+ALTER TABLE `tb_biaya_pendaftaran`
+  ADD CONSTRAINT `FK_tb_biaya_pendaftaran_tb_tahun_ajaran` FOREIGN KEY (`id_tahun_ajaran`) REFERENCES `tb_tahun_ajaran` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_detail_siswa`
@@ -855,7 +905,8 @@ ALTER TABLE `tb_perkembangan`
 -- Constraints for table `tb_raport`
 --
 ALTER TABLE `tb_raport`
-  ADD CONSTRAINT `FK_tb_raport_tb_guru` FOREIGN KEY (`nip`) REFERENCES `tb_guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_tb_raport_tb_guru` FOREIGN KEY (`nip`) REFERENCES `tb_guru` (`nip`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_tb_raport_tb_kelas` FOREIGN KEY (`id_kelas`) REFERENCES `tb_kelas` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_tb_raport_tb_siswa` FOREIGN KEY (`nis`) REFERENCES `tb_siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_tb_raport_tb_tahun_ajaran` FOREIGN KEY (`tahun`) REFERENCES `tb_tahun_ajaran` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
