@@ -60,6 +60,7 @@
           <ul class="treeview-menu">
             <li class="active"><a href="tentangkami.php"><i class="fa fa-circle-o"></i> Tentang Kami</a></li>
             <li><a href="faq.php"><i class="fa fa-circle-o"></i> FAQ</a></li>
+            <li><a href="manage-user.php"><i class="fa fa-circle-o"></i> Pengaturan User</a></li>
           </ul>
         </li>
 

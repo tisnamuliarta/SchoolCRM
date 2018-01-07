@@ -221,6 +221,46 @@ if (isset($_POST['btn_action'])) {
 		}
 	}
 
+
+	if ($_POST['btn_action'] == 'reset_password_ortu') {
+		$query ="
+			UPDATE tb_ortu 
+			set password = :password
+			WHERE id = :id
+		";
+		$statement = $connect->prepare($query);
+		$statement->execute(
+			array(
+				':password' 	=> password_hash('password',PASSWORD_DEFAULT),
+				':id' 	=> $_POST['id']
+			)
+		);
+		$result = $statement->fetchAll();
+		if (isset($result)) {
+			echo 'Password telah direset!';
+		}
+	}
+
+	if ($_POST['btn_action'] == 'reset_password_guru') {
+		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$query ="
+			UPDATE tb_guru 
+			set password = :password
+			WHERE nip = :nip
+		";
+		$statement = $connect->prepare($query);
+		$statement->execute(
+			array(
+				':password' 	=> password_hash('password',PASSWORD_DEFAULT),
+				':nip' 	=> $_POST['id']
+			)
+		);
+		$result = $statement->fetchAll();
+		if (isset($result)) {
+			echo 'Password telah direset!';
+		}
+	}
+
 }
 
 ?>

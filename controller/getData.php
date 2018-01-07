@@ -38,6 +38,9 @@ if (isset($_POST['pengaturanakun']))
 if (isset($_POST['pengaturanakunguru']))
 	getPengaturanAkunGuruDatatable($connect);
 
+if (isset($_POST['pengaturanakunadmin']))
+	getPengaturanAkunAdminDatatable($connect);
+
 if (isset($_POST['kelas']))
 	getKelasDatatable($connect);
 
@@ -46,6 +49,12 @@ if (isset($_POST['daftarsiswa']))
 
 if (isset($_GET['hasilBelajar']))
 	getHasilBelajarSiswaDatatable($connect);
+
+if (isset($_GET['manageUser']))
+	getPengaturanAkunOrtuDatatable($connect);
+if (isset($_GET['manageGuru']))
+	getPengaturanAkunGuruAdminDatatable($connect);
+
 
 function getHasilBelajarSiswaDatatable($connect) {
 	$query = '';
@@ -195,6 +204,155 @@ function getDaftarSiswaDatatable($connect) {
 ////////////////////////////
 // Get data for datatable //
 ////////////////////////////
+function getPengaturanAkunOrtuDatatable($connect) {
+	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query = '';
+	$output = [];
+	$query .= " 
+		SELECT *
+		from tb_ortu
+	";
+	if (isset($_GET["search"]["value"])) {
+		$query .= 'WHERE CONCAT(tb_ortu.nama_ayah,"",tb_ortu.username,"",tb_ortu.nama_ibu) LIKE "%'.$_GET["search"]["value"].'%" ';
+	}
+	if (isset($_GET["order"])) {
+		$query .= 'ORDER BY '.$_GET['order']['0']['column'].' '.$_GET['order']['0']['dir'].' ';
+	}else {
+		$query .= 'ORDER BY tb_ortu.id ASC ';
+	}
+	if ($_GET["length"] != -1) {
+		$query .= 'LIMIT ' . $_GET['start'] . ', ' . $_GET['length'];
+	}
+
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$data = [];
+	$filtered_rows = $statement->rowCount();
+	$start = $_REQUEST['start'];
+	$idx = 0;
+	foreach ($result as $row) {
+		$idx++;
+		$sub_array = [];
+		$sub_array[] = $idx;
+		$sub_array[] = $row['nama_ayah'];
+		$sub_array[] = $row['nama_ibu'];
+		$sub_array[] = $row['username'];
+		// $sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-info btn-xs update-guru">Update</button>';
+		$sub_array[] = '<button type="button" name="update_password" id="'.$row["id"].'" class="btn btn-success btn-xs reset-password-ortu">Reset Password</button>';
+		$data[] = $sub_array;
+	}
+
+	$output = [
+		"draw" => intval($_GET["draw"]),
+		"recordsTotal" => $filtered_rows,
+		"recordsFiltered"  => get_total_all_records($connect,"tb_ortu"),
+		"data" => $data
+	];
+
+	echo json_encode($output);
+}
+
+function getPengaturanAkunGuruAdminDatatable($connect) {
+	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query = '';
+	$output = [];
+	$query .= " 
+		SELECT *
+		from tb_guru WHERE type != 'admin'
+	";
+	if (isset($_GET["search"]["value"])) {
+		$query .= 'AND CONCAT(tb_guru.nama,"",tb_guru.username) LIKE "%'.$_GET["search"]["value"].'%" ';
+	}
+	if (isset($_GET["order"])) {
+		$query .= 'ORDER BY '.$_GET['order']['0']['column'].' '.$_GET['order']['0']['dir'].' ';
+	}else {
+		$query .= 'ORDER BY tb_guru.nip ASC ';
+	}
+	if ($_GET["length"] != -1) {
+		$query .= 'LIMIT ' . $_GET['start'] . ', ' . $_GET['length'];
+	}
+
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$data = [];
+	$filtered_rows = $statement->rowCount();
+	$start = $_REQUEST['start'];
+	$idx = 0;
+	foreach ($result as $row) {
+		$idx++;
+		$sub_array = [];
+		$sub_array[] = $idx;
+		$sub_array[] = $row['nama'];
+		$sub_array[] = $row['username'];
+		$sub_array[] = $row['alamat'];
+		// $sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-info btn-xs update-guru">Update</button>';
+		$sub_array[] = '<button type="button" name="update_password" id="'.$row["nip"].'" class="btn btn-warning btn-xs reset-password-guru">Reset Password</button>';
+		$data[] = $sub_array;
+	}
+
+	$output = [
+		"draw" => intval($_GET["draw"]),
+		"recordsTotal" => $filtered_rows,
+		"recordsFiltered"  => get_total_all_records($connect,"tb_guru"),
+		"data" => $data
+	];
+
+	echo json_encode($output);
+}
+
+function getPengaturanAkunAdminDatatable($connect) {
+	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$nip = $_SESSION['nip'];
+	$query = '';
+	$output = [];
+	$query .= " 
+		SELECT *
+		from tb_guru
+		WHERE tb_guru.nip = {$nip}
+	";
+	if (isset($_POST["search"]["value"])) {
+		$query .= 'AND CONCAT(tb_guru.nama,"",tb_guru.username) LIKE "%'.$_POST["search"]["value"].'%" ';
+	}
+	if (isset($_POST["order"])) {
+		$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+	}else {
+		$query .= 'ORDER BY tb_guru.nip ASC ';
+	}
+	if ($_POST["length"] != -1) {
+		$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+	}
+
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$data = [];
+	$filtered_rows = $statement->rowCount();
+	$start = $_REQUEST['start'];
+	$idx = 0;
+	foreach ($result as $row) {
+		$idx++;
+		$sub_array = [];
+		$sub_array[] = $idx;
+		$sub_array[] = $row['nama'];
+		$sub_array[] = $row['username'];
+		$sub_array[] = $row['alamat'];
+		$sub_array[] = $row['tlpn'];
+		$sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-info btn-xs update-guru">Update</button>';
+		$sub_array[] = '<button type="button" name="update_password" id="'.$row["nip"].'" class="btn btn-success btn-xs update-password">Update Password</button>';
+		$data[] = $sub_array;
+	}
+
+	$output = [
+		"draw" => intval($_POST["draw"]),
+		"recordsTotal" => $filtered_rows,
+		"recordsFiltered"  => get_total_guru_by_nip_records($connect,"tb_guru",$nip),
+		"data" => $data
+	];
+
+	echo json_encode($output);
+}
 
 function getPengaturanAkunGuruDatatable($connect) {
 	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
