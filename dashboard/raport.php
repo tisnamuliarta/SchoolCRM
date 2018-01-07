@@ -37,7 +37,7 @@
                 <button type="button" name="tampilkan_siswa" id="tampilkan_siswa" class="btn form-control btn-info btn-xs">Tampilkan</button><br><br>
               </div>
               <div class="col-sm-1 pull-right">
-                <button type="button" name="add" id="add_raport_button" class="btn form-control btn-success btn-xs">Add</button><br><br>
+                <button type="button" name="add" id="add_raport_button" class="btn form-control btn-success btn-xs">Tambah</button><br><br>
               </div>
             </div>
           </div>
@@ -49,6 +49,8 @@
                   <th>NIS</th>
                   <th>Nama</th>
                   <th>Kelas</th>
+                  <th>Tahun Ajaran</th>
+                  <th>Semester</th>
                   <th>Pembiasaan</th>
                   <th>Bahasa</th>
                   <th>Daya Fikir</th>
@@ -78,7 +80,6 @@
         </div>
         <div class="modal-body" style="padding-left: 30px;">
           <div class="row">
-            <div class="col-sm-10"><label>Data siswa : </label><hr></div>
             <div class="col-sm-12" id="forNewTahun" >
               <div class="form-group">
                 <div class="row">
@@ -216,7 +217,7 @@
             </div>
           </div>
           
-          <div class="row">
+          <div class="row isHide" id="section_naik_kelas">
             <div class="col-sm-12">
                 <div class="form-group">
                   <div class="row">
@@ -224,10 +225,25 @@
                       <label>Naik Kelas / Tinggal Kelas</label>
                     </div>
                     <div class="col-md-3">
-                      <div class="radio"><label><input type="radio" name="naik_kelas" id="naik_kelas" value="1"> Naik Kelas</label></div>
+                      <div class="radio"><label><input type="radio" name="naik_kelas" id="naik_kelas" value="1" checked> Naik Kelas</label></div>
                     </div>
                     <div class="col-md-3">
                       <div class="radio"><label><input type="radio" name="naik_kelas" id="naik_kelas" value="0"> Tingggal Kelas</label></div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+          <div class="row" id="section_naik_semester">
+            <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label>Naik Semester</label>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="radio"><label><input type="radio" name="naik_kelas" id="naik_kelas" value="1" checked> Naik Semester</label></div>
                     </div>
                   </div>
                 </div>
@@ -248,6 +264,8 @@
         <div class="modal-footer">
           <input type="hidden" name="id_raport" id="id_raport" />
           <input type="hidden" name="btn_action" id="btn_action" />
+          <input type="hidden" name="semester" id="semester" />
+          <input type="hidden" name="post_tahun_ajaran" id="post_tahun_ajaran" />
           <input type="hidden" name="tgl" id="tgl" value="<?php echo date('Y-m-d') ?>">
           <input type="submit" name="action" id="action" class="btn btn-info" value="Add" />
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -324,7 +342,7 @@
     $('#add_raport_button').click(function(){
       $('#raportModal').modal('show');
       $('#formRaport')[0].reset();
-      $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Nilai Perkembangan");
+      $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Nilai Raport");
       $('#action').val('Add');
       $('#btn_action').val('Add');
 
@@ -334,17 +352,30 @@
       $('#forEditNIS').addClass('isHide');
       $('#forNewTahun').removeClass('isHide');
       $('#forNewNIS').removeClass('isHide');
+
+
     });
     // on change select nis
     $('#tahun').change(function(){
+      var semester = $(this).find(':selected').data('semester');
+      var tahun_ajaran = $(this).find(':selected').data('tahun');
       var tahun = $('#tahun').val();
       var btn_action = 'load_nis_by_semester';
       getSiswaNISByTahun(tahun, btn_action);
+      if (semester == 'semester 1') {
+        $('#section_naik_kelas').addClass('isHide')
+        $('#section_naik_semester').removeClass('isHide')
+      }else {
+        $('#section_naik_semester').addClass('isHide')
+        $('#section_naik_kelas').removeClass('isHide')
+      }
+      $('#semester').val(semester);
+      $('#post_tahun_ajaran').val(tahun_ajaran);
       $('#nama').val("")
-      $('#sosial').val("")
-      $('#daya_ingat').val("")
+      $('#pembiasaan').val("")
+      $('#daya_fikir').val("")
       $('#motorik').val("")
-      $('#aktif').val("")
+      $('#bahasa').val("")
     })
 
     $('#nis').change(function(){

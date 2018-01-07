@@ -52,8 +52,9 @@ function getNilaiMotorik($connect, $nis, $tahun,$perkembangan) {
 
 }
 
-function updateRaportTotal($connect,$nis,$tahun) {
+function updateRaportTotal($connect,$nis,$tahun,$semester,$naik_kelas,$id_tahun_ajaran,$tahun_ajaran) {
 	// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	// query select raport
 	$querySelect = "SELECT tb_raport.* FROM tb_raport
 		LEFT JOIN tb_siswa ON tb_siswa.nis = tb_raport.nis
 		LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa 
@@ -92,6 +93,53 @@ function updateRaportTotal($connect,$nis,$tahun) {
 		':nis'		=> $nis,
 		':tahun'	=> $tahun
 	));
+
+	// query select tahun ajaran
+	// Update kenaikan kelas atau naik semester
+	$update_tahun_ajaran = '';
+	$ta = $connect->prepare("SELECT * FROM tb_tahun_ajaran WHERE id = {$id_tahun_ajaran}");
+	$ta->execute();
+	$resultta = $ta->fetch(PDO::FETCH_ASSOC);
+	if (($naik_kelas == 1) && ($semester == 'semester 1')) {
+		$selectNewTa = $connect->prepare("SELECT * FROM tb_tahun_ajaran WHERE tahun = '{$tahun_ajaran}' AND semester = 'semester 2' ");
+		$selectNewTa->execute();
+		$resultNewTa = $selectNewTa->fetch(PDO::FETCH_ASSOC);
+		$update_tahun_ajaran = $resultNewTa['id'];
+
+		// select id siswa
+		$getIDSiswa = $connect->prepare("SELECT * FROM tb_siswa WHERE nis = '{$nis}' ");
+		$getIDSiswa->execute();
+		$resultGetIdSiswa = $getIDSiswa->fetch(PDO::FETCH_ASSOC);
+		$idSiswa = $resultGetIdSiswa['id'];
+
+		$updateDetailSiswa = $connect->prepare("UPDATE tb_detail_siswa 
+			SET id_tahun_ajaran = {$update_tahun_ajaran}
+			WHERE id_siswa = {$idSiswa} ");
+		$updateDetailSiswa->execute();
+
+	}else if (($naik_kelas == 1) && ($semester == 'semester 2')) {
+		$selectNewTa = $connect->prepare("SELECT * FROM tb_tahun_ajaran WHERE LEFT(tahun,4) = RIGHT('{$tahun_ajaran}',4) AND semester = 'semester 1' ");
+		$selectNewTa->execute();
+		$resultNewTa = $selectNewTa->fetch(PDO::FETCH_ASSOC);
+		$update_tahun_ajaran = $resultNewTa['id'];
+
+		// select id siswa
+		$getIDSiswa = $connect->prepare("SELECT * FROM tb_siswa WHERE nis = '{$nis}' ");
+		$getIDSiswa->execute();
+		$resultGetIdSiswa = $getIDSiswa->fetch(PDO::FETCH_ASSOC);
+		$idSiswa = $resultGetIdSiswa['id'];
+
+		$selectKelas = $connect->prepare("SELECT * FROM tb_kelas WHERE kelas = 'B'");
+		$selectKelas->execute();
+		$resultKelas = $selectKelas->fetch(PDO::FETCH_ASSOC);
+		$idKelas = $resultKelas['id'];
+
+		$updateDetailSiswa = $connect->prepare("UPDATE tb_detail_siswa 
+			SET id_tahun_ajaran = {$update_tahun_ajaran},
+			id_kelas = {$idKelas}
+			WHERE id_siswa = {$idSiswa} ");
+		$updateDetailSiswa->execute();
+	}
 }
 
 function returnValue($field) {

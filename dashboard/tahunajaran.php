@@ -11,7 +11,7 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="col-sm-1 pull-right">
-              <button type="button" name="add" id="add_tahunajaran_button" class="btn form-control btn-success btn-xs">Add</button>
+              <button type="button" name="add" id="add_tahunajaran_button" class="btn form-control btn-success btn-xs">Tambah</button>
               <br><br>
             </div>
           </div>
@@ -65,12 +65,12 @@
 
           <div class="form-group">
             <label>Tanggal Mulai</label>
-            <input type="text" name="tgl_mulai" id="tgl_mulai" placeholder="2017-01-21" class="form-control getDatePicker" required  />
+            <input type="text" name="tgl_mulai" id="tgl_mulai" placeholder="2017-01-21" class="form-control getDatePickerWOvalidate" required  />
           </div>
 
           <div class="form-group">
             <label>Tanggal Selesai</label>
-            <input type="text" name="tgl_selesai" id="tgl_selesai" placeholder="2017-01-21" class="form-control getDatePicker" required  />
+            <input type="text" name="tgl_selesai" id="tgl_selesai" placeholder="2017-01-21" class="form-control getDatePickerWOvalidate" required  />
           </div>
         </div>
         <div class="modal-footer">

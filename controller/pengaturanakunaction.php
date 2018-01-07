@@ -223,6 +223,7 @@ if (isset($_POST['btn_action'])) {
 
 
 	if ($_POST['btn_action'] == 'reset_password_ortu') {
+		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$query ="
 			UPDATE tb_ortu 
 			set password = :password

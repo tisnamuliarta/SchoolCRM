@@ -15,7 +15,7 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="col-sm-1 pull-right">
-              <button type="button" name="add" id="add_diskon_button" class="btn form-control btn-success btn-xs">Add</button>
+              <button type="button" name="add" id="add_diskon_button" class="btn form-control btn-success btn-xs">Tambah</button>
               <br><br>
             </div>
           </div>

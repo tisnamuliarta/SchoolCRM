@@ -31,7 +31,7 @@ if (isset($_POST['btn_action'])) {
 		if ($isSame) {
 			echo 'Tahun ajaran tidak boleh sama!';
 		}else {
-			$query = " INSERT INTO tb_tahun_ajaran (tahun,semester,tgl_mulai,tgl_selesai) VALUES (:tahun,:semester) ";
+			$query = " INSERT INTO tb_tahun_ajaran (tahun,semester,tgl_mulai,tgl_selesai) VALUES (:tahun,:semester,:tgl_mulai,:tgl_selesai) ";
 			$statement = $connect->prepare($query);
 			$statement->execute(
 				array(

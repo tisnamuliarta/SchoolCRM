@@ -88,7 +88,8 @@ function getAllBukuPenghubungTahunAjaran($connect) {
  * @return string
  */
 function listTahunAjatan($connect,$tahun) {
-	$query = "SELECT tb_tahun_ajaran.id,tb_tahun_ajaran.tahun, CONCAT(tb_tahun_ajaran.tahun,' - ',tb_tahun_ajaran.semester) as tahun_ajaran 
+	$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$query = "SELECT tb_tahun_ajaran.id,tb_tahun_ajaran.tahun, CONCAT(tb_tahun_ajaran.tahun,' - ',tb_tahun_ajaran.semester) as tahun_ajaran, tb_tahun_ajaran.semester 
 		FROM tb_tahun_ajaran
 		WHERE $tahun IN (SELECT LEFT(tahun,4)) OR $tahun IN(SELECT RIGHT(tahun,4)) 
 		ORDER BY tb_tahun_ajaran.tahun DESC ";
@@ -97,7 +98,7 @@ function listTahunAjatan($connect,$tahun) {
 	$result = $dbs->fetchAll();
 	$output = '';
 	foreach ($result as $row) {
-		$output .= '<option value="'.$row['id'].'" >'.$row['tahun_ajaran'].'</option>' ;
+		$output .= '<option data-tahun="'.$row['tahun'].'" data-semester="'.$row['semester'].'" value="'.$row['id'].'" >'.$row['tahun_ajaran'].'</option>' ;
 	}
 	return $output;
 }

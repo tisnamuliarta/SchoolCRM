@@ -40,7 +40,7 @@
                 <button type="button" name="tampilkan_siswa" id="tampilkan_siswa" class="btn form-control btn-info btn-xs">Tampilkan</button><br><br>
               </div>
               <div class="col-sm-1 pull-right">
-                <button type="button" name="add" id="add_perkembangan_button" class="btn form-control btn-success btn-xs">Add</button><br><br>
+                <button type="button" name="add" id="add_perkembangan_button" class="btn form-control btn-success btn-xs">Tambah</button><br><br>
               </div>
             </div>
           </div>

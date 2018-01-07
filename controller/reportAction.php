@@ -88,33 +88,65 @@ if (isset($_POST['btn_action'])) {
 	 * ==========================================
 	 */
 	if ($_POST['btn_action'] == 'Add') {
-		$query = "
-			INSERT INTO tb_raport (tahun,nip,nis,pembiasaan,bahasa,motorik,daya_fikir,keterangan,naik_kelas,tgl) 
-			VALUES (:tahun,:nip,:nis,:pembiasaan,:bahasa,:motorik,:daya_fikir,:keterangan,:naik_kelas,:tgl)
-		";
-		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$statement = $connect->prepare($query);
-		$statement->execute(
-			array(
-				':tahun' 			=> $_POST['tahun'],
-				':nip' 				=> $_SESSION['nip'],
-				':nis' 				=> $_POST['nis'],
-				':pembiasaan' 		=> $_POST['pembiasaan'],
-				':bahasa' 			=> $_POST['bahasa'],
-				':motorik' 			=> $_POST['motorik'],
-				':daya_fikir' 		=> $_POST['daya_fikir'],
-				':keterangan' 		=> $_POST['keterangan'],
-				':naik_kelas' 		=> $_POST['naik_kelas'],
-				':tgl'				=> $_POST['tgl'],
-			)
-		);
+		$semester = $_POST['semester'];
+		$tahun_ajaran = $_POST['post_tahun_ajaran'];
+		$id_tahun_ajaran = $_POST['tahun'];
+		$nis = $_POST['nis'];
+		// check duplicate
+		$checkDuplicate = $connect->prepare("SELECT * FROM tb_raport WHERE nis = '{$nis}' AND tahun = {$id_tahun_ajaran}");
+		$checkDuplicate->execute();
+		$countCheckDuplicate = $checkDuplicate->rowCount();
 
-		updateRaportTotal($connect,$_POST['nis'],$_POST['tahun']);
+		// Select kelas
+		$selectKelas = $connect->prepare("SELECT tb_kelas.id FROM tb_kelas 
+			LEFT JOIN tb_detail_siswa ON tb_detail_siswa.id_kelas = tb_kelas.id
+			LEFT JOIN tb_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
+			WHERE tb_siswa.nis = '{$nis}' ");
+		$selectKelas->execute();
+		$resultSelectKelas = $selectKelas->fetch(PDO::FETCH_ASSOC);
 
-		$result = $statement->fetchAll();
-		if (isset($result)) {
-			echo 'Nilai Raport berhasil ditambahkan!!';
+
+		if ($countCheckDuplicate > 0) {
+			echo "Ups! terjadi kesalahan. Nilai raport hanya dapat diberikan sekali dalam 1 semester!";
+		}else {
+			$query = "
+				INSERT INTO tb_raport (tahun,nip,nis,pembiasaan,bahasa,motorik,daya_fikir,keterangan,naik_kelas,tgl,id_kelas) 
+				VALUES (:tahun,:nip,:nis,:pembiasaan,:bahasa,:motorik,:daya_fikir,:keterangan,:naik_kelas,:tgl,:id_kelas)
+			";
+
+			$naik_kelas = '';
+			if ($semester == 'semester 1') {
+				$naik_kelas = 1;
+			}else {
+				$naik_kelas = $_POST['naik_kelas'];
+			}
+			$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$statement = $connect->prepare($query);
+			$statement->execute(
+				array(
+					':tahun' 			=> $id_tahun_ajaran,
+					':nip' 				=> $_SESSION['nip'],
+					':nis' 				=> $_POST['nis'],
+					':pembiasaan' 		=> $_POST['pembiasaan'],
+					':bahasa' 			=> $_POST['bahasa'],
+					':motorik' 			=> $_POST['motorik'],
+					':daya_fikir' 		=> $_POST['daya_fikir'],
+					':keterangan' 		=> $_POST['keterangan'],
+					':naik_kelas' 		=> $naik_kelas,
+					':tgl'				=> $_POST['tgl'],
+					':id_kelas'			=> $resultSelectKelas['id']
+				)
+			);
+
+			updateRaportTotal($connect,$_POST['nis'],$_POST['tahun'],$semester,$naik_kelas,$id_tahun_ajaran,$tahun_ajaran);
+
+			$result = $statement->fetchAll();
+			if (isset($result)) {
+				echo 'Nilai Raport berhasil ditambahkan!!';
+			}
+			
 		}
+
 	}
 	/**
 	 * ====================================

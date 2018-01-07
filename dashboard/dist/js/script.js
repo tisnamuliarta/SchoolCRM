@@ -6,6 +6,10 @@ $(function() {
       format: 'yyyy-mm-dd',
       endDate: '0d',
     });
+    $('.getDatePickerWOvalidate').datepicker({
+      autoclose: true,
+      format: 'yyyy-mm-dd'
+    });
     $('.displayDatePicker').datepicker({
       autoclose: true,
       format: 'yyyy-mm-dd',

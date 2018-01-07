@@ -1,42 +1,30 @@
 <?php require 'partials/head_admin.php'; ?>
+
 <span id="alert_action"></span>
 <div class="row">
   <div class="col-lg-12 col-xs-12">
     <!-- small box -->
     <div class="box">
       <div class="box-header  with-border">
-        <h3 class="box-title"><i class="fa fa-user"></i> Data Guru</h3>
+        <h3 class="box-title"><i class="fa fa-user"></i> Pengaturan Akun</h3>
       </div>
       <div class="box-body">
         <div class="row">
           <div class="col-sm-12">
-            <div class="col-sm-1 pull-right">
-              <button type="button" name="add" id="add_guru_button" class="btn form-control btn-success btn-xs">Tambah</button>
-              <br><br>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
             <div class="table-responsive">
-              <table id="gurutable" class="table table-bordered table-striped">
+              <table id="userstable" class="table table-bordered table-striped">
                 <thead>
-                <tr>
-                  <th>NIP</th>
-                  <th>Nama</th>
-                  <th>Username</th>
-                  <th>Tanggal Lahir</th>
-                  <th>Jenis Kelamin</th>
-                  <th>Telepon</th>
-                  <th>Role</th>
-                  <th>Status</th>
-                  <!-- <th></th> -->
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-                </thead>
-              </table>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Username</th>
+                    <th>Alamat</th>
+                    <th>Telepon</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                </table>
             </div>
           </div>
         </div>
@@ -101,37 +89,7 @@
                 <label>Telepon</label>
                 <input class="form-control" name="tlpn" id="guruTlpn" required />
                 <div class="text-danger" id="tlpnError"></div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Username</label>
-                <input class="form-control" name="username" id="username" pattern="[^\s]+" title="Username tidak dapat mengandung spasi!" required/>
-                <input type="hidden" name="hiddenUsername" id="hiddenUsername">
-                <div class="text-danger" id="usernameError"></div>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Password</label>
-                <input class="form-control" type="password" id="password" name="password"/>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Status</label>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="radio">
-                  <label><input type="radio" id="active" name="status" value="active" required> Active</label>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="radio">
-                  <label><input type="radio" id="non-active" name="status" value="non-active"> Non Active</label>
-                </div>
+                <input class="form-control" type="hidden" name="status" value="active" />
               </div>
             </div>
           </div>
@@ -147,6 +105,39 @@
   </div>
 </div>
 
+<div id="updatePasswordModal" class="modal fade">
+  <div class="modal-dialog modal-sm">
+      <form method="post" id="update_password_form">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title"><i class="fa fa-plus"></i>Update Password</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="usernameUpdatePassword" class="form-control" required="required">
+                  </div>
+                  <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" id="update_password" class="form-control" required="required">
+                  </div>
+                  <div class="form-group">
+                      <label>Konfirmasi Password</label>
+                      <input type="password" name="c_password" id="c_update_password" class="form-control" required="required">
+                    </div>
+              </div>
+              <div class="modal-footer">                  
+                  <input type="hidden" name="user_id_update" id="user_id_update" />
+                  <input type="hidden" name="btn_action_update_password" id="btn_action_update_password" />
+                  <input type="submit" name="action_update_password" id="action_update_password" class="btn btn-info" value="Add" />
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+
 <div id="guruDetailModal" class="modal fade">
   <div class="modal-dialog">
       <form method="post" id="product_form">
@@ -158,8 +149,7 @@
               <div class="modal-body">
                   <Div id="guruDetails"></Div>
               </div>
-              <div class="modal-footer">
-                  
+              <div class="modal-footer">                  
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
           </div>
@@ -167,82 +157,85 @@
   </div>
 </div>
 
-
-
 <?php require 'partials/footer.php'; ?>
 <script type="text/javascript">
+  var password = document.getElementById("update_password")
+    , confirm_password = document.getElementById("c_update_password");
+
+  function validatePassword(){
+    if(password.value != confirm_password.value) {
+      confirm_password.setCustomValidity("Passwords not match");
+    } else {
+      confirm_password.setCustomValidity('');
+    }
+  }
+
+  password.onchange = validatePassword;
+  confirm_password.onkeyup = validatePassword;
   /**
      * ===================================
      * Guru datatable
      * ===================================
      */
-      var guruTable = $('#gurutable').DataTable({
+      var ortuTable = $('#userstable').DataTable({
         "processing":true,
         "serverSide":true,
+        "paging":false,
+        "searching":false,
+        "ordering":false,
+        "info":false,
         "order":[],
         "ajax":{
           url: "../controller/getData.php",
           type: "POST",
-          data:{table: "tb_guru"}
+          data:{pengaturanakunguru: "ta"}
         },
         "columnDefs":[
+          {"targets":[1,2],"width":"600"},
           {
-            "targets":[0,8,9,10],
+            "targets":[0,4,5],
             "orderable":false,
           },
         ],
         "pageLength": 10
       });
 
-      $('#add_guru_button').click(function(){
-        $('#guruModal').modal('show');
-        $('#formGuru')[0].reset();
-        $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Guru");
+      $('#add_tahunajaran_button').click(function(){
+        $('#tahunAjaranModal').modal('show');
+        $('#formKegiatan')[0].reset();
+        $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Tahun Ajaran");
         $('#action').val('Add');
         $('#btn_action').val('Add');
-        $('#password').prop('disabled',false);
-        $('#username').prop('disabled',false);
-        $('#nip').prop('disabled',false);
       });
-    // check if guru username is same
-    $('#username').on('input', function(e){
-      e.preventDefault();
-      var guruUsername = $('#username').val();
-      $.ajax({
-        url: "../controller/helper.php",
-        method:"POST",
-        data: {guruUsername:guruUsername},
-        success: function(data){
-          $('#usernameError').html(data)
-        }
+      //open update password modal
+      $(document).on('click','.update-password',function(){
+        var id = $(this).attr("id");
+        $('#updatePasswordModal').modal('show');
+        $('#update_password_form')[0].reset();
+        $('#action_update_password').val('Update Password');
+        $('#btn_action_update_password').val('update_password_guru');
+        $('#user_id_update').val(id);
       });
-    });
-    // Check if phone is same
-    $('#guruTlpn').on('input', function(e){
-      e.preventDefault();
-      var tlpn = $('#guruTlpn').val();
-      $.ajax({
-        url: "../controller/helper.php",
-        method: "POST",
-        data: {tlpn:tlpn},
-        success: function(data){
-          $('#tlpnError').html(data)
-        }
-      })
-    });
-    $('#nip').on('input', function(e){
-      e.preventDefault();
-      var nip = $('#nip').val();
-      $.ajax({
-        url: "../controller/helper.php",
-        method: "POST",
-        data: {nip:nip},
-        success: function(data){
-          $('#nipError').html(data)
-        }
-      })
-    });
     // ============= save data ======
+    $(document).on('submit','#update_password_form', function(e){
+      e.preventDefault();
+      $('#action_update_password').attr('disabled','disabled');
+      var formData = $(this).serialize();
+      $.ajax({
+        url: "../controller/pengaturanakunaction.php",
+        method: "POST",
+        data: formData,
+        success: function(data){
+          $('#update_password_form')[0].reset();
+          $('#updatePasswordModal').modal('hide');
+          $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
+          $('#action_update_password').attr('disabled', false);
+          ortuTable.ajax.reload();
+        }
+      })
+    });
+
+   // ============= save data ======
     $(document).on('submit','#formGuru', function(e){
       e.preventDefault();
       $('#action').attr('disabled','disabled');
@@ -256,15 +249,13 @@
           $('#guruModal').modal('hide');
           $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
           $('#action').attr('disabled', false);
-          guruTable.ajax.reload();
+          ortuTable.ajax.reload();
         }
       })
     });
     // ============= Display single data and update
     $(document).on('click','.update-guru',function(){
       var nip = $(this).attr("id");
-      $('#password').prop('disabled',true);
-      $('#username').prop('disabled',true);
       // $('#nip').prop('disabled',true);
       var btn_action = 'fetch_single';
       $.ajax({
@@ -290,59 +281,23 @@
     });
 
     // ================== delete data
-    $(document).on('click','.delete-guru',function(){
-      var user_nip = $(this).attr("id");
-      var status = $(this).data("status");
+    $(document).on('click','.delete-kegiatan',function(){
+      var id = $(this).attr("id");
       var btn_action = 'delete';
-      if (confirm("Anda yakin akan akan menonaktifkan user ini?")) {
+      if (confirm("Anda yakin akan menghapus kegiatan ini?")) {
         $.ajax({
-          url: '../controller/guruaction.php',
+          url: '../controller/kegiatanaction.php',
           method: 'POST',
-          data: {user_nip: user_nip, status:status, btn_action:btn_action},
+          data: {id: id, btn_action:btn_action},
           success: function(data) {
             $('#alert_action').fadeIn().html('<div class="alert alert-info alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>')
-            guruTable.ajax.reload();
+            ortuTable.ajax.reload();
           }
         })
       }else {
         return false;
       }
     })
-
-    // ================== Grand as admin
-    $(document).on('click','.make-admin',function(){
-      var user_nip = $(this).attr("id");
-      var type = $(this).data("type");
-      var btn_action = 'asAdmin';
-      if (confirm("Anda yakin akan akan menjadikan user ini sebagai admin?")) {
-        $.ajax({
-          url: '../controller/guruaction.php',
-          method: 'POST',
-          data: {user_nip: user_nip, type:type, btn_action:btn_action},
-          success: function(data) {
-            $('#alert_action').fadeIn().html('<div class="alert alert-info alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>')
-            guruTable.ajax.reload();
-          }
-        })
-      }else {
-        return false;
-      }
-    })
-
-    // View data ========================
-    $(document).on('click','.view-guru',function(){
-      var nip = $(this).attr("id");
-      var btn_action = 'guruDetails';
-      $.ajax({
-        url: '../controller/helper.php',
-        method: 'POST',
-        data: {guru_nip:nip,btn_action:btn_action},
-        success: function(data) {
-          $('#guruDetailModal').modal('show');
-          $('#guruDetails').html(data)
-        }
-      });
-    });
 
     ////////////////////////
     // End guru datatable //

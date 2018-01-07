@@ -8,9 +8,9 @@ $kelas = $_GET['kelas'];
 $tahunAjaran = $_GET['tahunAjaran'];
 $query .= " 
 	SELECT tb_raport.*, tb_siswa.nama, tb_siswa.jenis_kelamin, DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir , DATE_FORMAT(tb_raport.tgl,'%d %M %Y') as tanggal_raport ,
-	(SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas,
-	(SELECT tb_tahun_ajaran.tahun FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as tahun_ajaran,
-	(SELECT tb_tahun_ajaran.semester FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as semester
+	(SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id = tb_raport.id_kelas) as kelas,
+	(SELECT tb_tahun_ajaran.tahun FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_raport.tahun) as tahun_ajaran,
+	(SELECT tb_tahun_ajaran.semester FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_raport.tahun) as semester
 	from tb_raport 
     LEFT JOIN tb_siswa on tb_siswa.nis = tb_raport.nis
 	LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
@@ -18,7 +18,7 @@ $query .= "
 ";
 
 if ($_GET['isSearch'] == 'yes') {
-	$query .= " AND tb_detail_siswa.id_kelas = $kelas AND tb_detail_siswa.id_tahun_ajaran = $tahunAjaran ";
+	$query .= " AND tb_raport.id_kelas = $kelas AND tb_raport.tahun = $tahunAjaran ";
 }
 
 if (isset($_GET["search"]["value"])) {
@@ -52,6 +52,8 @@ foreach ($result as $row) {
 	$sub_array[] = $row['nis'];
 	$sub_array[] = $row['nama'];
 	$sub_array[] = $row['kelas'];
+	$sub_array[] = $row['tahun_ajaran'];
+	$sub_array[] = $row['semester'];
 	// $sub_array[] = $row['tanggal_raport'];
 	$sub_array[] = $row['pembiasaan'];
 	$sub_array[] = $row['bahasa'];
