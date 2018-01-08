@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 07, 2018 at 11:33 PM
+-- Generation Time: Jan 08, 2018 at 12:33 AM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.7
 
@@ -31,6 +31,15 @@ CREATE TABLE `tb_biaya_pendaftaran` (
   `id_tahun_ajaran` int(10) UNSIGNED DEFAULT NULL,
   `biaya` double UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_biaya_pendaftaran`
+--
+
+INSERT INTO `tb_biaya_pendaftaran` (`id`, `id_tahun_ajaran`, `biaya`) VALUES
+(1, 8, 150000),
+(2, 9, 100000),
+(3, 6, 100000);
 
 -- --------------------------------------------------------
 
@@ -735,7 +744,7 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT for table `tb_biaya_pendaftaran`
 --
 ALTER TABLE `tb_biaya_pendaftaran`
-  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tb_detail_kegiatan`
 --
