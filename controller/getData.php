@@ -17,6 +17,9 @@ if (isset($_POST['pekerjaan']))
 if (isset($_POST['tahunajaran']))
 	getTahunAjaranDatatable($connect);
 
+if (isset($_POST['biayaDaftar']))
+	getBiayaDaftarDatatable($connect);
+
 if (isset($_POST['diskon']))
 	getDiskonDatatable($connect);
 
@@ -840,6 +843,51 @@ function getDiskonDatatable($connect) {
 		"draw" => intval($_POST["draw"]),
 		"recordsTotal" => $filtered_rows,
 		"recordsFiltered"  => get_total_all_records($connect,"tb_diskon"),
+		"data" => $data
+	];
+
+	echo json_encode($output);
+}
+
+function getBiayaDaftarDatatable($connect) {
+	$query = '';
+	$output = [];
+	$query .= " SELECT *, (SELECT CONCAT(tb_tahun_ajaran.tahun,' - ',tb_tahun_ajaran.semester) as tahun_ajaran FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_biaya_pendaftaran.id_tahun_ajaran) as tahun_ajaran from tb_biaya_pendaftaran ";
+	if (isset($_POST["search"]["value"])) {
+		$query .= 'WHERE tb_biaya_pendaftaran.biaya LIKE "%'.$_POST["search"]["value"].'%" ';
+	}
+	if (isset($_POST["order"])) {
+		$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+	}else {
+		$query .= 'ORDER BY tb_biaya_pendaftaran.id ASC ';
+	}
+	if ($_POST["length"] != -1) {
+		$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+	}
+
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$data = [];
+	$filtered_rows = $statement->rowCount();
+	$start = $_REQUEST['start'];
+	$idx = 0;
+	foreach ($result as $row) {
+		$idx++;
+		$status = '';
+		$jk = '';
+		$sub_array = [];
+		$sub_array[] = $idx;
+		$sub_array[] = $row['tahun_ajaran'];
+		$sub_array[] = $row['biaya'];
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-biaya-daftar">Update</button>';
+		$data[] = $sub_array;
+	}
+
+	$output = [
+		"draw" => intval($_POST["draw"]),
+		"recordsTotal" => $filtered_rows,
+		"recordsFiltered"  => get_total_all_records($connect,"tb_biaya_pendaftaran"),
 		"data" => $data
 	];
 

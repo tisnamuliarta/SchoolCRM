@@ -42,7 +42,7 @@
           <span>Pekerjaan</span></a>
         </li>
         <li id="link-sidebar"><a href="tahunajaran.php"><i class="fa fa-calendar-plus-o"></i> 
-          <span>Tahun Ajaran</span></a>
+          <span>Tahun Ajaran & Biaya daftar</span></a>
         </li>
         <li id="link-sidebar"><a href="diskon.php"><i class="fa fa-money"></i> 
           <span>Diskon</span></a>

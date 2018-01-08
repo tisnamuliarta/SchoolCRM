@@ -5,6 +5,59 @@ include 'function.php';
 $isSame = false;
 $output = [];
 
+if (isset($_POST['btn_action_biaya_daftar'])) {
+	if ($_POST['btn_action_biaya_daftar'] == 'Add') {
+		$isSame = false;
+		$selectQuery = "SELECT * FROM tb_biaya_pendaftaran WHERE id_tahun_ajaran = :id_tahun_ajaran";
+		$dbs = $connect->prepare($selectQuery);
+		$dbs->execute(array(
+			':id_tahun_ajaran' => $_POST['id_tahun_ajaran']
+		)); 
+		$countdbs = $dbs->rowCount();
+
+		if ($countdbs > 0) {
+			echo 'Biaya pendaftaran hanya untuk satu tahun!';
+		}else {
+			$query = " INSERT INTO tb_biaya_pendaftaran (id_tahun_ajaran,biaya) VALUES (:id_tahun_ajaran,:biaya) ";
+			$statement = $connect->prepare($query);
+			$statement->execute(
+				array(
+					':id_tahun_ajaran' 	=> $_POST['id_tahun_ajaran'],
+					':biaya' 			=> $_POST['biaya']
+				)
+			);
+			$result = $statement->fetchAll();
+			if (isset($result)) {
+				echo 'Biaya pendaftaran berhasil ditambahkan!';
+			}
+		}
+	}
+
+	if ($_POST['btn_action_biaya_daftar'] == 'Edit') {
+		$query = "
+			UPDATE tb_biaya_pendaftaran
+			SET id_tahun_ajaran = :id_tahun_ajaran,
+			biaya = :biaya
+			WHERE id = :ta_id
+		";
+		// $statement = $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$statement = $connect->prepare($query);
+		$statement->execute(
+			array(
+				':id_tahun_ajaran' 		=> $_POST['id_tahun_ajaran'],
+				':biaya' 	=> $_POST['biaya'],
+				':ta_id'		=> $_POST['thn_ajaran_id']
+			)
+		);
+		// print_r($statement->errorInfo());
+		$result = $statement->fetch();
+		if (isset($result)) {
+			echo "Biaya pendaftaran berhasil diupdate!";
+		}
+	}
+}
+
+
 if (isset($_POST['btn_action'])) {
 	/**
 	 * ==========================================
@@ -67,6 +120,22 @@ if (isset($_POST['btn_action'])) {
 			$output['tahun'] = $row['tahun'];
 			$output['tgl_mulai'] = $row['tgl_mulai'];
 			$output['tgl_selesai'] = $row['tgl_selesai'];
+		}
+		echo json_encode($output);
+	}
+
+	if ($_POST['btn_action'] == 'fetch_single_biaya_daftar') {
+		$query = " SELECT * FROM tb_biaya_pendaftaran WHERE id = :id ";
+		$statement = $connect->prepare($query);
+		$statement->execute([
+			':id' => $_POST['ta_id']
+		]);
+		$result = $statement->fetchAll();
+		// $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
+		foreach ($result as $row) {
+			$output['id'] = $row['id'];
+			$output['id_tahun_ajaran'] = $row['id_tahun_ajaran'];
+			$output['biaya'] = $row['biaya'];
 		}
 		echo json_encode($output);
 	}
