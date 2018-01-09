@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 08, 2018 at 12:33 AM
+-- Generation Time: Jan 09, 2018 at 01:36 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.7
 
@@ -95,7 +95,7 @@ CREATE TABLE `tb_detail_siswa` (
 --
 
 INSERT INTO `tb_detail_siswa` (`id`, `id_siswa`, `id_kelas`, `id_tahun_ajaran`) VALUES
-(7, 4, 2, 8),
+(7, 4, 6, 7),
 (8, 5, 6, 6),
 (14, 6, 6, 6),
 (15, 7, 6, 6),
@@ -368,7 +368,8 @@ INSERT INTO `tb_pendaftaran` (`id`, `id_siswa`, `id_ortu`, `id_tahun_ajaran`, `t
 (5, 8, 58, 6, '2017-12-24 03:13:58', 90000, 'transfer', 'paid', 'dfd2e228ca51dabf574d6912a9bef315.jpg', NULL),
 (8, 11, 58, 6, '2017-12-25 01:43:55', 90000, 'transfer', 'paid', '56a8da1d3bcb2e9b334a778be5b1d781.png', NULL),
 (10, 13, 58, 6, '2017-12-31 02:32:36', 90000, 'transfer', 'paid', '0552fd25d5b2312eb092cca17d9e868a.jpg', NULL),
-(11, 14, 58, 6, '2017-12-31 02:35:46', 90000, 'transfer', 'unpaid', 'ced5008753cb50b6bb424556dcc8f707.jpg', NULL);
+(11, 14, 58, 6, '2017-12-31 02:35:46', 90000, 'transfer', 'unpaid', 'ced5008753cb50b6bb424556dcc8f707.jpg', NULL),
+(12, 15, 58, 6, '2018-01-08 22:08:16', 99000, 'transfer', 'unpaid', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -380,6 +381,8 @@ CREATE TABLE `tb_perkembangan` (
   `id` int(10) NOT NULL,
   `nip` varchar(20) DEFAULT NULL,
   `nis` varchar(10) DEFAULT NULL,
+  `id_kelas` int(10) UNSIGNED DEFAULT NULL,
+  `id_tahun_ajaran` int(10) UNSIGNED DEFAULT NULL,
   `pembiasaan` varchar(1) DEFAULT NULL,
   `bahasa` varchar(1) DEFAULT NULL,
   `daya_fikir` varchar(1) DEFAULT NULL,
@@ -391,39 +394,15 @@ CREATE TABLE `tb_perkembangan` (
 -- Dumping data for table `tb_perkembangan`
 --
 
-INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `pembiasaan`, `bahasa`, `daya_fikir`, `motorik`, `tgl`) VALUES
-(29, '1010101', '0001', 'A', 'B', 'A', 'B', '2017-12-04'),
-(30, '1010101', '0002', 'B', 'B', 'C', 'D', '2017-12-04'),
-(31, '1010101', '0003', 'C', 'B', 'A', 'B', '2017-12-04'),
-(32, '1010101', '0004', 'B', 'B', 'B', 'B', '2017-12-04'),
-(33, '1010101', '0005', 'D', 'B', 'B', 'B', '2017-12-04'),
-(34, '1010101', '0001', 'B', 'A', 'B', 'B', '2017-12-05'),
-(35, '1010101', '0002', 'B', 'B', 'B', 'B', '2017-12-05'),
-(36, '1010101', '0001', 'B', 'B', 'B', 'A', '2017-12-06'),
-(37, '1010101', '0001', 'C', 'C', 'A', 'A', '2017-12-07'),
-(38, '1010101', '0002', 'B', 'C', 'B', 'D', '2017-12-06'),
-(39, '1010101', '0002', 'C', 'A', 'B', 'B', '2017-12-07'),
-(40, '1010101', '0003', 'A', 'B', 'C', 'B', '2017-12-05'),
-(41, '1010101', '0003', 'B', 'B', 'C', 'A', '2017-12-06'),
-(42, '1010101', '0003', 'C', 'B', 'A', 'A', '2017-12-07'),
-(43, '1010101', '0004', 'C', 'B', 'B', 'A', '2017-12-05'),
-(44, '1010101', '0004', 'B', 'B', 'A', 'A', '2017-12-06'),
-(45, '1010101', '0004', 'B', 'B', 'A', 'A', '2017-12-07'),
-(46, '1010101', '0005', 'B', 'B', 'B', 'C', '2017-12-05'),
-(47, '1010101', '0005', 'B', 'B', 'C', 'C', '2017-12-06'),
-(48, '1010101', '0006', 'B', 'B', 'A', 'A', '2017-12-04'),
-(49, '1010101', '0006', 'C', 'B', 'C', 'C', '2017-12-05'),
-(50, '1010101', '0006', 'B', 'A', 'B', 'C', '2017-12-06'),
-(51, '1010101', '0006', 'B', 'B', 'C', 'D', '2017-12-07'),
-(52, '1010101', '0001', 'B', 'C', 'B', 'A', '2018-01-01'),
-(53, '1010101', '0001', 'C', 'B', 'C', 'B', '2018-01-02'),
-(54, '1010101', '0001', 'B', 'A', 'B', 'B', '2018-01-03'),
-(55, '1010101', '0001', 'B', 'A', 'B', 'B', '2018-01-04'),
-(56, '1010101', '0001', 'C', 'B', 'B', 'C', '2018-01-05'),
-(57, '1010101', '0002', 'B', 'B', 'A', 'B', '2018-01-01'),
-(58, '1010101', '0002', 'B', 'B', 'A', 'B', '2018-01-02'),
-(59, '1010101', '0002', 'A', 'B', 'C', 'C', '2018-01-03'),
-(60, '1010101', '0002', 'A', 'B', 'A', 'B', '2018-01-04');
+INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `id_kelas`, `id_tahun_ajaran`, `pembiasaan`, `bahasa`, `daya_fikir`, `motorik`, `tgl`) VALUES
+(62, '1010101', '0001', 6, 6, 'A', 'B', 'B', 'B', '2017-11-01'),
+(63, '1010101', '0001', 6, 6, 'B', 'B', 'A', 'B', '2017-11-02'),
+(64, '1010101', '0001', 6, 6, 'A', 'B', 'C', 'A', '2017-11-03'),
+(65, '1010101', '0001', 6, 6, 'A', 'B', 'C', 'D', '2017-11-04'),
+(77, '1010101', '0001', 6, 7, 'A', 'B', 'A', 'B', '2018-01-01'),
+(78, '1010101', '0001', 6, 7, 'A', 'B', 'B', 'B', '2018-01-02'),
+(79, '1010101', '0001', 6, 7, 'A', 'B', 'A', 'C', '2018-01-03'),
+(80, '1010101', '0001', 6, 7, 'A', 'B', 'B', 'B', '2018-01-04');
 
 -- --------------------------------------------------------
 
@@ -452,8 +431,8 @@ CREATE TABLE `tb_raport` (
 --
 
 INSERT INTO `tb_raport` (`id`, `tahun`, `nip`, `nis`, `id_kelas`, `pembiasaan`, `bahasa`, `daya_fikir`, `motorik`, `total_nilai`, `keterangan`, `naik_kelas`, `tgl`) VALUES
-(20, 6, '1010101', '0001', 6, 'B', 'B', 'A', 'A', 'A', 'rer', 1, '2018-01-07'),
-(21, 7, '1010101', '0001', 6, 'C', 'A', 'B', 'C', 'A', 'er', 1, '2018-01-07');
+(22, 6, '1010101', '0001', 6, 'A', 'B', 'B', 'B', 'B', 'wwd', 1, '2018-01-09'),
+(23, 7, '1010101', '0001', 6, 'A', 'B', 'B', 'B', 'B', 'sds', 0, '2018-01-09');
 
 -- --------------------------------------------------------
 
@@ -499,7 +478,8 @@ INSERT INTO `tb_siswa` (`nis`, `id`, `id_ortu`, `nama`, `alamat`, `tgl_lahir`, `
 ('0005', 8, 58, 'Astuti', 'DPS', '2017-12-03', 2, 'active'),
 ('0006', 11, 58, 'Azis', 'Denpasar', '2017-12-04', 1, 'active'),
 ('0007', 13, 58, 'anu', 'dps', '2017-12-27', 2, 'active'),
-(NULL, 14, 58, 'Nana', 'DPS', '2017-12-03', 2, 'non-active');
+(NULL, 14, 58, 'Nana', 'DPS', '2017-12-03', 2, 'non-active'),
+(NULL, 15, 58, 'wwe', 'wew', '2014-05-19', 1, 'non-active');
 
 -- --------------------------------------------------------
 
@@ -511,6 +491,7 @@ CREATE TABLE `tb_tahun_ajaran` (
   `id` int(10) UNSIGNED NOT NULL,
   `tahun` varchar(200) DEFAULT NULL,
   `semester` varchar(200) DEFAULT NULL,
+  `biaya_daftar` double DEFAULT NULL,
   `tgl_mulai` date DEFAULT NULL,
   `tgl_selesai` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -519,14 +500,14 @@ CREATE TABLE `tb_tahun_ajaran` (
 -- Dumping data for table `tb_tahun_ajaran`
 --
 
-INSERT INTO `tb_tahun_ajaran` (`id`, `tahun`, `semester`, `tgl_mulai`, `tgl_selesai`) VALUES
-(1, '2011/2012', 'semester 1', '2011-07-01', '2017-12-30'),
-(2, '2011/2012', 'semester 2', '2012-01-01', '2012-06-30'),
-(3, '2012/2013', 'semester 1', '2019-08-02', '2019-12-21'),
-(6, '2017/2018', 'semester 1', '2017-07-01', '2017-12-31'),
-(7, '2017/2018', 'semester 2', '2018-01-04', '2018-06-27'),
-(8, '2018/2019', 'semester 1', '2018-08-06', '2018-12-20'),
-(9, '2018/2019', 'semester 2', '2019-01-03', '2019-06-25');
+INSERT INTO `tb_tahun_ajaran` (`id`, `tahun`, `semester`, `biaya_daftar`, `tgl_mulai`, `tgl_selesai`) VALUES
+(1, '2011/2012', 'semester 1', 100000, '2011-07-01', '2017-12-30'),
+(2, '2011/2012', 'semester 2', 105000, '2012-01-01', '2012-06-30'),
+(3, '2012/2013', 'semester 2', 103000, '2019-08-02', '2019-12-21'),
+(6, '2017/2018', 'semester 1', 110000, '2017-07-01', '2017-12-31'),
+(7, '2017/2018', 'semester 2', 115000, '2018-01-04', '2018-06-27'),
+(8, '2018/2019', 'semester 1', 120000, '2018-08-06', '2018-12-20'),
+(9, '2018/2019', 'semester 2', 125000, '2019-01-03', '2019-06-25');
 
 -- --------------------------------------------------------
 
@@ -687,7 +668,9 @@ ALTER TABLE `tb_pendaftaran`
 ALTER TABLE `tb_perkembangan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_tb_perkembangan_tb_guru` (`nip`),
-  ADD KEY `FK_tb_perkembangan_tb_siswa` (`nis`);
+  ADD KEY `FK_tb_perkembangan_tb_siswa` (`nis`),
+  ADD KEY `FK_tb_perkembangan_tb_kelas` (`id_kelas`),
+  ADD KEY `FK_tb_perkembangan_tb_tahun_ajaran` (`id_tahun_ajaran`);
 
 --
 -- Indexes for table `tb_raport`
@@ -809,17 +792,17 @@ ALTER TABLE `tb_pekerjaan`
 -- AUTO_INCREMENT for table `tb_pendaftaran`
 --
 ALTER TABLE `tb_pendaftaran`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `tb_perkembangan`
 --
 ALTER TABLE `tb_perkembangan`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 --
 -- AUTO_INCREMENT for table `tb_raport`
 --
 ALTER TABLE `tb_raport`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `tb_riwayat_kelas`
 --
@@ -829,7 +812,7 @@ ALTER TABLE `tb_riwayat_kelas`
 -- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `tb_tahun_ajaran`
 --
@@ -908,7 +891,9 @@ ALTER TABLE `tb_pendaftaran`
 --
 ALTER TABLE `tb_perkembangan`
   ADD CONSTRAINT `FK_tb_perkembangan_tb_guru` FOREIGN KEY (`nip`) REFERENCES `tb_guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_tb_perkembangan_tb_siswa` FOREIGN KEY (`nis`) REFERENCES `tb_siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_tb_perkembangan_tb_kelas` FOREIGN KEY (`id_kelas`) REFERENCES `tb_kelas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_tb_perkembangan_tb_siswa` FOREIGN KEY (`nis`) REFERENCES `tb_siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_tb_perkembangan_tb_tahun_ajaran` FOREIGN KEY (`id_tahun_ajaran`) REFERENCES `tb_tahun_ajaran` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_raport`

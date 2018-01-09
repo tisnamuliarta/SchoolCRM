@@ -21,25 +21,35 @@
   </div>
 </div>
 
-<div class="contentHasilBelajar">
-  <div class="row">
-    <div class="col-md-12">
-      <h2 class="text-center">TK SINAR PRIMA</h2>
+  <div class="contentHasilBelajar">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center">TK SINAR PRIMA</h2>
+      </div>
     </div>
-    <div class="col-sm-12 col-md-8 col-md-offset-2">
-      <div id="formLoadRaport">
-        <div class="box box-solid">
-          <div class="box-body">
-            <div class="">
-              <table class="table table-striped table-bordered" id="siswatable">
-                <thead>
-                  <tr>
-                    <th width="80%" style="text-align: center;top: 0">KOMPETENSI DASAR</th>
-                    <th width="20%" style="text-align: center;">HASIL BELAJAR</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-md-offset-2" style="margin-bottom: 20px;">
+        <div class="pull-right">
+          <button type="button" name="print" id="print_button" class="btn btn-success btn-sm"> <i class="fa fa-print"></i> Cetak</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-md-offset-2">
+        <div id="formLoadRaport">
+          <div class="box box-solid">
+            <div class="box-body">
+              <div class="">
+                <table class="table table-striped table-bordered" id="siswatable">
+                  <thead>
+                    <tr>
+                      <th width="80%" style="text-align: center;top: 0">KOMPETENSI DASAR</th>
+                      <th width="20%" style="text-align: center;">HASIL BELAJAR</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -80,6 +90,32 @@
       //     "pageLength": 10
       //   });
       // }
+      
+      $('#print_button').click(function(e){
+        e.preventDefault();
+        var contents = $("#formLoadRaport").html();
+        var frame1 = $('<iframe />');
+        frame1[0].name = "frame1";
+        frame1.css({ "position": "absolute", "top": "-1000000px" });
+        $("body").append(frame1);
+        var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+        frameDoc.document.open();
+        //Create a new HTML document.
+        frameDoc.document.write('<html><head><title>DIV Contents</title>');
+        frameDoc.document.write('</head><body>');
+        //Append the external CSS file.
+        frameDoc.document.write('<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />');
+        //Append the DIV contents.
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        setTimeout(function () {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            frame1.remove();
+        }, 500);
+
+      });
 
       $('#tampilkan_siswa').click(function(e){
         e.preventDefault();

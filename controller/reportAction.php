@@ -21,6 +21,7 @@ if (isset($_GET['btn_action'])) {
 	}
 
 	if ($_GET['btn_action'] == 'getHasilBelajar') {
+		$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$query = '';
 		$id_ortu = $_GET['id_ortu'];
 		$tahunAjaran = $_GET['tahun_ajaran'];
@@ -34,10 +35,11 @@ if (isset($_GET['btn_action'])) {
 		from tb_raport
 		LEFT JOIN tb_siswa ON tb_siswa.nis = tb_raport.nis
 		LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
-		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.id_ortu = {$id_ortu} AND tb_detail_siswa.id_tahun_ajaran = {$tahunAjaran} AND tb_siswa.nis = {$nis}";
+		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.id_ortu = {$id_ortu} AND tb_raport.tahun = {$tahunAjaran} AND tb_raport.nis = '{$nis}' ";
 
 		$statement = $connect->prepare($query);
 		$statement->execute();
+		// echo $query;
 		$result = $statement->fetchAll();
 		$single = $statement->fetch(PDO::FETCH_ASSOC);
 		foreach ($result as $row) {

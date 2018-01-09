@@ -10,10 +10,10 @@
       <div class="box-body">
         <div class="row">
           <div class="col-sm-12">
-            <div class="col-sm-3 pull-right">
+            <div class="col-md-2 pull-right">
               <div class="btn-group">
                 <button type="button" name="add" id="add_tahunajaran_button" class="btn btn-success btn-sm" >Tambah</button>
-                <button type="button" name="terbitkan_buku_penghubung" id="terbitkan_buku_penghubung" class="btn btn-info btn-sm" style="margin-left: 10px;">Terbitkan Buku Penghubung</button>
+                <!-- <button type="button" name="terbitkan_buku_penghubung" id="terbitkan_buku_penghubung" class="btn btn-info btn-sm" style="margin-left: 10px;">Terbitkan Buku Penghubung</button> -->
               </div>
               <br><br>
             </div>
