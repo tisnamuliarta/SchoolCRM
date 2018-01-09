@@ -1,7 +1,7 @@
 <?php require 'partials/head_admin.php'; ?>
 <span id="alert_action"></span>
 <div class="row">
-  <div class="col-md-6 col-xs-12">
+  <div class="col-md-12 col-xs-12">
     <!-- small box -->
     <div class="box">
       <div class="box-header  with-border">
@@ -27,6 +27,7 @@
                     <th>Semester</th>
                     <th>Tanggal Mulai</th>
                     <th>Tanggal Selesai</th>
+                    <th>Biaya Pendaftaran</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -38,8 +39,7 @@
     </div>
   </div>
 
-  <div class="col-md-6 col-xs-12">
-    <!-- small box -->
+  <!-- <div class="col-md-6 col-xs-12">
     <div class="box">
       <div class="box-header  with-border">
         <h3 class="box-title"><i class="fa fa-money"></i> Biaya Pendaftaran</h3>
@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 
 <div id="tahunBiayaDaftarModal" class="modal fade">
@@ -148,6 +148,11 @@
             <label>Tanggal Selesai</label>
             <input type="text" name="tgl_selesai" id="tgl_selesai" placeholder="2017-01-21" class="form-control getDatePickerWOvalidate" required  />
           </div>
+
+          <div class="form-group">
+            <label>Biaya Pendaftaran</label>
+            <input type="number" name="biaya_daftar" id="biaya_daftar" class="form-control" required  />
+          </div>
         </div>
         <div class="modal-footer">
           <input type="hidden" name="ta_id" id="ta_id" />
@@ -200,7 +205,7 @@
         },
         "columnDefs":[
           {
-            "targets":[0,5],
+            "targets":[0,6],
             "orderable":false,
           },
         ],
@@ -293,6 +298,7 @@
           $('select[name="semester"] option[value="'+data.semester+'"]').attr('selected','selected');
           $('#tgl_mulai').val(data.tgl_mulai);
           $('#tgl_selesai').val(data.tgl_selesai);
+          $('#biaya_daftar').val(data.biaya_daftar);
           $('#ta_id').val(ta_id)
           $('#action').val("Edit");
           $('#btn_action').val("Edit");

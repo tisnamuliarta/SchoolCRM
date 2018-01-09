@@ -147,7 +147,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Biaya Pendaftaran</label>
-                <input class="form-control" id="biayaPendaftaran" name="biayaPendaftaran" readonly required value="100000">
+                <input class="form-control" id="biayaPendaftaran" name="biayaPendaftaran" readonly required >
               </div>
             </div>
           </div>
@@ -315,13 +315,16 @@
     $('#tahun_ajaran').change(function(){
       var idTahunAjaran = $('#tahun_ajaran').val();
       var diskonNumber,diskonValue,total,textDiskon;
+      var txtBiayaDaftar = $(this).find(':selected').data('biayadaftar');
+      $('#biayaPendaftaran').val(txtBiayaDaftar);
       var biayaDaftar = $('#biayaPendaftaran').val();
+
       $.ajax({
         method: 'POST',
         data: {idTahunAjaran:idTahunAjaran},
         url: '../controller/helper.php',
         success: function(data){
-          biayaDaftar = 100000;
+          // biayaDaftar = 100000;
           textDiskon = $('#diskon').val(data);
           if ($('#jumlahAnak').val() > 0) {
             diskonNumber = $('#diskon').val();

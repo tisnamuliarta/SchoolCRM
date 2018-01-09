@@ -84,7 +84,7 @@ if (isset($_POST['btn_action'])) {
 		if ($isSame) {
 			echo 'Tahun ajaran tidak boleh sama!';
 		}else {
-			$query = " INSERT INTO tb_tahun_ajaran (tahun,semester,tgl_mulai,tgl_selesai) VALUES (:tahun,:semester,:tgl_mulai,:tgl_selesai) ";
+			$query = " INSERT INTO tb_tahun_ajaran (tahun,semester,tgl_mulai,tgl_selesai,biaya_daftar) VALUES (:tahun,:semester,:tgl_mulai,:tgl_selesai,:biaya_daftar) ";
 			$statement = $connect->prepare($query);
 			$statement->execute(
 				array(
@@ -92,6 +92,7 @@ if (isset($_POST['btn_action'])) {
 					':semester' 		=> $_POST['semester'],
 					':tgl_mulai' 		=> $_POST['tgl_mulai'],
 					':tgl_selesai' 		=> $_POST['tgl_selesai'],
+					':biaya_daftar' 		=> $_POST['biaya_daftar'],
 				)
 			);
 			$count = $statement->rowCount();
@@ -120,6 +121,7 @@ if (isset($_POST['btn_action'])) {
 			$output['tahun'] = $row['tahun'];
 			$output['tgl_mulai'] = $row['tgl_mulai'];
 			$output['tgl_selesai'] = $row['tgl_selesai'];
+			$output['biaya_daftar'] = $row['biaya_daftar'];
 		}
 		echo json_encode($output);
 	}
@@ -151,7 +153,8 @@ if (isset($_POST['btn_action'])) {
 			SET tahun = :tahun,
 			semester = :semester,
 			tgl_mulai = :tgl_mulai,
-			tgl_selesai = :tgl_selesai
+			tgl_selesai = :tgl_selesai,
+			biaya_daftar = :biaya_daftar
 			WHERE id = :ta_id
 		";
 		// $statement = $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -162,6 +165,7 @@ if (isset($_POST['btn_action'])) {
 				':semester' 	=> $_POST['semester'],
 				':tgl_mulai' 	=> $_POST['tgl_mulai'],
 				':tgl_selesai' 	=> $_POST['tgl_selesai'],
+				':biaya_daftar' 	=> $_POST['biaya_daftar'],
 				':ta_id'		=> $_POST['ta_id']
 			)
 		);

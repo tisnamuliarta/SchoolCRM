@@ -120,7 +120,7 @@ if (isset($_POST['btn_action'])) {
 			}else {
 				$naik_kelas = $_POST['naik_kelas'];
 			}
-			$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$statement = $connect->prepare($query);
 			$statement->execute(
 				array(
@@ -156,9 +156,9 @@ if (isset($_POST['btn_action'])) {
 	if ($_POST['btn_action'] == 'fetch_single') {
 		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$query = " SELECT tb_raport.*, tb_siswa.nama, tb_siswa.jenis_kelamin, DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir , DATE_FORMAT(tb_raport.tgl,'%d %M %Y') as tanggal_raport ,
-			(SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas,
-			(SELECT CONCAT(tb_tahun_ajaran.tahun,' - ',tb_tahun_ajaran.semester) FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran ORDER BY tb_tahun_ajaran.tahun DESC) as tahun_ajaran,
-			(SELECT tb_tahun_ajaran.semester FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as semester
+			(SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_raport.id_kelas) as kelas,
+			(SELECT CONCAT(tb_tahun_ajaran.tahun) FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_raport.tahun ORDER BY tb_tahun_ajaran.tahun DESC) as tahun_ajaran,
+			(SELECT tb_tahun_ajaran.semester FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_raport.tahun) as semester
 			from tb_raport 
 		    LEFT JOIN tb_siswa on tb_siswa.nis = tb_raport.nis
 			LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
@@ -182,6 +182,7 @@ if (isset($_POST['btn_action'])) {
 			$output['keterangan'] = $row['keterangan'];
 			$output['naik_kelas'] = $row['naik_kelas'];
 			$output['tahun_ajaran'] = $row['tahun_ajaran'];
+			$output['semester'] = $row['semester'];
 			$output['tgl'] = $row['tgl'];
 		}
 		echo json_encode($output);
@@ -194,6 +195,11 @@ if (isset($_POST['btn_action'])) {
 	 * */
 	if ($_POST['btn_action'] == 'Edit') {
 		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$semester = $_POST['semester'];
+		$tahun_ajaran = $_POST['post_tahun_ajaran'];
+		$id_tahun_ajaran = $_POST['tahun'];
+		$nis = $_POST['nis'];
+
 		$query = "
 			UPDATE tb_raport
 			set
@@ -211,7 +217,8 @@ if (isset($_POST['btn_action'])) {
 				':id'			=> $_POST['id_raport']
 			)
 		);
-		updateRaportTotal($connect,$_POST['no_induk'],$_POST['tahun']);
+		// updateRaportTotal($connect,$_POST['no_induk'],$_POST['tahun']);
+		updateRaportTotal($connect,$_POST['nis'],$_POST['tahun'],$semester,$_POST['naik_kelas'],$id_tahun_ajaran,$tahun_ajaran);
 
 		$result = $statement->fetchAll();
 		if (isset($result)) {

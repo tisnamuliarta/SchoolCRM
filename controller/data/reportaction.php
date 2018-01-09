@@ -18,13 +18,10 @@ function getNilaiMotorik($connect, $nis, $tahun,$perkembangan) {
 		LEFT JOIN tb_detail_siswa ON tb_detail_siswa.id_siswa = tb_siswa.id
 		LEFT JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran
 		LEFT JOIN tb_kelas ON tb_kelas.id = tb_detail_siswa.id_kelas
-		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.nis = :nis  AND tb_detail_siswa.id_tahun_ajaran = :id_tahun_ajaran AND tgl BETWEEN tb_tahun_ajaran.tgl_mulai AND tb_tahun_ajaran.tgl_selesai ";
+		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.nis = '{$nis}'  AND tb_perkembangan.id_tahun_ajaran = '{$tahun}' AND tgl BETWEEN tb_tahun_ajaran.tgl_mulai AND tb_tahun_ajaran.tgl_selesai ";
 
 	$statement = $connect->prepare($query);
-	$statement->execute(array(
-		':nis'				=> $nis,
-		':id_tahun_ajaran'	=> $tahun
-	));
+	$statement->execute();
 
 	$result = $statement->fetch(PDO::FETCH_ASSOC);
 	$final = [];
@@ -34,11 +31,17 @@ function getNilaiMotorik($connect, $nis, $tahun,$perkembangan) {
 	$final["{$perkembangan}_d"] = $result["{$perkembangan}_d"];
 
 	$count = $final["{$perkembangan}_a"] + $final["{$perkembangan}_b"] + $final["{$perkembangan}_c"] + $final["{$perkembangan}_d"];
-	$all = (4 * $final["{$perkembangan}_a"]) + (3 * $final["{$perkembangan}_b"]) + (2 * $final["{$perkembangan}_c"]) + (1 * $final["{$perkembangan}_a"]);
-
+	$A = (4 * $final["{$perkembangan}_a"]);
+	$B = (3 * $final["{$perkembangan}_b"]);
+	$C = (2 * $final["{$perkembangan}_c"]);
+	$D = (1 * $final["{$perkembangan}_d"]);
+	$all = (integer)$A + (integer)$B + (integer)$C + (integer)$D;
 	$average = (double)$all / (double)$count;
 
-	// echo "Average ".$average;
+	// echo " Tahun ".$query;
+
+	// echo " all ".$all." count ".$count." average ".$average;
+	// echo " A ". $final["{$perkembangan}_a"] ." B ". $final["{$perkembangan}_b"] ." C ". $final["{$perkembangan}_c"] ." D ". $final["{$perkembangan}_d"];
 
 	if (($average >= 1) && ($average <= 1.75)) {
 		return 'D';

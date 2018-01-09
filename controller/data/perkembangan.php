@@ -10,9 +10,9 @@ $startDate = $_POST['tgl_perkembangan_mulai'];
 $endDate = $_POST['tgl_perkembangan_akhir'];
 $query .= " 
 	SELECT tb_perkembangan.*, tb_siswa.nama, tb_siswa.jenis_kelamin, DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir , DATE_FORMAT(tb_perkembangan.tgl,'%d %M %Y') as tanggal_perkembangan ,
-	(SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_detail_siswa.id_kelas) as kelas,
-	(SELECT tb_tahun_ajaran.tahun FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as tahun_ajaran,
-	(SELECT tb_tahun_ajaran.semester FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran) as semester
+	(SELECT tb_kelas.kelas FROM tb_kelas WHERE tb_kelas.id=tb_perkembangan.id_kelas) as kelas,
+	(SELECT tb_tahun_ajaran.tahun FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_perkembangan.id_tahun_ajaran) as tahun_ajaran,
+	(SELECT tb_tahun_ajaran.semester FROM tb_tahun_ajaran WHERE tb_tahun_ajaran.id = tb_perkembangan.id_tahun_ajaran) as semester
 	from tb_perkembangan 
     LEFT JOIN tb_siswa on tb_siswa.nis = tb_perkembangan.nis
 	LEFT JOIN tb_pendaftaran on tb_pendaftaran.id_siswa = tb_siswa.id
@@ -21,7 +21,7 @@ $query .= "
 ";
 
 if ($_POST['isSearch'] == 'yes') {
-	$query .= " AND tb_detail_siswa.id_kelas = $kelas AND tb_detail_siswa.id_tahun_ajaran = $tahunAjaran AND tb_perkembangan.tgl BETWEEN '$startDate' AND '$endDate' ";
+	$query .= " AND tb_perkembangan.id_kelas = $kelas AND tb_perkembangan.id_tahun_ajaran = $tahunAjaran AND tb_perkembangan.tgl BETWEEN '$startDate' AND '$endDate' ";
 }
 
 if (isset($_POST["search"]["value"])) {

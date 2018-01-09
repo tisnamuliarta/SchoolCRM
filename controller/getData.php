@@ -928,6 +928,7 @@ function getTahunAjaranDatatable($connect) {
 		$sub_array[] = $row['semester'];
 		$sub_array[] = $row['tgl_mulai'];
 		$sub_array[] = $row['tgl_selesai'];
+		$sub_array[] = $row['biaya_daftar'];
 		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-tahunajaran">Update</button>';
 		$data[] = $sub_array;
 	}

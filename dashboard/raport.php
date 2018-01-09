@@ -460,6 +460,15 @@
         data: { id:id, btn_action:btn_action },
         dataType: 'json',
         success: function(data){
+          var semester = data.semester;
+          if (semester == 'semester 1') {
+            $('#section_naik_kelas').addClass('isHide')
+            $('#section_naik_semester').removeClass('isHide')
+          }else {
+            $('#section_naik_semester').addClass('isHide')
+            $('#section_naik_kelas').removeClass('isHide')
+          }
+
           $('#raportModal').modal('show');
           $('select[name="tahun"] option[value="'+data.tahun+'"]').prop('selected','selected');
           $('select[name="nis"] option[value="'+data.nis+'"]').prop('selected','selected');
@@ -477,6 +486,8 @@
           $('input[name="mendengarkan"][value="'+data.mendengarkan+'"]').prop('checked',true);
           $('input[name="menulis"][value="'+data.menulis+'"]').prop('checked',true);
           $('#keterangan').val(data.keterangan);
+          $('#semester').val(data.semester);
+          $('#post_tahun_ajaran').val(data.tahun_ajaran);
           $('input[name="naik_kelas"][value="'+data.naik_kelas+'"]').prop('checked',true);
           $('#id_raport').val(id)
           $('#action').val("Edit");
