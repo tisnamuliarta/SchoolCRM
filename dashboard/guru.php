@@ -281,7 +281,7 @@
           $('input[type="radio"]#'+data.jenis_kelamin+'').prop('checked',true);
           $('#'+data.status+'').prop('checked',true);
           $('#guruTlpn').val(data.tlpn);
-          $('.modal-user-title').html("<i class='fa fa-pencil-square-o'></i> Edit Product");
+          $('.modal-user-title').html("<i class='fa fa-pencil-square-o'></i> Edit Data Guru");
           $('#action').val("Edit");
           $('#user_nip').val(nip)
           $('#btn_action').val("Edit");
