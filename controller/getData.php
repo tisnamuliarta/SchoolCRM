@@ -169,7 +169,7 @@ function getDaftarSiswaDatatable($connect) {
 		$jk = '';
 		$update = '';
 		$button = '<div class="btn-group-vertical">
-					<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
+					<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>
 				</div>';
 		if ($row['status'] == 'active') {
 			$status = '<span class="label label-success">Active</span>';
@@ -241,7 +241,7 @@ function getPengaturanAkunOrtuDatatable($connect) {
 		$sub_array[] = $row['nama_ayah'];
 		$sub_array[] = $row['nama_ibu'];
 		$sub_array[] = $row['username'];
-		// $sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-info btn-xs update-guru">Update</button>';
+		// $sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-info btn-xs update-guru">Ubah</button>';
 		$sub_array[] = '<button type="button" name="update_password" id="'.$row["id"].'" class="btn btn-success btn-xs reset-password-ortu">Reset Password</button>';
 		$data[] = $sub_array;
 	}
@@ -290,7 +290,7 @@ function getPengaturanAkunGuruAdminDatatable($connect) {
 		$sub_array[] = $row['nama'];
 		$sub_array[] = $row['username'];
 		$sub_array[] = $row['alamat'];
-		// $sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-info btn-xs update-guru">Update</button>';
+		// $sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-info btn-xs update-guru">Ubah</button>';
 		$sub_array[] = '<button type="button" name="update_password" id="'.$row["nip"].'" class="btn btn-warning btn-xs reset-password-guru">Reset Password</button>';
 		$data[] = $sub_array;
 	}
@@ -342,7 +342,7 @@ function getPengaturanAkunAdminDatatable($connect) {
 		$sub_array[] = $row['username'];
 		$sub_array[] = $row['alamat'];
 		$sub_array[] = $row['tlpn'];
-		$sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-info btn-xs update-guru">Update</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-info btn-xs update-guru">Ubah</button>';
 		$sub_array[] = '<button type="button" name="update_password" id="'.$row["nip"].'" class="btn btn-success btn-xs update-password">Update Password</button>';
 		$data[] = $sub_array;
 	}
@@ -394,7 +394,7 @@ function getPengaturanAkunGuruDatatable($connect) {
 		$sub_array[] = $row['username'];
 		$sub_array[] = $row['alamat'];
 		$sub_array[] = $row['tlpn'];
-		$sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-info btn-xs update-guru">Update</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-info btn-xs update-guru">Ubah</button>';
 		$sub_array[] = '<button type="button" name="update_password" id="'.$row["nip"].'" class="btn btn-success btn-xs update-password">Update Password</button>';
 		$data[] = $sub_array;
 	}
@@ -456,8 +456,8 @@ function getKegiatanDatatable($connect) {
 		$sub_array[] = $row['deskripsi'];
 		$sub_array[] = $row['kelas'];
 		$sub_array[] = $row['tgl_kegiatan'];
-		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-kegiatan">Update</button>';
-		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-kegiatan">Delete</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-kegiatan">Ubah</button>';
+		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-kegiatan">Hapus</button>';
 		$data[] = $sub_array;
 	}
 
@@ -511,7 +511,7 @@ function getPengaturanAkunDatatable($connect) {
 		$sub_array[] = $row['nama_pekerjaan_ayah'];
 		$sub_array[] = $row['nama_pekerjaan_ibu'];
 		$sub_array[] = $row['tlpn'];
-		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-info btn-xs update-user">Update</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-info btn-xs update-user">Ubah</button>';
 		$sub_array[] = '<button type="button" name="update_password" id="'.$row["id"].'" class="btn btn-success btn-xs update-password">Update Password</button>';
 		$data[] = $sub_array;
 	}
@@ -586,7 +586,7 @@ function getDataSiswaDatatable($connect) {
 				$button = '
 					<div class="btn-group-vertical">
 						<div class="col-sm-12">
-							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
+							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>
 						</div>
 						<div class="col-sm-12" >
 							<button type="button" name="konfirmasi-pembayaran" id="'.$row["id_pendaftaran"].'" class="btn btn-info btn-xs konfirmasi-siswa" data-status="'.$row["id"].'">Konfirmasi Pembayaran</button>
@@ -604,7 +604,7 @@ function getDataSiswaDatatable($connect) {
 				$button = '
 					<div class="btn-group-vertical">
 						<div class="col-sm-12" >
-							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
+							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>
 						</div>
 						<div class="col-sm-12" >
 							<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
@@ -624,7 +624,7 @@ function getDataSiswaDatatable($connect) {
 				$button = '
 					<div class="btn-group-vertical">
 						<div class="col-sm-12" >
-							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>
+							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>
 						</div>
 						<div class="col-sm-12" >
 							<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
@@ -703,7 +703,7 @@ function getSiswaBaruDatatable($connect) {
 		}
 
 		if ($row['status_pembayaran'] == 'unpaid') {
-			$update = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>';
+			$update = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>';
 			$status = '<span class="label label-danger">Belum Bayar</span>';
 		}elseif ($row['status_pembayaran'] == 'waiting') {
 			$update = '';
@@ -712,7 +712,7 @@ function getSiswaBaruDatatable($connect) {
 			$update = '';
 			$status = '<span class="label label-success">Lunas</span><br><span class="label label-info">Diterima</span>';
 		}elseif ($row['status_pembayaran'] == 'abort') {
-			$update = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Update</button>';
+			$update = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>';
 			$status = '<span class="label label-danger">Siswa ditolak</span>';
 		}
 		if ($row['jenis_kelamin'] == '1') {
@@ -787,8 +787,8 @@ function getFAQDatatable($connect) {
 		$sub_array[] = $row['judul'];
 		$sub_array[] = $row['kontent'];
 		$sub_array[] = $status;
-		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-faq">Update</button>';
-		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-faq" data-status="'.$row["status"].'">Delete</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-faq">Ubah</button>';
+		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-faq" data-status="'.$row["status"].'">Hapus</button>';
 		$data[] = $sub_array;
 	}
 
@@ -836,7 +836,7 @@ function getDiskonDatatable($connect) {
 		$sub_array[] = $idx;
 		$sub_array[] = $row['tahun_ajaran_detail'];
 		$sub_array[] = $row['diskon'];
-		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-diskon">Update</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-diskon">Ubah</button>';
 		$data[] = $sub_array;
 	}
 
@@ -881,7 +881,7 @@ function getBiayaDaftarDatatable($connect) {
 		$sub_array[] = $idx;
 		$sub_array[] = $row['tahun_ajaran'];
 		$sub_array[] = $row['biaya'];
-		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-biaya-daftar">Update</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-biaya-daftar">Ubah</button>';
 		$data[] = $sub_array;
 	}
 
@@ -930,7 +930,7 @@ function getTahunAjaranDatatable($connect) {
 		$sub_array[] = $row['tgl_mulai'];
 		$sub_array[] = $row['tgl_selesai'];
 		$sub_array[] = $row['biaya_daftar'];
-		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-tahunajaran">Update</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-tahunajaran">Ubah</button>';
 		$data[] = $sub_array;
 	}
 
@@ -999,9 +999,9 @@ function getGuruDatatable($connect) {
 		$sub_array[] = $row['type'];
 		$sub_array[] = $status;
 		// $sub_array[] = '<button type="button" name="make-admin" id="'.$row["nip"].'" class="btn btn-info btn-xs make-admin" data-type="'.$row["type"].'">Jadikan Admin</button>';
-		$sub_array[] = '<button type="button" name="view" id="'.$row["nip"].'" class="btn btn-info btn-xs view-guru">View</button>';
-		$sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-warning btn-xs update-guru">Update</button>';
-		$sub_array[] = '<button type="button" name="delete" id="'.$row["nip"].'" class="btn btn-danger btn-xs delete-guru" data-status="'.$row["status"].'">Delete</button>';
+		$sub_array[] = '<button type="button" name="view" id="'.$row["nip"].'" class="btn btn-info btn-xs view-guru">Lihat</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["nip"].'" class="btn btn-warning btn-xs update-guru">Ubah</button>';
+		$sub_array[] = '<button type="button" name="delete" id="'.$row["nip"].'" class="btn btn-danger btn-xs delete-guru" data-status="'.$row["status"].'">Hapus</button>';
 		$data[] = $sub_array;
 	}
 
@@ -1048,8 +1048,8 @@ function getKelasDatatable($connect) {
 		$sub_array[] = $idx;
 		$sub_array[] = $row['kelas'];
 		$sub_array[] = $row['maximal_siswa'];
-		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-kelas">Update</button>';
-		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-kelas" data-status="'.$row["id"].'">Delete</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-kelas">Ubah</button>';
+		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-kelas" data-status="'.$row["id"].'">Hapus</button>';
 		$data[] = $sub_array;
 	}
 
@@ -1093,8 +1093,8 @@ function getPekerjaanDatatable($connect) {
 		$sub_array = [];
 		$sub_array[] = $idx ;
 		$sub_array[] = $row['pekerjaan'];
-		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-pekerjaan">Update</button>';
-		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-pekerjaan" data-status="'.$row["id"].'">Delete</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-pekerjaan">Ubah</button>';
+		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-pekerjaan" data-status="'.$row["id"].'">Hapus</button>';
 		$data[] = $sub_array;
 	}
 
@@ -1139,9 +1139,9 @@ function getGaleriDatatable($connect) {
 		$sub_array = [];
 		$sub_array[] = $row['judul'];
 		$sub_array[] = $row['deskripsi'];
-		$sub_array[] = '<button type="button" name="view" id="'.$row["id"].'" class="btn btn-info btn-xs view-galeri">View</button>';
-		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-galeri">Update</button>';
-		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-galeri" data-status="'.$row["status"].'">Delete</button>';
+		$sub_array[] = '<button type="button" name="view" id="'.$row["id"].'" class="btn btn-info btn-xs view-galeri">Lihat</button>';
+		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-galeri">Ubah</button>';
+		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-galeri" data-status="'.$row["status"].'">Hapus</button>';
 		$data[] = $sub_array;
 	}
 

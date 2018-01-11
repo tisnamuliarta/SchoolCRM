@@ -21,7 +21,7 @@ if (isset($_GET['isSearch'])) {
 			LEFT JOIN tb_siswa ON tb_siswa.nis = tb_perkembangan.nis
 			LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
 			LEFT JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran
-			WHERE tb_detail_siswa.id_tahun_ajaran = '{$id_tahun_ajaran}' AND tb_perkembangan.nis = '{$nis}' AND MONTH(tb_perkembangan.tgl) = '{$month}' AND tb_perkembangan.tgl BETWEEN DATE_ADD(DATE_ADD(LAST_DAY(tb_perkembangan.tgl), INTERVAL 1 DAY), INTERVAL - 1 MONTH) AND LAST_DAY(tb_perkembangan.tgl)
+			WHERE tb_perkembangan.id_tahun_ajaran = '{$id_tahun_ajaran}' AND tb_perkembangan.nis = '{$nis}' AND MONTH(tb_perkembangan.tgl) = '{$month}' AND tb_perkembangan.tgl BETWEEN DATE_ADD(DATE_ADD(LAST_DAY(tb_perkembangan.tgl), INTERVAL 1 DAY), INTERVAL - 1 MONTH) AND LAST_DAY(tb_perkembangan.tgl)
 			";
 		$statement = $connect->prepare($query);
 		$statement->execute();
@@ -53,7 +53,7 @@ if (isset($_GET['isSearch'])) {
 			LEFT JOIN tb_siswa ON tb_siswa.nis = tb_perkembangan.nis
 			LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
 			LEFT JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran
-			WHERE tb_detail_siswa.id_tahun_ajaran = '{$id_tahun_ajaran}' AND tb_perkembangan.nis = '{$nis}' AND MONTH(tb_perkembangan.tgl) = '{$month}' AND tb_perkembangan.tgl BETWEEN DATE_ADD(DATE_ADD(LAST_DAY(tb_perkembangan.tgl), INTERVAL 1 DAY), INTERVAL - 1 MONTH) AND LAST_DAY(tb_perkembangan.tgl) ";
+			WHERE tb_perkembangan.id_tahun_ajaran = '{$id_tahun_ajaran}' AND tb_perkembangan.nis = '{$nis}' AND MONTH(tb_perkembangan.tgl) = '{$month}' AND tb_perkembangan.tgl BETWEEN DATE_ADD(DATE_ADD(LAST_DAY(tb_perkembangan.tgl), INTERVAL 1 DAY), INTERVAL - 1 MONTH) AND LAST_DAY(tb_perkembangan.tgl) ";
 
 		$statement = $connect->prepare($query);
 		$statement->execute();
@@ -84,7 +84,7 @@ if (isset($_GET['isSearch'])) {
 			LEFT JOIN tb_siswa ON tb_siswa.nis = tb_perkembangan.nis
 			LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
 			LEFT JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran
-			WHERE tb_detail_siswa.id_tahun_ajaran = '{$id_tahun_ajaran}' AND tb_perkembangan.nis = '{$nis}' AND MONTH(tb_perkembangan.tgl) = '{$month}' AND tb_perkembangan.tgl BETWEEN DATE_ADD(DATE_ADD(LAST_DAY(tb_perkembangan.tgl), INTERVAL 1 DAY), INTERVAL - 1 MONTH) AND LAST_DAY(tb_perkembangan.tgl) ";
+			WHERE tb_perkembangan.id_tahun_ajaran = '{$id_tahun_ajaran}' AND tb_perkembangan.nis = '{$nis}' AND MONTH(tb_perkembangan.tgl) = '{$month}' AND tb_perkembangan.tgl BETWEEN DATE_ADD(DATE_ADD(LAST_DAY(tb_perkembangan.tgl), INTERVAL 1 DAY), INTERVAL - 1 MONTH) AND LAST_DAY(tb_perkembangan.tgl) ";
 
 		$statement = $connect->prepare($query);
 		$statement->execute();
@@ -115,7 +115,7 @@ if (isset($_GET['isSearch'])) {
 			LEFT JOIN tb_siswa ON tb_siswa.nis = tb_perkembangan.nis
 			LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
 			LEFT JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran
-			WHERE tb_detail_siswa.id_tahun_ajaran = '{$id_tahun_ajaran}' AND tb_perkembangan.nis = '{$nis}' AND MONTH(tb_perkembangan.tgl) = '{$month}' AND tb_perkembangan.tgl BETWEEN DATE_ADD(DATE_ADD(LAST_DAY(tb_perkembangan.tgl), INTERVAL 1 DAY), INTERVAL - 1 MONTH) AND LAST_DAY(tb_perkembangan.tgl) ";
+			WHERE tb_perkembangan.id_tahun_ajaran = '{$id_tahun_ajaran}' AND tb_perkembangan.nis = '{$nis}' AND MONTH(tb_perkembangan.tgl) = '{$month}' AND tb_perkembangan.tgl BETWEEN DATE_ADD(DATE_ADD(LAST_DAY(tb_perkembangan.tgl), INTERVAL 1 DAY), INTERVAL - 1 MONTH) AND LAST_DAY(tb_perkembangan.tgl) ";
 
 		$statement = $connect->prepare($query);
 		$statement->execute();
