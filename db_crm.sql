@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 09, 2018 at 01:36 PM
+-- Generation Time: Jan 11, 2018 at 12:24 AM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.7
 
@@ -236,6 +236,7 @@ CREATE TABLE `tb_kegiatan` (
   `nip` varchar(20) DEFAULT NULL,
   `nama` varchar(200) DEFAULT NULL,
   `deskripsi` text,
+  `foto` varchar(230) DEFAULT NULL,
   `tgl` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -243,27 +244,9 @@ CREATE TABLE `tb_kegiatan` (
 -- Dumping data for table `tb_kegiatan`
 --
 
-INSERT INTO `tb_kegiatan` (`id`, `id_kelas`, `nip`, `nama`, `deskripsi`, `tgl`) VALUES
-(4, 6, '1010101', 'Menulis', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-04'),
-(5, 6, '1010101', 'Berhitung', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-05'),
-(6, 6, '1010101', 'asasa', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-06'),
-(7, 6, '1010101', 'wdwdwd', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-07'),
-(8, 6, '1010101', 'aaa', 'Man bun venmo gochujang, synth quinoa scenester ethical', '2017-12-08'),
-(9, 6, '1010101', 'wsswwwdwfc', 'Man bun venmo gochujang, synth quinoa scenester', '2017-12-11'),
-(10, 6, '1010101', 'sdsfww', 'Sriracha direct trade portland live-edge swag.', '2017-12-12'),
-(11, 6, '1010101', 'akhakusha', ' direct trade portland live-edge swag.', '2017-12-13'),
-(12, 6, '1010101', 'dwdswdswd', ' tile. Sriracha direct trade portland live-edge swag.', '2017-12-14'),
-(13, 6, '1010101', 'Wdwsddsw', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art p', '2017-12-15'),
-(14, 6, '1010101', 'scsss', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-18'),
-(15, 6, '1010101', 'fefefwqasds', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-19'),
-(16, 6, '1010101', 'daas', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-20'),
-(17, 6, '1010101', 'asdaas', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-21'),
-(18, 6, '1010101', 'sasa', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-22'),
-(19, 6, '1010101', 'daasas', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-25'),
-(20, 6, '1010101', 'qsqqsq', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-26'),
-(21, 6, '1010101', 'dadad', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-27'),
-(22, 6, '1010101', 'wdwdwswd', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-28'),
-(23, 6, '1010101', 'wdwswsw', 'Man bun venmo gochujang, synth quinoa scenester ethical intelligentsia letterpress blue bottle poutine. Marfa ramps art party before they sold out lumbersexual cardigan man bun air plant subway tile. Sriracha direct trade portland live-edge swag.', '2017-12-29');
+INSERT INTO `tb_kegiatan` (`id`, `id_kelas`, `nip`, `nama`, `deskripsi`, `foto`, `tgl`) VALUES
+(28, 6, '1010101', 'We', 'www', '6d329f4d31adb511e9e00861eef84f2a.jpg', '2017-12-04'),
+(29, 6, '1010101', 'sasa', 'asas', '78458dd455466c851e1e28203cc9782f.jpg', '2017-12-05');
 
 -- --------------------------------------------------------
 
@@ -772,7 +755,7 @@ ALTER TABLE `tb_galeri_detail`
 -- AUTO_INCREMENT for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `tb_kelas`
 --
