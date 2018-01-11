@@ -28,6 +28,7 @@
                 <thead>
                 <tr>
                   <th>NO</th>
+                  <th></th>
                   <th>Nama</th>
                   <th>Deskripsi</th>
                   <th>Kelas</th>
@@ -47,7 +48,7 @@
 
 <div id="tahunAjaranModal" class="modal fade">
   <div class="modal-dialog">
-    <form method="post" id="formKegiatan">
+    <form method="post" id="formKegiatan" enctype="multipart/form-data">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -88,6 +89,14 @@
               <div class="form-group">
                 <label>Tanggal Kegiatan</label>
                 <input type="text" name="tgl" id="tgl" class="form-control displayDatePicker" required />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Foto</label>
+                <input type="file" name="foto" id="foto" placeholder="Menulis" class="form-control" required />
               </div>
             </div>
           </div>
@@ -169,9 +178,10 @@
           data:{kegiatan: "ta"}
         },
         "columnDefs":[
-          {"targets":2,"width":"600"},
+          {"targets":1,"width":"100"},
+          {"targets":3,"width":"600"},
           {
-            "targets":[0,4,5],
+            "targets":[0,6,7],
             "orderable":false,
           },
         ],
@@ -181,7 +191,7 @@
       $('#add_tahunajaran_button').click(function(){
         $('#tahunAjaranModal').modal('show');
         $('#formKegiatan')[0].reset();
-        $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Tahun Ajaran");
+        $('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Kegiatan");
         $('#action').val('Add');
         $('#btn_action').val('Add');
       });
@@ -201,7 +211,9 @@
       $.ajax({
         url: "../controller/kegiatanaction.php",
         method: "POST",
-        data: formData,
+        data: new FormData(this),
+        contentType: false,
+        processData: false,
         success: function(data){
           $('#formKegiatan')[0].reset();
           $('#tahunAjaranModal').modal('hide');
@@ -214,7 +226,7 @@
     // ============= Display single data and update
     $(document).on('click','.update-kegiatan',function(){
       var id = $(this).attr("id");
-      $('.modal-user-title').html("<i class='fa fa-plus'></i> Edit Tahun Ajaran");
+      $('.modal-user-title').html("<i class='fa fa-plus'></i> Edit Kegiatan");
       var btn_action = 'fetch_single';
       $.ajax({
         url: '../controller/kegiatanaction.php',

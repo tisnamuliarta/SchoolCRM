@@ -61,6 +61,7 @@ if (isset($_GET['btn_action'])) {
 		$tahun_ajaran = $_GET['tahun_ajaran'];
 		$nis = $_GET['nis'];
 		$week = $_GET['week'];
+		$semester = $_GET['semester'];
 		$data = array();
 
 		$query = "SELECT tb_kegiatan.*
@@ -69,14 +70,14 @@ if (isset($_GET['btn_action'])) {
 		LEFT JOIN tb_detail_siswa ON tb_kelas.id = tb_detail_siswa.id_kelas
 		LEFT JOIN tb_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
 		LEFT JOIN tb_tahun_ajaran ON tb_tahun_ajaran.id = tb_detail_siswa.id_tahun_ajaran
-		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.id_ortu = {$id_ortu} AND tb_tahun_ajaran.tahun = '{$tahun_ajaran}' AND tb_siswa.nis = '{$nis}' AND WEEK(tb_kegiatan.tgl) IN ({$week}) ";
+		WHERE tb_siswa.nis IS NOT NULL AND tb_siswa.id_ortu = {$id_ortu} AND tb_tahun_ajaran.tahun = '{$tahun_ajaran}' AND tb_tahun_ajaran.semester = '{$semester}'  AND tb_siswa.nis = '{$nis}' AND WEEK(tb_kegiatan.tgl) IN ({$week}) ";
 		// echo $query;
 		$statement = $connect->prepare($query);
 		$statement->execute();
 		$result = $statement->fetchAll();
 		$single = $statement->fetch(PDO::FETCH_ASSOC);
 		foreach ($result as $row) {
-			$data[] = array('nama' => $row['nama'],'deskripsi' => $row['deskripsi']);
+			$data[] = array('nama' => $row['nama'],'deskripsi' => $row['deskripsi'],'foto' => $row['foto']);
 		}
 
 		echo json_encode($data);

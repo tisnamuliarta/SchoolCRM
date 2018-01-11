@@ -451,6 +451,7 @@ function getKegiatanDatatable($connect) {
 		$idx++;
 		$sub_array = [];
 		$sub_array[] = $idx;
+		$sub_array[] = '<img src="../uploads/kegiatan/'.$row["foto"].'" class="img img-responsive" style="width:100px;height:auto" />';
 		$sub_array[] = $row['nama'];
 		$sub_array[] = $row['deskripsi'];
 		$sub_array[] = $row['kelas'];
