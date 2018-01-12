@@ -46,7 +46,7 @@ foreach ($result as $row) {
 	$jk = '';
 	$update = '';
 	$button = '<div class="btn-group-vertical">
-				<button type="button" name="update-raport" id="'.$row["id"].'" class="btn btn-info btn-sm update-raport">Update</button>
+				<button type="button" name="update-raport" id="'.$row["id"].'" class="btn btn-info btn-sm update-raport">Ubah</button>
 			</div>';
 	$sub_array = [];
 	$sub_array[] = $row['nis'];

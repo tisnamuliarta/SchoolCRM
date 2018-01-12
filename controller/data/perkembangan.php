@@ -49,8 +49,8 @@ foreach ($result as $row) {
 	$jk = '';
 	$update = '';
 	$button = '<div class="btn-group-vertical">
-				<button type="button" name="update-perkembangan" id="'.$row["id"].'" class="btn btn-info btn-sm update-perkembangan">Update</button>
-				<button type="button" name="delete-perkembangan" id="'.$row["id"].'" class="btn btn-warning btn-sm delete-perkembangan">Delete</button>
+				<button type="button" name="update-perkembangan" id="'.$row["id"].'" class="btn btn-info btn-sm update-perkembangan">Ubah</button>
+				<button type="button" name="delete-perkembangan" id="'.$row["id"].'" class="btn btn-warning btn-sm delete-perkembangan">Hapus</button>
 			</div>';
 	if ($row['jenis_kelamin'] == '1') {
 		$jk = 'Laki-laki';

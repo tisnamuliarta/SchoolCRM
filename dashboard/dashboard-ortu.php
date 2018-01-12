@@ -142,22 +142,26 @@
       data: {chartType:lesson, isSearch:isSearch,nis:nis,idTahunAjaran:idTahunAjaran,month:month},
       method: 'GET',
       success: function(data){
-        var id = [];
+        var minggu = [];
         var nilai = [];
+        var huruf = [];
         var toJSON = $.parseJSON(data);
 
-        $.each(toJSON, function(k,v){
-          id.push(v.id);
+        var arr = $.each(toJSON, function(k,v){
+          minggu.push(v.minggu);
           nilai.push(v.nilai);
+          huruf.push(v.huruf);
         })
+
+        // console.log(toJSON)
 
         var ctx = $("#barChart"+lesson);
         var barGraph = new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: id,
+            labels: minggu,
             datasets: [{
-              label: 'Jumlah data '+lesson,
+              label: 'Nilai ',
               data: nilai,
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
@@ -179,11 +183,28 @@
             }]
           },
           options: {
+            legend: {
+                display: true,
+                labels: {
+                    fontColor: 'rgb(255, 99, 132)'
+                },
+                text: 'Legend',
+            },
             scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero:true
+              xAxes:[{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Minggu Ke'
                 }
+              }],
+              yAxes: [{
+                  ticks: {
+                    beginAtZero:true
+                  },
+                  scaleLabel: {
+                      display: true,
+                      labelString: '1=>D, 2=>C, 3=>C, 4=>A '
+                  }
               }]
             }
           }

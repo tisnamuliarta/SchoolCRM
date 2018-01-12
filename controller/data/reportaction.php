@@ -38,11 +38,6 @@ function getNilaiMotorik($connect, $nis, $tahun,$perkembangan) {
 	$all = (integer)$A + (integer)$B + (integer)$C + (integer)$D;
 	$average = (double)$all / (double)$count;
 
-	// echo " Tahun ".$query;
-
-	// echo " all ".$all." count ".$count." average ".$average;
-	// echo " A ". $final["{$perkembangan}_a"] ." B ". $final["{$perkembangan}_b"] ." C ". $final["{$perkembangan}_c"] ." D ". $final["{$perkembangan}_d"];
-
 	if (($average >= 1) && ($average <= 1.75)) {
 		return 'D';
 	}elseif (($average >= 1.76) && ($average <= 2.51)) {
@@ -53,6 +48,10 @@ function getNilaiMotorik($connect, $nis, $tahun,$perkembangan) {
 		return 'A';
 	}
 
+	// echo " Tahun ".$query;
+
+	// echo " all ".$all." count ".$count." average ".$average;
+	// echo " A ". $final["{$perkembangan}_a"] ." B ". $final["{$perkembangan}_b"] ." C ". $final["{$perkembangan}_c"] ." D ". $final["{$perkembangan}_d"];
 }
 
 function updateRaportTotal($connect,$nis,$tahun,$semester,$naik_kelas,$id_tahun_ajaran,$tahun_ajaran) {
