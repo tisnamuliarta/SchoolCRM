@@ -69,7 +69,7 @@ function getAllTahunAjaran($connect) {
 }
 
 function getAllBukuPenghubungTahunAjaran($connect) {
-	$query = "SELECT DISTINCT tb_tahun_ajaran.tahun, CONCAT(tb_tahun_ajaran.tahun) as tahun_ajaran 
+	$query = "SELECT tb_tahun_ajaran.tahun, tb_tahun_ajaran.semester, CONCAT(tb_tahun_ajaran.tahun,' - ',tb_tahun_ajaran.semester) as tahun_ajaran 
 		FROM tb_tahun_ajaran
 		ORDER BY tb_tahun_ajaran.tahun DESC ";
 	$dbs = $connect->prepare($query);
@@ -77,7 +77,7 @@ function getAllBukuPenghubungTahunAjaran($connect) {
 	$result = $dbs->fetchAll();
 	$output = '';
 	foreach ($result as $row) {
-		$output .= '<option value="'.$row['tahun_ajaran'].'" >'.$row['tahun_ajaran'].'</option>' ;
+		$output .= '<option data-semester="'.$row['semester'].'" value="'.$row['tahun'].'" >'.$row['tahun_ajaran'].'</option>' ;
 	}
 	return $output;
 }

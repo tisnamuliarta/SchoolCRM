@@ -1,6 +1,6 @@
 <?php require 'partials/head.php'; ?>
 <div class="row">
-  <div class="col-md-10 col-sm-12 col-md-offset-1">
+  <div class="col-md-8 col-md-offset-2 col-sm-12">
     <div class="row">
       <div class="col-md-3">
         <select name="nama_siswa" id="nama_siswa" class="form-control">
@@ -8,20 +8,20 @@
         </select>
       </div>
       
-      <div class="col-md-2">
+      <div class="col-md-4">
         <select name="tahun_ajaran" id="tahun_ajaran" class="form-control" required>
           <?php
             echo getAllBukuPenghubungTahunAjaran($connect) 
           ?> 
         </select>
       </div>
-      <div class="col-md-2">
+      <!-- <div class="col-md-2">
         <select name="semester" id="semester" class="form-control">
           <option value="semester 1">Semester 1</option>
           <option value="semester 2">Semester 2</option>
         </select>
-      </div>
-      <div class="col-md-2">
+      </div> -->
+      <div class="col-md-3">
         <select name="week" id="week" class="form-control">
           <?php  
             $number = 0;
@@ -67,7 +67,7 @@
         var nis = $('#nama_siswa').val();
         var tahun_ajaran = $('#tahun_ajaran').val();
         var week = $('#week').val();
-        var semester = $('#semester').val();
+        var semester = $('#tahun_ajaran').find(':selected').data('semester');
         var id_ortu = <?php echo $_SESSION['id']; ?>;
         if (nis != '' && tahun_ajaran != '' && week != '') {
           $.ajax({
@@ -79,9 +79,11 @@
               // var result = $.parseJSON(data);
               
               var content = $('#buku_penghubung_content');
-              content.append("<p>Dear Parents,</p>"+"<p>Untuk minggu ke-"+week+" tahun ajaran "+tahun_ajaran+" anak-anak belajar</p>");
+              content.append("<p>Dear Parents,</p>"+"<p>Untuk minggu ke-"+week+" tahun ajaran "+tahun_ajaran+" "+semester+" anak-anak belajar</p>");
+              var start = 1;
               $.each(data, function(idx, elem){
-                content.append("<ul><li>"+"<img src='../uploads/kegiatan/"+elem.foto+"' style='width:80px;height:auto' />"+" <strong>"+elem.nama+"</strong>"+ " seperti "+elem.deskripsi+"</li></ul>")
+                content.append("<ol start="+start+"><li><dl>"+" <dt>"+elem.nama+"</dt>"+ "<dd> seperti "+elem.deskripsi+"</dd></dl> "+"<img src='../uploads/kegiatan/"+elem.foto+"' style='width:120px;height:auto' />"+"</li></ol>")
+                start++;
               });
               content.append("<br><br><p>Demikian buku penghubung kegiatan siswa TK SINAR PRIMA. Atas perhatian Bapak/Ibu Orang Tua Siswa, kami ucapkan terima kasih.</p>")
             }
