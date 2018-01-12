@@ -8,7 +8,7 @@
         <hr>
       </div>
       <!-- small box -->
-      <div class="box">
+      <div class="box box-solid">
         <div class="box-body">
           <section class="content">
             <?php  
