@@ -284,7 +284,7 @@
           $('#galeriModal').modal('show');
           $('#judul').val(data.judul);
           $('#deskripsi').val(data.deskripsi);
-          $('.modal-galeri-title').html("<i class='fa fa-pencil-square-o'></i> Edit Product");
+          $('.modal-galeri-title').html("<i class='fa fa-pencil-square-o'></i> Edit Galeri");
           $('#action').val("Edit");
           $('#galeri_id').val(id)
           $('#btn_action').val("Edit");
@@ -304,7 +304,7 @@
           $('#kelasModal').modal('show');
           $('#kelas').val(data.kelas);
           $('#maximal_siswa').val(data.maximal_siswa);
-          $('.modal-galeri-title').html("<i class='fa fa-pencil-square-o'></i> Edit Product");
+          $('.modal-kelas-title').html("<i class='fa fa-pencil-square-o'></i> Edit Kelas");
           $('#action_kelas').val("Edit");
           $('#id_kelas').val(id)
           $('#btn_action_kelas').val("Edit");

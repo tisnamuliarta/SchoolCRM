@@ -14,6 +14,7 @@
 <script src="plugins/daterangepicker/daterangepicker.js"></script>
 <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script src="plugins/fastclick/fastclick.js"></script>
 <script src="plugins/iCheck/icheck.min.js"></script>
 <script src="plugins/chartjs/Chart.bundle.min.js"></script>
@@ -32,6 +33,8 @@
 <!-- <script src="dist/js/script.js"></script> -->
 <script type="text/javascript">
 	$(function(){
+		$("#content-tentangkami").wysihtml5();
+
 		var url = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
 		$('ul.treeview-menu li a[href="' + url + '"]').parent().parent().parent().addClass('active');
 		$('ul.treeview-menu li a[href="' + url + '"]').parent().addClass('active');

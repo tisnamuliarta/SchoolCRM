@@ -38,7 +38,7 @@
         <form method="post">
           <div class="form-group">
             <label>Tentang Kami</label>
-            <textarea class="form-control" id="content" name="content" style="height: 150px;" row="50" autofocus required></textarea>
+            <textarea class="form-control" id="content-tentangkami" name="content" style="height: 150px;" row="50" autofocus required></textarea>
           </div>
           <div class="modal-footer">
               <button type="submit" name="simpan" id="simpan" class="btn btn-info" >Simpan</button>
