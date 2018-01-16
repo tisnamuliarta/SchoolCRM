@@ -62,7 +62,7 @@
 
 <div id="siswaBaruModal" class="modal fade">
   <div class="modal-dialog">
-    <form method="post" id="siswaForm">
+    <form method="post" id="siswaForm" accept="multipart/form-data">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -151,7 +151,13 @@
               </div>
             </div>
           </div>
-
+          
+          <div class="row">
+            <div class="col-md-6">
+              <label>Upload Kartu Keluarga</label>
+              <input type="file" name="kk" id="kk" class="form-control">
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <input type="hidden" name="id_siswa" id="id_siswa" />

@@ -23,7 +23,7 @@
               <tr>
                 <th>Judul</th>
                 <th>Deskripsi</th>
-                <th></th>
+                <th>Foto</th>
                 <th></th>
                 <th></th>
               </tr>

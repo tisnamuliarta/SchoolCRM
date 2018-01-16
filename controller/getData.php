@@ -585,6 +585,9 @@ function getDataSiswaDatatable($connect) {
 			if ($totalKuotaSiswa <= 30) {
 				$button = '
 					<div class="btn-group-vertical">
+						<div class="col-sm-12" >
+							<button type="button" name="view-data-kk" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-kk">Lihat KK</button>
+						</div>
 						<div class="col-sm-12">
 							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>
 						</div>
@@ -623,6 +626,9 @@ function getDataSiswaDatatable($connect) {
 			if ($totalKuotaSiswa <= 30) {
 				$button = '
 					<div class="btn-group-vertical">
+						<div class="col-sm-12" >
+							<button type="button" name="view-data-kk" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-kk">Lihat KK</button>
+						</div>
 						<div class="col-sm-12" >
 							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>
 						</div>

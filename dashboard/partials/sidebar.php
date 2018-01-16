@@ -29,6 +29,9 @@
         <li id="link-sidebar"><a href="index.php"><i class="fa fa-dashboard"></i> 
           <span>Dashboard</span></a>
         </li>
+        <li id="link-sidebar"><a href="siswa.php"><i class="fa fa-users"></i> 
+          <span>Siswa Baru</span></a>
+        </li>
         <li id="link-sidebar"><a href="user.php"><i class="fa fa-user-secret "></i> 
           <span>User</span></a>
         </li>
@@ -70,9 +73,6 @@
         </li>
         <li id="link-sidebar"><a href="dashboard-guru.php"><i class="fa fa-dashboard"></i> 
           <span>Dashboard</span></a>
-        </li>
-        <li id="link-sidebar"><a href="siswa.php"><i class="fa fa-users"></i> 
-          <span>Siswa Baru</span></a>
         </li>
         <li id="link-sidebar"><a href="daftar-siswa.php"><i class="fa fa-users"></i> 
           <span>Data Siswa</span></a>
