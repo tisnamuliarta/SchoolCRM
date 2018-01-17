@@ -583,13 +583,22 @@ function getDataSiswaDatatable($connect) {
 		if ($row['status_pembayaran'] == 'unpaid') {
 			$status .= '<span class="label label-danger">Non Active</span>';
 			if ($totalKuotaSiswa <= 30) {
-				$button = '
+				if ($row['cara_bayar'] == 'transfer') {
+					$button = '
+						<div class="btn-group-vertical">
+							<div class="col-sm-12" >
+								<button type="button" name="view-data-kk" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-kk">Lihat KK</button>
+							</div>
+							<div class="col-sm-12">
+								<button type="button" name="tolak-pembayaran" id="'.$row["id_pendaftaran"].'" class="btn btn-danger btn-xs tolak-siswa" data-namasiswa="'.$row['nama'].'" data-idsiswa="'.$row["id"].'">Tolak</button>
+							</div>
+						</div>
+					';
+				}else {
+					$button = '
 					<div class="btn-group-vertical">
 						<div class="col-sm-12" >
 							<button type="button" name="view-data-kk" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-kk">Lihat KK</button>
-						</div>
-						<div class="col-sm-12">
-							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>
 						</div>
 						<div class="col-sm-12" >
 							<button type="button" name="konfirmasi-pembayaran" id="'.$row["id_pendaftaran"].'" class="btn btn-info btn-xs konfirmasi-siswa" data-status="'.$row["id"].'">Konfirmasi Pembayaran</button>
@@ -599,18 +608,19 @@ function getDataSiswaDatatable($connect) {
 						</div>
 					</div>
 				';
+				}
+				
 			}
 		}elseif ($row['status_pembayaran'] == 'waiting') {
 			$status .= '<span class="label label-info">Menunggu Konfirmasi</span>';
 			if ($totalKuotaSiswa <= 30) {
-				
 				$button = '
 					<div class="btn-group-vertical">
 						<div class="col-sm-12" >
-							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>
+							<button type="button" name="view-data-kk" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-kk">Lihat KK</button>
 						</div>
 						<div class="col-sm-12" >
-							<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
+							<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-success btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
 						</div>
 						<div class="col-sm-12" >
 							<button type="button" name="konfirmasi-pembayaran" id="'.$row["id_pendaftaran"].'" class="btn btn-info btn-xs konfirmasi-siswa" data-status="'.$row["id"].'">Konfirmasi Pembayaran</button>
@@ -630,9 +640,6 @@ function getDataSiswaDatatable($connect) {
 							<button type="button" name="view-data-kk" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-kk">Lihat KK</button>
 						</div>
 						<div class="col-sm-12" >
-							<button type="button" name="update-siswa" id="'.$row["id"].'" class="btn btn-warning btn-xs update-siswa">Ubah</button>
-						</div>
-						<div class="col-sm-12" >
 							<button type="button" name="view-data-konfirmasi" id="'.$row["id_pendaftaran"].'" class="btn btn-primary btn-xs view-data-konfirmasi">Lihat Bukti Pembayaran</button>
 						</div>
 					</div>
@@ -645,6 +652,7 @@ function getDataSiswaDatatable($connect) {
 		$sub_array = [];
 		$sub_array[] = $idx;
 		$sub_array[] = $row['nama'];
+		$sub_array[] = $row['cara_bayar'];
 		$sub_array[] = $row['nama_ayah'];
 		$sub_array[] = $row['nama_ibu'];
 		$sub_array[] = $jk;

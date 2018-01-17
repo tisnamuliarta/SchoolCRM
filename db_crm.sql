@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 11, 2018 at 12:24 AM
+-- Generation Time: Jan 17, 2018 at 10:51 AM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.7
 
@@ -101,7 +101,8 @@ INSERT INTO `tb_detail_siswa` (`id`, `id_siswa`, `id_kelas`, `id_tahun_ajaran`) 
 (15, 7, 6, 6),
 (16, 8, 6, 6),
 (17, 11, 6, 6),
-(18, 13, 6, 6);
+(18, 13, 6, 6),
+(19, 20, 6, 9);
 
 -- --------------------------------------------------------
 
@@ -336,6 +337,7 @@ CREATE TABLE `tb_pendaftaran` (
   `cara_bayar` varchar(200) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'unpaid',
   `foto` varchar(200) DEFAULT NULL,
+  `kk` varchar(200) DEFAULT NULL,
   `keterangan` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -343,16 +345,16 @@ CREATE TABLE `tb_pendaftaran` (
 -- Dumping data for table `tb_pendaftaran`
 --
 
-INSERT INTO `tb_pendaftaran` (`id`, `id_siswa`, `id_ortu`, `id_tahun_ajaran`, `tgl_daftar`, `jumlah_bayar`, `cara_bayar`, `status`, `foto`, `keterangan`) VALUES
-(1, 4, 58, 6, '2017-12-21 10:53:11', 100000, 'transfer', 'paid', '51da8c3b9fd197afb41fc909af33b944.png', NULL),
-(2, 5, 59, 6, '2017-12-21 11:04:31', 100000, 'tunai', 'paid', '47460723b0a47d88ba2979e088a5f95d.png', NULL),
-(3, 6, 59, 6, '2017-12-24 02:59:21', 90000, 'transfer', 'paid', '06ec7291e7c5ae6cb940fef00b42cb76.png', NULL),
-(4, 7, 58, 6, '2017-12-24 03:00:40', 90000, 'tunai', 'paid', '6bee1034b0763cc19d1384313c4b903b.png', NULL),
-(5, 8, 58, 6, '2017-12-24 03:13:58', 90000, 'transfer', 'paid', 'dfd2e228ca51dabf574d6912a9bef315.jpg', NULL),
-(8, 11, 58, 6, '2017-12-25 01:43:55', 90000, 'transfer', 'paid', '56a8da1d3bcb2e9b334a778be5b1d781.png', NULL),
-(10, 13, 58, 6, '2017-12-31 02:32:36', 90000, 'transfer', 'paid', '0552fd25d5b2312eb092cca17d9e868a.jpg', NULL),
-(11, 14, 58, 6, '2017-12-31 02:35:46', 90000, 'transfer', 'unpaid', 'ced5008753cb50b6bb424556dcc8f707.jpg', NULL),
-(12, 15, 58, 6, '2018-01-08 22:08:16', 99000, 'transfer', 'unpaid', NULL, NULL);
+INSERT INTO `tb_pendaftaran` (`id`, `id_siswa`, `id_ortu`, `id_tahun_ajaran`, `tgl_daftar`, `jumlah_bayar`, `cara_bayar`, `status`, `foto`, `kk`, `keterangan`) VALUES
+(1, 4, 58, 6, '2017-12-21 10:53:11', 100000, 'transfer', 'paid', '51da8c3b9fd197afb41fc909af33b944.png', NULL, NULL),
+(2, 5, 59, 6, '2017-12-21 11:04:31', 100000, 'tunai', 'paid', '47460723b0a47d88ba2979e088a5f95d.png', NULL, NULL),
+(3, 6, 59, 6, '2017-12-24 02:59:21', 90000, 'transfer', 'paid', '06ec7291e7c5ae6cb940fef00b42cb76.png', NULL, NULL),
+(4, 7, 58, 6, '2017-12-24 03:00:40', 90000, 'tunai', 'paid', '6bee1034b0763cc19d1384313c4b903b.png', NULL, NULL),
+(5, 8, 58, 6, '2017-12-24 03:13:58', 90000, 'transfer', 'paid', 'dfd2e228ca51dabf574d6912a9bef315.jpg', NULL, NULL),
+(8, 11, 58, 6, '2017-12-25 01:43:55', 90000, 'transfer', 'paid', '56a8da1d3bcb2e9b334a778be5b1d781.png', NULL, NULL),
+(10, 13, 58, 6, '2017-12-31 02:32:36', 90000, 'transfer', 'paid', '0552fd25d5b2312eb092cca17d9e868a.jpg', NULL, NULL),
+(13, 18, 58, 6, '2018-01-16 11:14:11', 99000, 'transfer', 'unpaid', NULL, 'fa2ddc442776bf441c4b426255605df4.png', NULL),
+(15, 20, 58, 9, '2018-01-17 10:45:49', 125000, 'transfer', 'paid', 'ac018c944201804922b7d8532626569c.png', 'e8c1c9df03dd0b3a2e206e18b0c9df3f.png', NULL);
 
 -- --------------------------------------------------------
 
@@ -385,7 +387,11 @@ INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `id_kelas`, `id_tahun_ajaran`
 (77, '1010101', '0001', 6, 7, 'A', 'B', 'A', 'B', '2018-01-01'),
 (78, '1010101', '0001', 6, 7, 'A', 'B', 'B', 'B', '2018-01-02'),
 (79, '1010101', '0001', 6, 7, 'A', 'B', 'A', 'C', '2018-01-03'),
-(80, '1010101', '0001', 6, 7, 'A', 'B', 'B', 'B', '2018-01-04');
+(80, '1010101', '0001', 6, 7, 'A', 'B', 'B', 'B', '2018-01-04'),
+(81, '1010101', '0001', 6, 7, 'B', 'B', 'A', 'B', '2017-11-06'),
+(82, '1010101', '0001', 6, 7, 'B', 'B', 'B', 'C', '2017-11-13'),
+(83, '1010101', '0001', 6, 7, 'B', 'A', 'B', 'B', '2017-11-20'),
+(84, '1010101', '0001', 6, 7, 'A', 'B', 'A', 'B', '2017-11-27');
 
 -- --------------------------------------------------------
 
@@ -461,8 +467,8 @@ INSERT INTO `tb_siswa` (`nis`, `id`, `id_ortu`, `nama`, `alamat`, `tgl_lahir`, `
 ('0005', 8, 58, 'Astuti', 'DPS', '2017-12-03', 2, 'active'),
 ('0006', 11, 58, 'Azis', 'Denpasar', '2017-12-04', 1, 'active'),
 ('0007', 13, 58, 'anu', 'dps', '2017-12-27', 2, 'active'),
-(NULL, 14, 58, 'Nana', 'DPS', '2017-12-03', 2, 'non-active'),
-(NULL, 15, 58, 'wwe', 'wew', '2014-05-19', 1, 'non-active');
+(NULL, 18, 58, 'asasawq', 'asasa', '2018-01-01', 1, 'non-active'),
+('0008', 20, 58, 'wewewwew', 'wewewewe', '2017-12-31', 1, 'active');
 
 -- --------------------------------------------------------
 
@@ -508,7 +514,7 @@ CREATE TABLE `tb_tentang` (
 --
 
 INSERT INTO `tb_tentang` (`id`, `content`) VALUES
-(3, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\r\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\r\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\r\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\r\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\r\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+(4, '<p>Jalan Jaya Giri XXIV A, Denpasar, Bali 081238123456</p><p>Jam Operasional</p><p>Senin-Jumat : 08:00-12:00 WITA<br></p>');
 
 -- --------------------------------------------------------
 
@@ -730,7 +736,7 @@ ALTER TABLE `tb_detail_raport`
 -- AUTO_INCREMENT for table `tb_detail_siswa`
 --
 ALTER TABLE `tb_detail_siswa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `tb_diskon`
 --
@@ -775,12 +781,12 @@ ALTER TABLE `tb_pekerjaan`
 -- AUTO_INCREMENT for table `tb_pendaftaran`
 --
 ALTER TABLE `tb_pendaftaran`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `tb_perkembangan`
 --
 ALTER TABLE `tb_perkembangan`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 --
 -- AUTO_INCREMENT for table `tb_raport`
 --
@@ -795,7 +801,7 @@ ALTER TABLE `tb_riwayat_kelas`
 -- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `tb_tahun_ajaran`
 --
@@ -805,7 +811,7 @@ ALTER TABLE `tb_tahun_ajaran`
 -- AUTO_INCREMENT for table `tb_tentang`
 --
 ALTER TABLE `tb_tentang`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tb_user`
 --

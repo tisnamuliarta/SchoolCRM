@@ -628,3 +628,66 @@ function getKonfirmasiPembayaranDetails($connect,$id_pendaftaran) {
 
 	echo $output;
 }
+
+function getDataKK($connect,$id_pendaftaran) {
+	$qp = "SELECT tb_pendaftaran.*, tb_ortu.nama_ayah,tb_ortu.nama_ibu FROM tb_pendaftaran LEFT JOIN tb_ortu on tb_ortu.id = tb_pendaftaran.id_ortu WHERE tb_pendaftaran.id= :id ";
+	$dbsg = $connect->prepare($qp);
+	$dbsg->execute(array(
+		':id' => $id_pendaftaran
+	));
+	$galeriResult = $dbsg->fetchAll();
+
+	$output = '
+	<div class="table-responsive">
+		<table class="table table-boredered  table-striped">
+	';
+	foreach($galeriResult as $row)
+	{
+		$status = '';
+		$jenis_kelamin = '';
+		$output .= '
+		<tr>
+			<td>Nama Ayah</td>
+			<td>: '.$row["nama_ayah"].'</td>
+		</tr>
+		<tr>
+			<td>Nama Ibu</td>
+			<td>: '.$row["nama_ibu"].'</td>
+		</tr>
+		<tr>
+			<td>Tanggal Daftar</td>
+			<td>: '.$row["tgl_daftar"].'</td>
+		</tr>
+		<tr>
+			<td>Jumlah Bayar</td>
+			<td>: '.$row["jumlah_bayar"].'</td>
+		</tr>
+		<tr>
+			<td>Metode Pembayaran</td>
+			<td>: '.$row["cara_bayar"].'</td>
+		</tr>
+		';
+	}
+	$output .= '
+		</table>
+	</div>
+	';
+	$output .='
+		<div class="row">
+	';
+	foreach ($galeriResult as $row) {
+		$output .= '
+			<div class="col-sm-12">
+			    <div class="image img">
+			      <img class="img img-responsive" src="../uploads/kk/'.$row['kk'].'" alt="First slide">
+			    </div>
+			  </div>
+		';
+	}
+
+	$output .= '
+		</div>
+	';
+
+	echo $output;
+}

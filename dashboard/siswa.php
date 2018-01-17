@@ -24,6 +24,7 @@
                 <tr>
                   <th>No</th>
                   <th>Nama</th>
+                  <th>Cara Bayar</th>
                   <th>Nama Ayah</th>
                   <th>Nama Ibu</th>
                   <th>Jenis Kelamin</th>
@@ -219,13 +220,13 @@
           {
             extend: 'print',
             exportOptions: {
-              columns: [ 1,2,3,4,5,6 ]
+              columns: [ 1,2,3,4,5,6,7 ]
             }
           },
           {
             extend: 'pdf',
             exportOptions: {
-              columns: [ 1,2,3,4,5,6 ]
+              columns: [ 1,2,3,4,5,6,7 ]
             }
           }
         ],
@@ -240,7 +241,7 @@
         "columnDefs":[
           {
             "width":"8%",
-            "targets":[0,7,8],
+            "targets":[8,9],
             "orderable":false,
           },
         ],
@@ -376,6 +377,20 @@
     $(document).on('click','.view-data-konfirmasi',function(){
       var pendaftaran_id = $(this).attr("id");
       var btn_action = 'data_konfirmasi_pendaftaran';
+      $.ajax({
+        url: '../controller/helper.php',
+        method: 'POST',
+        data: {pendaftaran_id:pendaftaran_id,btn_action:btn_action},
+        success: function(data) {
+          $('#userDetailModal').modal('show');
+          $('#userDetails').html(data)
+        }
+      });
+    });
+
+    $(document).on('click','.view-data-kk',function(){
+      var pendaftaran_id = $(this).attr("id");
+      var btn_action = 'data_kk';
       $.ajax({
         url: '../controller/helper.php',
         method: 'POST',

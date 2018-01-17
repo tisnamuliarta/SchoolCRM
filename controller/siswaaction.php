@@ -11,6 +11,16 @@ if (isset($_POST['btn_action'])) {
 	 * ==========================================
 	 */
 	if ($_POST['btn_action'] == 'Add') {
+		$newName = '';
+		$fileName = explode(".", $_FILES['kk']['name']);
+		$allowedExt = array("jpg","jpeg","png");
+		if (in_array($fileName[1], $allowedExt)) {
+			$newName = md5(rand()).'.'.$fileName[1];
+			$sourcePath = $_FILES['kk']['tmp_name'];
+			$destination = '../uploads/kk/'.$newName;
+			move_uploaded_file($sourcePath,$destination);
+		}
+
 		// $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$query = "INSERT INTO tb_siswa (nama,id_ortu,tgl_lahir,alamat,jenis_kelamin) 
 			VALUES (:nama,:id_ortu,:tgl_lahir,:alamat,:jenis_kelamin) ";
@@ -24,15 +34,16 @@ if (isset($_POST['btn_action'])) {
 		));
 		$idSiswa = $connect->lastInsertId();
 
-		$queryPendaftaran = "INSERT INTO tb_pendaftaran (id_siswa,id_tahun_ajaran,id_ortu,jumlah_bayar,cara_bayar)
-			VALUES (:id_siswa,:id_tahun_ajaran,:id_ortu,:jumlah_bayar,:cara_bayar)";
+		$queryPendaftaran = "INSERT INTO tb_pendaftaran (id_siswa,id_tahun_ajaran,id_ortu,jumlah_bayar,cara_bayar,kk)
+			VALUES (:id_siswa,:id_tahun_ajaran,:id_ortu,:jumlah_bayar,:cara_bayar,:kk)";
 		$statementPendaftaran = $connect->prepare($queryPendaftaran);
 		$statementPendaftaran->execute(array(
 			':id_siswa'			=> $idSiswa,
 			':id_tahun_ajaran'	=> $_POST['tahun_ajaran'],
 			':id_ortu'			=> $_SESSION['id'],
 			':jumlah_bayar'		=> $_POST['biayaPendaftaran'],
-			':cara_bayar'		=> $_POST['metodePembayaran']
+			':cara_bayar'		=> $_POST['metodePembayaran'],
+			':kk'				=> $newName
 		));
 
 		$result = $statement->fetchAll();
@@ -46,7 +57,7 @@ if (isset($_POST['btn_action'])) {
 	 * ====================================
 	 */
 	if ($_POST['btn_action'] == 'fetch_single') {
-		$query = " SELECT tb_siswa.*,DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir, tb_pendaftaran.jumlah_bayar,tb_pendaftaran.cara_bayar,tb_pendaftaran.id_tahun_ajaran,tb_pendaftaran.status as status_pembayaran
+		$query = " SELECT tb_siswa.*,DATE_FORMAT(tb_siswa.tgl_lahir,'%d %M %Y') as tanggal_lahir, tb_pendaftaran.jumlah_bayar,tb_pendaftaran.cara_bayar,tb_pendaftaran.id_tahun_ajaran,tb_pendaftaran.status as status_pembayaran, tb_pendaftaran.id as id_pendaftaran
 			from tb_siswa
 			LEFT JOIN tb_pendaftaran on tb_pendaftaran.id_siswa = tb_siswa.id WHERE 
 			tb_siswa.id = :id ";
@@ -61,6 +72,7 @@ if (isset($_POST['btn_action'])) {
 			$output['id'] = $row['id'];
 			$output['nama'] = $row['nama'];
 			$output['nis'] = $row['nis'];
+			$output['id_pendaftaran'] = $row['id_pendaftaran'];
 			$output['id_tahun_ajaran'] = $row['id_tahun_ajaran'];
 			$output['jumlah_bayar'] = $row['jumlah_bayar'];
 			$output['tgl_lahir'] = $row['tgl_lahir'];
@@ -101,6 +113,42 @@ if (isset($_POST['btn_action'])) {
 	 * ==================================================
 	 * */
 	if ($_POST['btn_action'] == 'Edit') {
+		$galeriStatement = $connect->prepare("SELECT * from tb_pendaftaran where id = :id_pendaftaran");
+		$galeriStatement->execute(array(
+			':id_pendaftaran' => $_POST['id_pendaftaran_siswa']
+		));
+		$resultFoto = $galeriStatement->fetchAll();
+		foreach ($galeriStatement as $row) {
+			$file = "../uploads/kk/".$row["kk"];
+			if (file_exists($file)) {
+				unlink($file);
+				$delete = true;	
+			}
+		}
+
+		$newName = '';
+		$fileName = explode(".", $_FILES['kk']['name']);
+		$allowedExt = array("jpg","jpeg","png");
+		if (in_array($fileName[1], $allowedExt)) {
+			$newName = md5(rand()).'.'.$fileName[1];
+			$sourcePath = $_FILES['kk']['tmp_name'];
+			$destination = '../uploads/kk/'.$newName;
+			move_uploaded_file($sourcePath,$destination);
+		}
+
+		$queryPendaftaran = "
+			UPDATE tb_pendaftaran
+			set kk = :kk
+			WHERE id = :id
+		";
+		$statementPendaftaran = $connect->prepare($queryPendaftaran);
+		$statementPendaftaran->execute(
+			array(
+				':kk' 		=> $newName,
+				':id'			=> $_POST['id_pendaftaran_siswa']
+			)
+		);
+
 		$query = "
 			UPDATE tb_siswa
 			set nama = :nama,

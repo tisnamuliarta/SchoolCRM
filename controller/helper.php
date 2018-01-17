@@ -74,4 +74,7 @@ if (isset($_POST['btn_action'])) {
 	if ($_POST['btn_action'] == 'data_konfirmasi_pendaftaran') {
 		getKonfirmasiPembayaranDetails($connect,$_POST['pendaftaran_id']);
 	}
+	if ($_POST['btn_action'] == 'data_kk') {
+		getDataKK($connect,$_POST['pendaftaran_id']);
+	}
 }

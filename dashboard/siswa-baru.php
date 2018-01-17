@@ -87,6 +87,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
+                <small class="text-info">Perhatian! Nama anak yang anda daftarkan harus anak kandung yang dibuktikan dengan kartu keluarga.</small>
                 <label>Nama</label>                
                 <input type="text" name="nama" id="nama" class="form-control" required />
               </div>
@@ -155,7 +156,7 @@
           <div class="row">
             <div class="col-md-6">
               <label>Upload Kartu Keluarga</label>
-              <input type="file" name="kk" id="kk" class="form-control">
+              <input type="file" name="kk" id="kk" required class="form-control">
             </div>
           </div>
         </div>
@@ -164,6 +165,7 @@
           <input type="hidden" name="btn_action" id="btn_action" />
           <input type="hidden" name="diskon" id="diskon">
           <input type="hidden" name="jumlahAnak" id="jumlahAnak">
+          <input type="hidden" name="id_pendaftaran_siswa" id="id_pendaftaran_siswa">
           <input type="hidden" name="tgl_daftar" id="tgl_daftar" value="<?php echo date('Y-m-d') ?>">
           <input type="submit" name="action" id="action" class="btn btn-info" value="Add" />
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -389,14 +391,16 @@
       $.ajax({
         url: "../controller/siswaaction.php",
         method: "POST",
-        data: formData,
+        data: new FormData(this),
+        contentType: false,
+        processData: false,
         success: function(data){
           $('#siswaForm')[0].reset();
           $('#siswaBaruModal').modal('hide');
           $('#alert_action').fadeIn().html('<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+data+'</div>');
           $('#action').attr('disabled', false);
           userTable.ajax.reload();
-          window.location.reload(true);
+          // window.location.reload(true);
         }
       })
     });
@@ -465,6 +469,7 @@
           $('#siswaBaruModal').modal('show');
           $('#nama').val(data.nama);
           $('#tgl_lahir').val(data.tgl_lahir);
+          $('#id_pendaftaran_siswa').val(data.id_pendaftaran);
           $('#alamat').val(data.alamat);
           $('#tahun_ajaran').val(data.id_tahun_ajaran);
           $('#biayaPendaftaran').val(data.jumlah_bayar);
