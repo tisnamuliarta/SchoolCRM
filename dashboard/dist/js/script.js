@@ -4,7 +4,7 @@ $(function() {
     $('.getDatePicker').datepicker({
       autoclose: true,
       format: 'yyyy-mm-dd',
-      endDate: '0d',
+      endDate: '0d'
     });
     $('.getDatePickerWOvalidate').datepicker({
       autoclose: true,

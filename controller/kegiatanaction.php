@@ -72,6 +72,24 @@ if (isset($_POST['btn_action'])) {
 		echo json_encode($output);
 	}
 
+    if ($_POST['btn_action'] == 'get_list_siswa') {
+
+        $query = " SELECT tb_kegiatan.*
+		from tb_kegiatan 
+		WHERE tb_kegiatan.id = :id ";
+        $statement = $connect->prepare($query);
+        $statement->execute([
+            ':id' => $_POST['id']
+        ]);
+        $result = $statement->fetchAll();
+        // $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
+        foreach ($result as $row) {
+            $output['id'] = $row['id'];
+            $output['id_kelas'] = $row['id_kelas'];
+        }
+        echo json_encode($output);
+    }
+
 	/**
 	 * =================================================
 	 * Update data

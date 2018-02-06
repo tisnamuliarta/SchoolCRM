@@ -35,6 +35,9 @@ if (isset($_POST['datasiswa']))
 if (isset($_POST['kegiatan']))
 	getKegiatanDatatable($connect);
 
+if (isset($_POST['listSiswaByKegiatan']))
+    getSiswaByKegiatanDatatable($connect,$_POST['id_kegiatan'], $_POST['id_kelas']);
+
 if (isset($_POST['pengaturanakun']))
 	getPengaturanAkunDatatable($connect);
 
@@ -456,7 +459,9 @@ function getKegiatanDatatable($connect) {
 		$sub_array[] = $row['deskripsi'];
 		$sub_array[] = $row['kelas'];
 		$sub_array[] = $row['tgl_kegiatan'];
-		$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-kegiatan">Ubah</button>';
+		$sub_array[] = '
+		<button type="button" data-kelas="'.$row["id_kelas"].'" name="add_perkembangan" id="'.$row["id"].'" class="btn btn-info btn-xs add_perkembangan">Tambah Perkembangan</button>
+		<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-kegiatan">Ubah</button>';
 		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-kegiatan">Hapus</button>';
 		$data[] = $sub_array;
 	}
@@ -469,6 +474,59 @@ function getKegiatanDatatable($connect) {
 	];
 
 	echo json_encode($output);
+}
+
+function getSiswaByKegiatanDatatable($connect, $id_kegiatan, $id_kelas) {
+    // $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $query = '';
+    $query .= " 
+		SELECT tb_siswa.*, tb_kegiatan.id as id_kegiatan, tb_kegiatan.id_kelas as id_kelas
+		from tb_siswa
+		LEFT JOIN tb_detail_siswa on tb_siswa.id = tb_detail_siswa.id_siswa
+		LEFT JOIN tb_kegiatan ON tb_detail_siswa.id_kelas = tb_kegiatan.id_kelas
+		WHERE tb_kegiatan.id = $id_kegiatan AND tb_siswa.nis IS NOT NULL AND tb_kegiatan.id_kelas= $id_kelas
+	";
+    if (isset($_POST["search"]["value"])) {
+        $query .= 'AND CONCAT(tb_siswa.nama) LIKE "%'.$_POST["search"]["value"].'%" ';
+    }
+    if (isset($_POST["order"])) {
+        $query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+    }else {
+        $query .= 'ORDER BY tb_siswa.nis ASC ';
+    }
+    if ($_POST["length"] != -1) {
+        $query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+    }
+
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $data = [];
+    $filtered_rows = $statement->rowCount();
+    $start = $_REQUEST['start'];
+    $idx = 0;
+    foreach ($result as $row) {
+        $idx++;
+        $sub_array = [];
+        $sub_array[] = $idx;
+        $sub_array[] = $row['nis'];
+        $sub_array[] = $row['nama'];
+        $sub_array[] = '
+		    <button type="button" data-kegiatan="'.$row["id_kegiatan"].'" data-nis="'.$row["nis"].'" data-name="'.$row["nama"].'" data-toggle="modal" data-target="#perkembanganModal" name="add_nilai_perkembangan" id="'.$row["nis"].'" class="btn btn-info btn-xs add_nilai_perkembangan">Tambah</button> 
+		    <button type="button" name="view_nilai_perkembangan" data-nis="'.$row["nis"].'" data-kegiatan="'.$row["id_kegiatan"].'"  id="'.$row["nis"].'" data-toggle="modal" data-target="#guruDetailModal" class="btn btn-warning btn-xs view_nilai_perkembangan">Lihat Nilai</button>
+		';
+        $sub_array[] = '<button type="button" name="update_nilai_perkembangan" data-kelas="'.$row["id_kelas"].'" data-kegiatan="'.$row["id_kegiatan"].'" id="'.$row["nis"].'" class="btn btn-success btn-xs update_nilai_perkembangan">Ubah</button>';
+        $data[] = $sub_array;
+    }
+
+    $output = [
+        "draw" => intval($_POST["draw"]),
+        "recordsTotal" => $filtered_rows,
+        "recordsFiltered"  => get_total_all_siswa_by_kelas_records($connect,$id_kelas),
+        "data" => $data
+    ];
+
+    echo json_encode($output);
 }
 
 function getPengaturanAkunDatatable($connect) {
@@ -1173,6 +1231,15 @@ function get_total_all_siswa_records($connect,$table,$id_ortu){
 	$statement = $connect->prepare("SELECT * FROM $table WHERE id_ortu = $id_ortu");
 	$statement->execute();
 	return $statement->rowCount();
+}
+function get_total_all_siswa_by_kelas_records($connect,$id_kelas){
+    $statement = $connect->prepare("
+      SELECT * FROM tb_siswa
+      LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa
+      WHERE tb_detail_siswa.id_kelas = $id_kelas
+      ");
+    $statement->execute();
+    return $statement->rowCount();
 }
 function get_total_all_notNull_siswa_records($connect,$table){
 	$statement = $connect->prepare("SELECT * FROM $table WHERE nis IS NOT NULL");

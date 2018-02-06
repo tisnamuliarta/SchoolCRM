@@ -490,6 +490,43 @@ function getUserDetail($connect,$user_id) {
 	echo $output;
 }
 
+function getDetailNilaiSiswa($connect,$nis,$id_kegiatan ) {
+    $query = "SELECT * FROM tb_perkembangan WHERE nis = $nis AND id_kegiatan = $id_kegiatan";
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    $result = $statement->fetchAll();
+    $output = '
+	<div class="table-responsive">
+		<table class="table table-boredered  table-striped">
+	';
+    foreach($result as $row)
+    {
+        $output .= '
+		<tr>
+			<td>pembiasaan</td>
+			<td>'.$row["pembiasaan"].'</td>
+		</tr>
+		<tr>
+			<td>bahasa</td>
+			<td>'.$row["bahasa"].'</td>
+		</tr>
+		<tr>
+			<td>daya fikir</td>
+			<td>'.$row["daya_fikir"].'</td>
+		</tr>
+		<tr>
+			<td>motorik</td>
+			<td>'.$row["motorik"].'</td>
+		</tr>
+		';
+    }
+    $output .= '
+		</table>
+	</div>
+	';
+    echo $output;
+}
+
 /**
  * ========================
  * Display details

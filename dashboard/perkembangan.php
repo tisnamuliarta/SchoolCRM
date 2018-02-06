@@ -388,7 +388,7 @@
       }else {
         return false;
       }
-    })
+    });
 
     ////////////////////////
     // End guru datatable //

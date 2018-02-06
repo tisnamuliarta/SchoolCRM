@@ -7,6 +7,9 @@
   }
 }
 
+.isHide {
+    display: hidden;
+}
 .jumbotron {
     background-image: url("../imgs/bg1.jpg");
     background-color: #ffffff;

@@ -71,6 +71,9 @@ if (isset($_POST['btn_action'])) {
 	if ($_POST['btn_action'] == 'guruDetails') {
 		getGuruDetail($connect,$_POST['guru_nip']);
 	}
+    if ($_POST['btn_action'] == 'nilaiPerkembanganSiswa') {
+        getDetailNilaiSiswa($connect,$_POST['nis'],$_POST['kegiatan']);
+    }
 	if ($_POST['btn_action'] == 'data_konfirmasi_pendaftaran') {
 		getKonfirmasiPembayaranDetails($connect,$_POST['pendaftaran_id']);
 	}

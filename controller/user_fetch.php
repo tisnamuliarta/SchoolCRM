@@ -53,7 +53,7 @@ foreach ($result as $row) {
 	$sub_array[] = $row['tlpn'];
 	// $sub_array[] = $row['alamat'];
 	$sub_array[] = $status;
-	$sub_array[] = '<button type="button" name="view" id="'.$row["id"].'" class="btn btn-info btn-xs view-user">View</button>';
+	$sub_array[] = '<button type="button" name="view" id="'.$row["id"].'"  class="btn btn-info btn-xs view-user">View</button>';
 	$sub_array[] = '<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-user">Update</button>';
 	$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-user" data-status="'.$row["status"].'">Delete</button>';
 	$data[] = $sub_array;
