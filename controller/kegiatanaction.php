@@ -86,6 +86,7 @@ if (isset($_POST['btn_action'])) {
         foreach ($result as $row) {
             $output['id'] = $row['id'];
             $output['id_kelas'] = $row['id_kelas'];
+            $output['tgl_kegiatan'] = $_POST['tgl_kegiatan'];
         }
         echo json_encode($output);
     }

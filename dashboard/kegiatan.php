@@ -451,12 +451,13 @@
   // ============= Display list siswa
     $(document).on('click','.add_perkembangan',function(){
       var id = $(this).attr("id");
+      var tgl_kegiatan = $(this).data("tgl");
       $('.modal-list-siswa-title').html("<i class='fa fa-plus'></i> List Siswa");
       var btn_action = 'get_list_siswa';
       $.ajax({
           url: '../controller/kegiatanaction.php',
           method: 'POST',
-          data: { id:id, btn_action:btn_action },
+          data: { id:id, btn_action:btn_action,tgl_kegiatan:tgl_kegiatan },
           dataType: 'json',
           success: function(data){
               $('#listSiswaTable').DataTable().destroy();
@@ -468,7 +469,7 @@
                   "ajax":{
                       url: "../controller/getData.php",
                       type: "POST",
-                      data:{listSiswaByKegiatan: "ta", id_kegiatan: data.id, id_kelas: data.id_kelas}
+                      data:{listSiswaByKegiatan: "ta", id_kegiatan: data.id, id_kelas: data.id_kelas, tgl_kegiatan: data.tgl_kegiatan}
                   },
                   "columnDefs":[
                       {"targets":0,"width":"8%"},
@@ -549,6 +550,7 @@
       var nis = button.data('nis');
       var name = button.data('name');
       var kegiatan = button.data('kegiatan');
+      var tglkegiatan = button.data('tglkegiatan');
       var now = new Date();
 
       var modal = $(this);
@@ -556,8 +558,8 @@
       modal.find('.modal-user-title').html("<i class='fa fa-plus'></i> Tambah Nilai Perkembangan");
       $('input#nis').val(nis);
       $('input#nama').val(name);
-      $('input#id_kegiatan').val(kegiatan);
-      $('input#tgl_perkembangan').val(now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate());
+      $('input#id_kegiatan_siswa').val(kegiatan);
+      $('input#tgl_perkembangan').val(tglkegiatan);
       modal.find('.modal-footer input#action_nilai_perkembangan').val('Tambah');
       modal.find('.modal-footer input#btn_action_nilai_perkembangan').val('Add');
   });

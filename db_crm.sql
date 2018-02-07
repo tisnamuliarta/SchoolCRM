@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 07, 2018 at 12:01 AM
+-- Generation Time: Feb 07, 2018 at 05:29 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.7
 
@@ -382,8 +382,8 @@ CREATE TABLE `tb_perkembangan` (
 --
 
 INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `id_kelas`, `id_tahun_ajaran`, `pembiasaan`, `bahasa`, `daya_fikir`, `motorik`, `tgl`, `id_kegiatan`) VALUES
-(3, '1010101', '0001', 6, 7, 'D', 'B', 'D', 'B', '2018-02-05', 28),
-(4, '1010101', '0002', 6, 6, 'B', 'B', 'B', 'B', '2018-02-06', 28);
+(8, '1010101', '0001', 6, 7, 'B', 'A', 'B', 'A', '2017-12-04', 28),
+(9, '1010101', '0001', 6, 7, 'A', 'B', 'B', 'A', '2017-12-05', 29);
 
 -- --------------------------------------------------------
 
@@ -778,7 +778,7 @@ ALTER TABLE `tb_pendaftaran`
 -- AUTO_INCREMENT for table `tb_perkembangan`
 --
 ALTER TABLE `tb_perkembangan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tb_raport`
 --

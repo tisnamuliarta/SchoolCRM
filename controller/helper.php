@@ -80,4 +80,21 @@ if (isset($_POST['btn_action'])) {
 	if ($_POST['btn_action'] == 'data_kk') {
 		getDataKK($connect,$_POST['pendaftaran_id']);
 	}
+    if ($_POST['btn_action'] == 'data_kegiatan') {
+//        getDataKegiatan($connect,$_POST['id_kelas']);
+        $id_kelas =  $_POST['id_kelas'];
+        $query = "SELECT *  FROM tb_kegiatan
+		WHERE tb_kegiatan.id_kelas = :id_kelas
+		ORDER BY tb_kegiatan.nama DESC ";
+        $dbs = $connect->prepare($query);
+        $dbs->execute(array(
+            ':id_kelas' => $id_kelas
+        ));
+        $result = $dbs->fetchAll();
+        $output = '';
+        foreach ($result as $row) {
+            $output .= '<option value="'.$row['id'].'" >'.$row['nama'].'</option>' ;
+        }
+        echo $output;
+    }
 }

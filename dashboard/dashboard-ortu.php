@@ -5,6 +5,7 @@
     <div class="row">
       <div class="col-md-2">
         <select name="nama-siswa" id="nama-siswa" class="form-control">
+            <option value="">Pilih siswa</option>
           <?php echo getListSiswaByOrtu($connect,$_SESSION['id']) ?>
         </select>
       </div>
@@ -25,6 +26,11 @@
           ?> 
         </select>
       </div>
+        <div class="col-md-2">
+            <select name="nama-kegiatan" id="nama_kegiatan" class="form-control">
+                <option value="">Pilih Kegiatan</option>
+            </select>
+        </div>
       <div class="col-md-2 ">
         <button type="button" name="tampilkan_siswa" id="tampilkan_siswa" class="btn form-control btn-info btn-xs">Tampilkan</button><br><br>
       </div>
@@ -41,10 +47,10 @@
       <div class="box-body">
         <div class="row">
 
-          <div class="col-md-6">
+          <div class="col-md-8 col-md-offset-2">
             <div class="box box-success">
               <div class="box-header with-border">
-                <h3 class="box-title">Motorik</h3>
+                <h3 class="box-title">Nilai Perkembangan</h3>
 
                 <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -59,62 +65,6 @@
               </div>
             </div>
           </div>
-          
-          <div class="col-md-6">
-            <div class="box box-info">
-              <div class="box-header with-border">
-                <h3 class="box-title">Pembiasaan</h3>
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
-              </div>
-              <div class="box-body">
-                <div class="chart">
-                  <canvas id="barChartpembiasaan" style="height:230px"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="box box-danger">
-              <div class="box-header with-border">
-                <h3 class="box-title">Daya Fikir</h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
-              </div>
-              <div class="box-body">
-                <div class="chart">
-                  <canvas id="barChartdaya_fikir" style="height:230px"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="box box-primary">
-              <div class="box-header with-border">
-                <h3 class="box-title">Bahasa</h3>
-
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
-              </div>
-              <div class="box-body">
-                <div class="chart">
-                  <canvas id="barChartbahasa" style="height:230px"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
 
         </div>
       </div>
@@ -125,33 +75,55 @@
 
 <?php require 'partials/footer.php'; ?>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $('#nama-siswa').change(function(){
+            var id_kelas = $('#nama-siswa').find(':selected').data('kelas');
+            var btn_action = 'data_kegiatan';
+            $.ajax({
+                url:"../controller/helper.php",
+                method:"POST",
+                data:{id_kelas:id_kelas, btn_action:btn_action},
+                success:function(data)
+                {
+//                    console.log(data)
+                    $('#nama_kegiatan').html(data);
+
+                }
+            });
+        });
+    });
+
+
   $('#tampilkan_siswa').click(function(){
     var nis = $('#nama-siswa').val();
     var tahun_ajaran = $('#tahun_ajaran').val();
     var month = $('#month').val();
+    var nama_kegiatan = $('#nama_kegiatan').val();
     $('#perkembanganTable').DataTable().destroy();
-    fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'motorik');
-    fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'pembiasaan');
-    fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'bahasa');
-    fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'daya_fikir');
+    fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'motorik',nama_kegiatan);
+    // fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'pembiasaan',nama_kegiatan);
+    // fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'bahasa',nama_kegiatan);
+    // fetchDataPerkembanganSiswa('yes',nis,tahun_ajaran,month,'daya_fikir',nama_kegiatan);
   })
 
-  function fetchDataPerkembanganSiswa(isSearch,nis,idTahunAjaran,month,lesson) {
+  function fetchDataPerkembanganSiswa(isSearch,nis,idTahunAjaran,month,lesson,kegiatan ) {
     $.ajax({
       url: '../controller/ajax/getGrafikPerkembanganSiswa.php',
-      data: {chartType:lesson, isSearch:isSearch,nis:nis,idTahunAjaran:idTahunAjaran,month:month},
+      data: {chartType:lesson, isSearch:isSearch,nis:nis,idTahunAjaran:idTahunAjaran,month:month,kegiatan:kegiatan},
       method: 'GET',
       success: function(data){
-        var minggu = [];
+        var minggu;
         var nilai = [];
         var huruf = [];
+        var perkembangan = [];
         var toJSON = $.parseJSON(data);
 
         var arr = $.each(toJSON, function(k,v){
-          minggu.push(v.minggu);
+          minggu = v.minggu;
           nilai.push(v.nilai);
+          perkembangan.push(v.perkembangan);
           huruf.push(v.huruf);
-        })
+        });
 
         // console.log(toJSON)
 
@@ -159,7 +131,7 @@
         var barGraph = new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: minggu,
+            labels: perkembangan,
             datasets: [{
               label: 'Nilai ',
               data: nilai,
@@ -194,7 +166,7 @@
               xAxes:[{
                 scaleLabel: {
                     display: true,
-                    labelString: 'Minggu Ke'
+                    labelString: 'Minggu Ke ' + minggu
                 }
               }],
               yAxes: [{
@@ -203,7 +175,7 @@
                   },
                   scaleLabel: {
                       display: true,
-                      labelString: '1=>D, 2=>C, 3=>C, 4=>A '
+                      labelString: '1=D, 2=C, 3=C, 4=A '
                   }
               }]
             }

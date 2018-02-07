@@ -54,7 +54,7 @@ if (isset($_POST['btn_action_nilai_perkembangan'])) {
                     ':tgl'			=> $_POST['tgl_perkembangan'],
                     ':id_kelas'		=> $id_kelas,
                     ':id_tahun_ajaran'	=> $id_tahun_ajaran,
-                    ':id_kegiatan' 	    => $_POST['id_kegiatan'],
+                    ':id_kegiatan' 	    => $_POST['id_kegiatan_siswa'],
                 )
             );
             $result = $statement->fetchAll();

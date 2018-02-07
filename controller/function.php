@@ -7,7 +7,9 @@ function selectData($connect,$table){
 
 function getListSiswaByOrtu($connect,$id_ortu) {
 	$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$query = "SELECT * FROM tb_siswa WHERE id_ortu = :id_ortu ORDER BY nama  ASC";
+	$query = "SELECT tb_siswa.*, tb_detail_siswa.id_kelas FROM tb_siswa 
+      LEFT JOIN tb_detail_siswa ON tb_siswa.id = tb_detail_siswa.id_siswa 
+      WHERE tb_siswa.nis IS NOT NULL AND id_ortu = :id_ortu ORDER BY tb_siswa.nama  ASC";
 	$statement = $connect->prepare($query);
 	$statement->execute(array(
 		':id_ortu'	=> $id_ortu
@@ -15,9 +17,23 @@ function getListSiswaByOrtu($connect,$id_ortu) {
 	$result = $statement->fetchAll();
 	$output = '';
 	foreach ($result as $row) {
-		$output .= '<option value="'.$row['nis'].'" >'.$row['nama'].'</option>' ;
+		$output .= '<option data-kelas="'.$row['id_kelas'].'" value="'.$row['nis'].'" >'.$row['nama'].'</option>' ;
 	}
 	return $output;
+}
+function getListKegiatan($connect,$id_ortu) {
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $query = "SELECT * FROM tb_siswa WHERE id_ortu = :id_ortu ORDER BY nama  ASC";
+    $statement = $connect->prepare($query);
+    $statement->execute(array(
+        ':id_ortu'	=> $id_ortu
+    ));
+    $result = $statement->fetchAll();
+    $output = '';
+    foreach ($result as $row) {
+        $output .= '<option value="'.$row['nis'].'" >'.$row['nama'].'</option>' ;
+    }
+    return $output;
 }
 
 function getActivity($connect) {
@@ -233,6 +249,23 @@ function listAllTa($connect) {
 		$output .= '<option value="'.$row['id'].'" >'.$row['tahun_ajaran'].'</option>' ;
 	}
 	return $output;
+}
+function getDataKegiatan($connect, $id_kelas) {
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $query = "SELECT *  
+		FROM tb_kegiatan
+		WHERE tb_kegiatan.id_kelas = :id_kelas
+		ORDER BY tb_kegiatan.nama DESC ";
+    $dbs = $connect->prepare($query);
+    $dbs->execute(array(
+        ':id_kelas' => $id_kelas
+    ));
+    $result = $dbs->fetchAll();
+    $output = '';
+    foreach ($result as $row) {
+        $output .= '<option value="'.$row['id'].'" >'.$row['nama'].'</option>' ;
+    }
+    return $output;
 }
 
 /**

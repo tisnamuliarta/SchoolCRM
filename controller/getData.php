@@ -36,7 +36,7 @@ if (isset($_POST['kegiatan']))
 	getKegiatanDatatable($connect);
 
 if (isset($_POST['listSiswaByKegiatan']))
-    getSiswaByKegiatanDatatable($connect,$_POST['id_kegiatan'], $_POST['id_kelas']);
+    getSiswaByKegiatanDatatable($connect,$_POST['id_kegiatan'], $_POST['id_kelas'],$_POST['tgl_kegiatan']);
 
 if (isset($_POST['pengaturanakun']))
 	getPengaturanAkunDatatable($connect);
@@ -460,7 +460,7 @@ function getKegiatanDatatable($connect) {
 		$sub_array[] = $row['kelas'];
 		$sub_array[] = $row['tgl_kegiatan'];
 		$sub_array[] = '
-		<button type="button" data-kelas="'.$row["id_kelas"].'" name="add_perkembangan" id="'.$row["id"].'" class="btn btn-info btn-xs add_perkembangan">Tambah Perkembangan</button>
+		<button type="button" data-tgl="'.$row["tgl"].'" data-kelas="'.$row["id_kelas"].'" name="add_perkembangan" id="'.$row["id"].'" class="btn btn-info btn-xs add_perkembangan">Tambah Perkembangan</button>
 		<button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-xs update-kegiatan">Ubah</button>';
 		$sub_array[] = '<button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-xs delete-kegiatan">Hapus</button>';
 		$data[] = $sub_array;
@@ -476,7 +476,7 @@ function getKegiatanDatatable($connect) {
 	echo json_encode($output);
 }
 
-function getSiswaByKegiatanDatatable($connect, $id_kegiatan, $id_kelas) {
+function getSiswaByKegiatanDatatable($connect, $id_kegiatan, $id_kelas,$tgl_kegiatan) {
     // $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $query = '';
     $query .= " 
@@ -512,10 +512,10 @@ function getSiswaByKegiatanDatatable($connect, $id_kegiatan, $id_kelas) {
         $sub_array[] = $row['nis'];
         $sub_array[] = $row['nama'];
         $sub_array[] = '
-		    <button type="button" data-kegiatan="'.$row["id_kegiatan"].'" data-nis="'.$row["nis"].'" data-name="'.$row["nama"].'" data-toggle="modal" data-target="#perkembanganModal" name="add_nilai_perkembangan" id="'.$row["nis"].'" class="btn btn-info btn-xs add_nilai_perkembangan">Tambah</button> 
+		    <button type="button" data-kegiatan="'.$row["id_kegiatan"].'" data-nis="'.$row["nis"].'" data-name="'.$row["nama"].'" data-tglkegiatan="'.$tgl_kegiatan.'" data-toggle="modal" data-target="#perkembanganModal" name="add_nilai_perkembangan" id="'.$row["nis"].'" class="btn btn-info btn-xs add_nilai_perkembangan">Tambah</button> 
 		    <button type="button" name="view_nilai_perkembangan" data-nis="'.$row["nis"].'" data-kegiatan="'.$row["id_kegiatan"].'"  id="'.$row["nis"].'" data-toggle="modal" data-target="#guruDetailModal" class="btn btn-warning btn-xs view_nilai_perkembangan">Lihat Nilai</button>
 		';
-        $sub_array[] = '<button type="button" name="update_nilai_perkembangan" data-kelas="'.$row["id_kelas"].'" data-kegiatan="'.$row["id_kegiatan"].'" id="'.$row["nis"].'" class="btn btn-success btn-xs update_nilai_perkembangan">Ubah</button>';
+        $sub_array[] = '<button type="button" name="update_nilai_perkembangan" data-tglkegiatan="'.$tgl_kegiatan.'" data-kelas="'.$row["id_kelas"].'" data-kegiatan="'.$row["id_kegiatan"].'" id="'.$row["nis"].'" class="btn btn-success btn-xs update_nilai_perkembangan">Ubah</button>';
         $data[] = $sub_array;
     }
 
