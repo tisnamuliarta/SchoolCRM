@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 17, 2018 at 10:51 AM
+-- Generation Time: Feb 07, 2018 at 12:01 AM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.7
 
@@ -247,7 +247,8 @@ CREATE TABLE `tb_kegiatan` (
 
 INSERT INTO `tb_kegiatan` (`id`, `id_kelas`, `nip`, `nama`, `deskripsi`, `foto`, `tgl`) VALUES
 (28, 6, '1010101', 'We', 'www', '6d329f4d31adb511e9e00861eef84f2a.jpg', '2017-12-04'),
-(29, 6, '1010101', 'sasa', 'asas', '78458dd455466c851e1e28203cc9782f.jpg', '2017-12-05');
+(29, 6, '1010101', 'sasa', 'asas', '78458dd455466c851e1e28203cc9782f.jpg', '2017-12-05'),
+(30, 2, '1010101', 'sdf', 'ssds', '2b46cb1370f2675a25ba1fd95810b5ef.png', '2018-02-05');
 
 -- --------------------------------------------------------
 
@@ -363,7 +364,7 @@ INSERT INTO `tb_pendaftaran` (`id`, `id_siswa`, `id_ortu`, `id_tahun_ajaran`, `t
 --
 
 CREATE TABLE `tb_perkembangan` (
-  `id` int(10) NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
   `nip` varchar(20) DEFAULT NULL,
   `nis` varchar(10) DEFAULT NULL,
   `id_kelas` int(10) UNSIGNED DEFAULT NULL,
@@ -372,26 +373,17 @@ CREATE TABLE `tb_perkembangan` (
   `bahasa` varchar(1) DEFAULT NULL,
   `daya_fikir` varchar(1) DEFAULT NULL,
   `motorik` varchar(1) DEFAULT NULL,
-  `tgl` date DEFAULT NULL
+  `tgl` date DEFAULT NULL,
+  `id_kegiatan` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_perkembangan`
 --
 
-INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `id_kelas`, `id_tahun_ajaran`, `pembiasaan`, `bahasa`, `daya_fikir`, `motorik`, `tgl`) VALUES
-(62, '1010101', '0001', 6, 6, 'A', 'B', 'B', 'B', '2017-11-01'),
-(63, '1010101', '0001', 6, 6, 'B', 'B', 'A', 'B', '2017-11-02'),
-(64, '1010101', '0001', 6, 6, 'A', 'B', 'C', 'A', '2017-11-03'),
-(65, '1010101', '0001', 6, 6, 'A', 'B', 'C', 'D', '2017-11-04'),
-(77, '1010101', '0001', 6, 7, 'A', 'B', 'A', 'B', '2018-01-01'),
-(78, '1010101', '0001', 6, 7, 'A', 'B', 'B', 'B', '2018-01-02'),
-(79, '1010101', '0001', 6, 7, 'A', 'B', 'A', 'C', '2018-01-03'),
-(80, '1010101', '0001', 6, 7, 'A', 'B', 'B', 'B', '2018-01-04'),
-(81, '1010101', '0001', 6, 7, 'B', 'B', 'A', 'B', '2017-11-06'),
-(82, '1010101', '0001', 6, 7, 'B', 'B', 'B', 'C', '2017-11-13'),
-(83, '1010101', '0001', 6, 7, 'B', 'A', 'B', 'B', '2017-11-20'),
-(84, '1010101', '0001', 6, 7, 'A', 'B', 'A', 'B', '2017-11-27');
+INSERT INTO `tb_perkembangan` (`id`, `nip`, `nis`, `id_kelas`, `id_tahun_ajaran`, `pembiasaan`, `bahasa`, `daya_fikir`, `motorik`, `tgl`, `id_kegiatan`) VALUES
+(3, '1010101', '0001', 6, 7, 'D', 'B', 'D', 'B', '2018-02-05', 28),
+(4, '1010101', '0002', 6, 6, 'B', 'B', 'B', 'B', '2018-02-06', 28);
 
 -- --------------------------------------------------------
 
@@ -761,7 +753,7 @@ ALTER TABLE `tb_galeri_detail`
 -- AUTO_INCREMENT for table `tb_kegiatan`
 --
 ALTER TABLE `tb_kegiatan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `tb_kelas`
 --
@@ -786,7 +778,7 @@ ALTER TABLE `tb_pendaftaran`
 -- AUTO_INCREMENT for table `tb_perkembangan`
 --
 ALTER TABLE `tb_perkembangan`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tb_raport`
 --
